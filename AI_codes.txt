@@ -1,0 +1,1012 @@
+							
+								1. bfs for 8 puzzle (graph search)
+code : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+vector<int> location(vector<vector<int> >v)
+{
+    vector<int>cr;
+    for(int i=0;i<3;++i)
+    {
+        for(int j=0;j<3;++j) {
+            if(v[i][j]==0)
+            {
+                cr.pb(i);
+                cr.pb(j);
+                
+                return cr;
+            }
+        }
+    }
+    return cr;
+}
+
+
+signed main() 
+{IOS;
+    
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt","r",stdin);
+        freopen("output.txt","w",stdout);
+    #endif 
+
+    // int t;  cin>>t; while(t--)
+    {
+        vector<vector<int> >st(3,vector<int>(3,0));
+        vector<vector<int> >des(3,vector<int>(3,0));
+        
+        for(int i=0;i<3;++i) {
+            for(int j=0;j<3;++j)
+            cin>>st[i][j];
+        }
+        
+        for(int i=0;i<3;++i) {
+            for(int j=0;j<3;++j)
+            cin>>des[i][j];
+        }
+        
+        
+        map<vector<vector<int> >,int>mp;
+        queue<pair<vector<vector<int> >,int> >q;
+        q.push({st,0});
+        
+        while(!q.empty())
+        {
+            pair<vector<vector<int> >,int>p=q.front();
+            q.pop();
+            
+            if(mp.count(p.first)) continue;
+            mp[p.first]++;
+            
+            vector<int>cr=location(p.first);
+            int x=cr[0],y=cr[1];
+            
+            int lev=p.second;
+            vector<vector<int> >tmp=p.first;
+            
+            for(int i=0;i<3;++i)
+            {
+                for(int j=0;j<3;++j) cout<<tmp[i][j];
+                cout<<endl;
+            }
+            cout<<endl;
+            
+            if(tmp==des)
+            {
+                cout<<"Yes\n";
+                cout<<lev<<endl;
+                break;
+            }
+            
+            if(x-1>=0)
+            {
+                swap(tmp[x-1][y],tmp[x][y]);
+                q.push({tmp,lev+1});
+                swap(tmp[x-1][y],tmp[x][y]);
+            }
+            
+            if(x+1<3)
+            {
+                swap(tmp[x+1][y],tmp[x][y]);
+                q.push({tmp,lev+1});
+                swap(tmp[x+1][y],tmp[x][y]);
+            }
+            
+            if(y-1>=0)
+            {
+                swap(tmp[x][y-1],tmp[x][y]);
+                q.push({tmp,lev+1});
+                swap(tmp[x][y-1],tmp[x][y]);
+            }
+            
+            if(y+1<3)
+            {
+                swap(tmp[x][y+1],tmp[x][y]);
+                q.push({tmp,lev+1});
+                swap(tmp[x][y+1],tmp[x][y]);
+            }
+        }
+        
+    }
+}
+
+
+// 1 2 3
+// 5 6 0
+// 7 8 4
+
+// 1 2 3
+// 5 8 6
+// 0 7 4
+
+									-------------
+
+								2. bfs for 8 puzzle (tree search)
+
+code : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+vector<int> location(vector<vector<int> >v)
+{
+    vector<int>cr;
+    for(int i=0;i<3;++i)
+    {
+        for(int j=0;j<3;++j) {
+            if(v[i][j]==0)
+            {
+                cr.pb(i);
+                cr.pb(j);
+                
+                return cr;
+            }
+        }
+    }
+    // return cr;
+}
+
+
+signed main() 
+{IOS;
+    
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	
+    // int t;  cin>>t; while(t--)
+    {
+        vector<vector<int> >st(3,vector<int>(3,0));
+        vector<vector<int> >des(3,vector<int>(3,0));
+        vector<vector<int> >root(3,vector<int>(3,-1));
+        
+        for(int i=0;i<3;++i) {
+            for(int j=0;j<3;++j)
+            cin>>st[i][j];
+        }
+        
+        for(int i=0;i<3;++i) {
+            for(int j=0;j<3;++j)
+            cin>>des[i][j];
+        }
+        
+        
+        map<pair<vector<vector<int> >,int>,vector<vector<int> > >pr;
+        queue<pair<vector<vector<int> >,int> >q;
+        q.push({st,0});
+        pr[{st,0}]=root;
+        
+        while(!q.empty())
+        {
+            pair<vector<vector<int> >,int>p=q.front();
+            q.pop();
+            
+            vector<int>cr=location(p.first);
+            int x=cr[0],y=cr[1];
+            
+            int lev=p.second;
+            vector<vector<int> >tmp=p.first;
+            vector<vector<int> >pre=p.first;
+            
+            if(tmp==des)
+            {
+                int cr_lev=lev;
+                while(tmp!=root)
+                {
+                    for(int i=0;i<3;++i)
+                    {
+                        for(int j=0;j<3;++j) cout<<tmp[i][j];
+                        cout<<endl;
+                    }
+                    cout<<endl;
+                    
+                    tmp=pr[{tmp,cr_lev}];
+                    cr_lev--;
+                }
+                
+                cout<<lev<<endl;
+                break;
+            }
+            
+            if(x-1>=0)
+            {
+                swap(tmp[x-1][y],tmp[x][y]);
+                // if(pr[pre]!=tmp) 
+                q.push({tmp,lev+1}),pr[{tmp,lev+1}]=pre;
+                swap(tmp[x-1][y],tmp[x][y]);
+            }
+            
+            if(x+1<3)
+            {
+                swap(tmp[x+1][y],tmp[x][y]);
+                // if(pr[pre]!=tmp) 
+                q.push({tmp,lev+1}),pr[{tmp,lev+1}]=pre;
+                swap(tmp[x+1][y],tmp[x][y]);
+            }
+            
+            if(y-1>=0)
+            {
+                swap(tmp[x][y-1],tmp[x][y]);
+                // if(pr[pre]!=tmp) 
+                q.push({tmp,lev+1}),pr[{tmp,lev+1}]=pre;
+                swap(tmp[x][y-1],tmp[x][y]);
+            }
+            
+            if(y+1<3)
+            {
+                swap(tmp[x][y+1],tmp[x][y]);
+                // if(pr[pre]!=tmp) 
+                q.push({tmp,lev+1}),pr[{tmp,lev+1}]=pre;
+                swap(tmp[x][y+1],tmp[x][y]);
+            }
+        }
+        
+    }
+}
+
+
+// 1 2 3
+// 5 6 0
+// 7 8 4
+
+// 1 2 3
+// 5 8 6
+// 0 7 4
+
+									------------------
+
+								[3] uniform cost search 
+code : 
+#include<bits/stdc++.h>
+#define pb push_back
+#define int long long
+const int N=16;
+using namespace std;
+
+int cost[N][N];
+vector<int>wt;
+
+
+int dij(int k, int n)
+{
+	int tot_cost=10000000;
+	multiset< pair< pair<pair<int,int>,int>,vector<int> > >ms;
+	vector<int>start(n,0);
+	ms.insert({{{0,0},0},start});
+
+	map< pair< pair<int,int>,vector<int> >, int >mp;
+	while(1)
+	{
+		pair<pair<pair<int,int>,int>,vector<int>>p=*ms.begin();
+		ms.erase(ms.begin());
+		int x=p.first.first.second;
+		int tmp_dis=p.first.first.first;
+		int pre_wt=p.first.second;
+		vector<int>tmp_vis= p.second;
+
+		pair< pair<int,int>,vector<int> >p1={{x,pre_wt},tmp_vis};
+		if(mp.find(p1)!=mp.end()) continue;
+		mp[p1]=1;
+
+		if(x==0)
+		{
+			int cnt=0;
+			for(int i=1;i<n;++i) {
+				if(tmp_vis[i]==1) cnt++;
+			}
+			if(cnt==n-1) {
+				tot_cost=tmp_dis;
+				return tot_cost;
+			}
+		}
+
+		for(int i=0;i<n;++i)
+		{
+			if(i==x) continue;
+			if(i==0) {
+				ms.insert({{{tmp_dis + cost[x][i],i},0},tmp_vis});
+				continue;
+			}
+            
+			if(wt[i]+pre_wt<=k && tmp_vis[i]==0)
+			{
+				tmp_vis[i]=1;
+				ms.insert({{{tmp_dis + cost[x][i],i},pre_wt+wt[i]},tmp_vis});
+				tmp_vis[i]=0;
+			}
+		}
+
+	}
+	return tot_cost;
+}
+
+signed main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		memset(cost,0,sizeof(cost));
+		wt.clear();
+
+		int n;
+		cin>>n;
+		for(int i=0;i<n;++i)
+		{
+			for(int j=0;j<n;++j)
+			{
+				int x; cin>>x;
+				cost[i][j]=x;
+			}
+		}
+
+		wt.pb(0);
+		for(int i=1;i<n;++i) {
+		    int x;
+		    cin>>x;
+		    wt.pb(x);
+		}
+		int k; cin>>k;
+
+		int ans=0;
+		ans=dij(k,n);
+		cout<<ans<<endl;
+		
+	}
+}
+
+// input
+1
+5
+0 2 3 4 10 
+2 0 5 4 8 
+3 5 0 7 9 
+4 4 7 0 10 
+10 8 9 10 0 
+9 2 4 5 
+12
+
+// output
+30
+
+
+									--------------------
+
+
+									[4] path for Q3
+
+code : 
+
+#include<bits/stdc++.h>
+#define pb push_back
+#define int long long
+const int N=16;
+using namespace std;
+
+int cost[N][N];
+vector<int>wt;
+
+
+string dij(int k, int n)
+{
+	multiset< pair< pair< pair< pair<int,string>,int> ,int>,vector<int>> >ms;
+	vector<int>start(n,0);
+	ms.insert({{{{0,"0 "},0},0},start});
+
+	map< pair< pair<int,int>,vector<int> >, int >mp;
+	while(1)
+	{
+		pair<pair< pair< pair<int,string>,int> ,int>,vector<int>>p=*ms.begin();
+		ms.erase(ms.begin());
+		int x=p.first.first.second;
+		int tmp_dis=p.first.first.first.first;
+		int pre_wt=p.first.second;
+		vector<int>tmp_vis= p.second;
+		string s=p.first.first.first.second;
+
+		pair< pair<int,int>,vector<int> >p1={{x,pre_wt},tmp_vis};
+		if(mp.find(p1)!=mp.end()) continue;
+		mp[p1]=1;
+
+		if(x==0)
+		{
+			int cnt=0;
+			for(int i=1;i<n;++i) {
+				if(tmp_vis[i]==1) cnt++;
+			}
+			if(cnt==n-1) {
+				return s;
+			}
+		}
+
+		for(int i=0;i<n;++i)
+		{
+			if(i==x) continue;
+			if(i==0) {
+				ms.insert({{{{tmp_dis + cost[x][i],s+to_string(i)+" "},i},0},tmp_vis});
+				continue;
+			}
+			
+			if(wt[i]+pre_wt<=k && tmp_vis[i]==0)
+			{
+				tmp_vis[i]=1;
+	            ms.insert({{{{tmp_dis + cost[x][i],s+to_string(i)+" "},i},pre_wt+wt[i]},tmp_vis});
+				tmp_vis[i]=0;
+			}
+		}
+		
+	}
+	return "";
+}
+
+signed main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		memset(cost,0,sizeof(cost));
+		wt.clear();
+
+		int n;
+		cin>>n;
+		for(int i=0;i<n;++i)
+		{
+			for(int j=0;j<n;++j)
+			{
+				int x; cin>>x;
+				cost[i][j]=x;
+			}
+		}
+
+		wt.pb(0);
+		for(int i=1;i<n;++i) {
+		    int x;
+		    cin>>x;
+		    wt.pb(x);
+		}
+		int k; cin>>k;
+
+		cout<<dij(k,n)<<endl;
+	}
+}
+
+// input
+1
+5
+0 2 3 4 10 
+2 0 5 4 8 
+3 5 0 7 9 
+4 4 7 0 10 
+10 8 9 10 0 
+9 2 4 5 
+12
+
+// output
+0 1 0 2 4 3 0
+
+
+									-----------------
+
+
+									[5] extended version of [3]
+
+code : 
+#include<bits/stdc++.h>
+#define pb push_back
+#define int long long
+// #define MX 10000000000
+const int N=31;
+using namespace std;
+ 
+//rough work
+ 
+// vis({distance,node})
+// multiset({distance,node})
+// path : 0->3->0
+ 
+// v[3][0]= 0 if no visited, 1 if visited
+// v[3][1]= 0 if if its wt is not picked , 1 if its wt is picked
+ 
+// v[3][0]=1
+// v[3][1]=0
+// wt=0+10
+ 
+// v[3][0]=1
+// v[3][1]=1
+// wt=0+10-10=0
+ 
+// distance, node, wt
+ 
+// ---------
+ 
+int cost[N][N];
+vector<pair<int,int>>wt;
+ 
+ 
+string dij(int k, int n, int m)
+{
+	int tot_cost=10000000;
+	// map<pair<int,int>,int>vis;
+ 
+	// { { {dist,node},wt } , vis[mark for vis][mark for picking] } 
+	multiset< pair< pair< pair< pair<int,string>,int> ,int>,vector<vector<int>>> >ms;
+	vector<vector<int>>start(n+m, vector<int>(2,0));
+	// start.pb(0);
+	ms.insert({{{{0,"0 "},0},0},start});
+	// int cnt=0;
+ 
+	map< pair< pair<int,int>,vector<vector<int>> >, int >mp;
+	while(1)
+	{
+		pair<pair< pair< pair<int,string>,int> ,int>,vector<vector<int>>>p=*ms.begin();
+		ms.erase(ms.begin());
+		int x=p.first.first.second;
+		int tmp_dis=p.first.first.first.first;
+		int pre_wt=p.first.second;
+		vector<vector<int>>tmp_vis= p.second;
+		string s=p.first.first.first.second;
+ 
+		pair< pair<int,int>,vector<vector<int>> >p1={{x,pre_wt},tmp_vis};
+		if(mp.find(p1)!=mp.end()) continue;
+		mp[p1]=1;
+ 
+		// cout<<x<<" "<<tmp_dis<<" "<<pre_wt<<endl;
+ 
+		if(x<n)
+		{
+			int cnt=0;
+			for(int i=n;i<n+m;++i) {
+				if(tmp_vis[i][0]==1 && tmp_vis[i][1]==1) cnt++;
+			}
+			if(cnt==m) {
+				// for(int i=0;i<n+m;++i) cout<<tmp_vis[i][0]<<" "<<tmp_vis[i][1]<<endl;
+				// tot_cost=tmp_dis;
+				// return tot_cost;
+				return s;
+			}
+		}
+ 
+ 
+        // int bk=0;
+		for(int i=0;i<n+m;++i)
+		{
+			if(i==x) continue;
+			if(i<n) {
+				int tmp_wt=pre_wt;
+				vector<vector<int>>loc=tmp_vis;
+				for(int j=n;j<n+m;++j) {
+		if(wt[j].second==i && loc[j][1]==0 && loc[j][0]==1) {
+						tmp_wt-=wt[j].first;
+						loc[j][1]=1;
+					}
+				}
+				// ms.insert({{{tmp_dis + cost[x][i],i},tmp_wt},loc});
+	ms.insert({{{{tmp_dis + cost[x][i],s+to_string(i)+" "},i},tmp_wt},loc});
+				continue;
+			}
+            
+            // bk++;
+			if(wt[i].first+pre_wt<=k && tmp_vis[i][0]==0)
+			{
+				tmp_vis[i][0]=1;
+		// ms.insert({{{tmp_dis + cost[x][i],i},pre_wt+wt[i].first},tmp_vis});
+ms.insert({{{{tmp_dis + cost[x][i],s+to_string(i)+" "},i},pre_wt+wt[i].first},tmp_vis});
+				tmp_vis[i][0]=0;
+			}
+		}
+ 
+	}
+ 
+	// return tot_cost;
+	return "";
+}
+ 
+signed main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		memset(cost,0,sizeof(cost));
+		wt.clear();
+ 
+		int n,m;
+		cin>>n>>m;
+ 
+// 		vector<vector<int>>v(n, vector<int>(n,0LL));
+        // vector<int>v[n];
+		for(int i=0;i<n+m;++i)
+		{
+			for(int j=0;j<n+m;++j)
+			{
+				int x; cin>>x;
+				cost[i][j]=x;
+				// if(j>i) {
+				// 	v[i].pb(j);
+				// 	v[j].pb(i);
+				// }
+			}
+		}
+ 
+		for(int i=0;i<n;++i) wt.pb({0,0});
+		for(int i=n;i<n+m;++i) {
+		    int x,y;
+		    cin>>x>>y;
+		    wt.pb({x,y});
+		}
+		int k; cin>>k;
+ 
+		int ans=0;
+		// ans=dij(k,n,m);
+		// cout<<ans<<endl;
+		
+		cout<<dij(k,n,m)<<endl;
+	}
+}
+
+								--------------------------------
+
+										[6]
+
+Questions : Consider a grid of size m×n. Each cell is said to be connected with a maximum of 4 cells at top, bottom, right and left. Each grid has a cost denoting the cost of being at the grid. The grid is filled up with number 1 representing a navigable grid and 2 representing a grid that is currently not navigable but can be made navigable after construction. A person wants to reach from any cell in the leftmost column to any cell in the rightmost column using an optimal path. The path should first minimize the number of non-navigable grids that will have to be constructed. If multiple paths have the same number of non-navigable grids, the path should minimize the total cost of all the grids through which the path goes.
+
+code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+signed main() 
+{IOS;
+    
+    int t;  cin>>t; while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        
+        int a[n][m];
+        int cost[n][m];
+        for(int i=0;i<n;++i) {
+            for(int j=0;j<m;++j) cin>>a[i][j];
+        }
+        
+        for(int i=0;i<n;++i) {
+            for(int j=0;j<m;++j) cin>>cost[i][j];
+        }
+        
+        
+        
+        // -----input over----------
+        
+        
+        // vector<vector<int>>cnt(n, vector<int>(m,0));
+        // vector<vector<int>>v(n, vector<int>(m,0));
+        
+        multiset< pair< pair< pair<int,int>,vector<pair<int,int>>>, pair<int,int>> >ms;
+        int vis[n][m];
+        memset(vis,0,sizeof(vis));
+        vector< pair< pair<int,int>,vector<pair<int,int>>> >paths;
+        
+        for(int i=0;i<n;++i)
+        {
+            vector<pair<int,int>>tmp;
+            tmp.pb({i,0});
+            // ms.insert({{cost[i][0],a[i][0]-1},{i,0}});
+            ms.insert({{{a[i][0]-1,cost[i][0]},tmp},{i,0}});
+            // vis[i][0]=1;
+        }
+        
+        while(ms.size())
+        {
+            pair< pair< pair<int,int>,vector<pair<int,int>> >, pair<int,int>>p = *ms.begin();
+            ms.erase(ms.begin());
+            
+            // int cr_cost = p.first.first;
+            // int cr_2s = p.first.second;
+            int cr_2s = p.first.first.first;
+            int cr_cost = p.first.first.second;
+            vector<pair<int,int>>cr_path = p.first.second;
+            int x=p.second.first;
+            int y=p.second.second;
+            
+            
+            if(y==m-1)
+            {
+                paths.pb({{cr_2s,cr_cost},cr_path});
+                continue;
+            }
+            
+            if(vis[x][y]==1) continue;
+            vis[x][y]=1;
+            
+            
+            
+            if(x-1>=0)
+            {
+                cr_path.pb({x-1,y});
+                // ms.insert({{cost[x-1][y]+cr_cost,cr_2s+a[x-1][y]-1},{x-1,y}});
+                ms.insert({{{cr_2s+a[x-1][y]-1,cost[x-1][y]+cr_cost},cr_path},{x-1,y}});
+                cr_path.pop_back();
+            }
+            
+            if(y-1>=0)
+            {
+                cr_path.pb({x,y-1});
+                // ms.insert({{cost[x][y-1]+cr_cost,cr_2s+a[x][y-1]-1},{x,y-1}});
+                ms.insert({{{cr_2s+a[x][y-1]-1,cost[x][y-1]+cr_cost},cr_path},{x,y-1}});
+                cr_path.pop_back();
+            }
+            
+            if(x+1<n)
+            {
+                cr_path.pb({x+1,y});
+                // ms.insert({{cost[x+1][y]+cr_cost,cr_2s+a[x+1][y]-1},{x+1,y}});
+                ms.insert({{{cr_2s+a[x+1][y]-1,cost[x+1][y]+cr_cost},cr_path},{x+1,y}});
+                cr_path.pop_back();
+            }
+            
+            if(y+1<m)
+            {
+                cr_path.pb({x,y+1});
+                // ms.insert({{cost[x][y+1]+cr_cost,cr_2s+a[x][y+1]-1},{x,y+1}});
+                ms.insert({{{cr_2s+a[x][y+1]-1,cost[x][y+1]+cr_cost},cr_path},{x,y+1}});
+                cr_path.pop_back();
+            }
+        }
+        
+        sort(paths.begin(),paths.end());
+        
+        // int ans=paths[0].first;
+        // for(int i=0;i<paths.size();++i)
+        // {
+        //     // if(paths[i].first==ans)
+        //     // {
+        //     //     if(paths[i].second==2)
+        //     // }
+            
+        //     cout<<paths[i].first<<" "<<paths[i].second<<endl;
+        // }
+        
+        // cout<<paths[0].first<<" "<<paths[0].second<<endl;
+        
+        vector<pair<int,int>>ans = paths[0].second;
+        for(int i=0;i<ans.size();++i)
+        {
+            cout<<ans[i].first<<" "<<ans[i].second<<endl;
+        }
+        
+        
+    }
+}
+
+
+									---------------------------
+
+									[7]
+
+code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+signed main() 
+{IOS;
+    
+    int t;  cin>>t; while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        
+        int a[n][m];
+        int cost[n][m];
+        for(int i=0;i<n;++i) {
+            for(int j=0;j<m;++j) cin>>a[i][j];
+        }
+        
+        for(int i=0;i<n;++i) {
+            for(int j=0;j<m;++j) cin>>cost[i][j];
+        }
+        
+        
+        
+        // -----input over----------
+        
+        
+        // vector<vector<int>>cnt(n, vector<int>(m,0));
+        // vector<vector<int>>v(n, vector<int>(m,0));
+        
+        while(1)
+        {
+            
+            multiset< pair< pair< pair<int,pair<int,int>>,vector<pair<int,int>>>, pair<int,int>> >ms;
+            int vis[n][m];
+            memset(vis,0,sizeof(vis));
+            vector< pair< pair<int,pair<int,int>>,vector<pair<int,int>>> >paths;
+            
+            for(int i=0;i<n;++i)
+            {
+                vector<pair<int,int>>tmp;
+                tmp.pb({i,0});
+                // ms.insert({{cost[i][0],a[i][0]-1},{i,0}});
+                int cnt0=0,cnt2=0;
+                if(a[i][0]==0) cnt0=1;
+                if(a[i][0]==2) cnt2=1;
+                ms.insert({{{cnt2,{cnt0,cost[i][0]}},tmp},{i,0}});
+                // vis[i][0]=1;
+            }
+            
+            while(ms.size())
+            {
+                pair< pair< pair<int,pair<int,int>>,vector<pair<int,int>>>, pair<int,int>>p = *ms.begin();
+                ms.erase(ms.begin());
+                
+                // int cr_cost = p.first.first;
+                // int cr_2s = p.first.second;
+                int cr_2s = p.first.first.first;
+                int cr_0s = p.first.first.second.first;
+                int cr_cost = p.first.first.second.second;
+                vector<pair<int,int>>cr_path = p.first.second;
+                int x=p.second.first;
+                int y=p.second.second;
+                
+                
+                if(y==m-1)
+                {
+                    paths.pb({{cr_2s,{cr_0s,cr_cost}},cr_path});
+                    continue;
+                }
+                
+                if(vis[x][y]==1) continue;
+                vis[x][y]=1;
+                
+                
+                
+                if(x-1>=0)
+                {
+                    cr_path.pb({x-1,y});
+                    // ms.insert({{cost[x-1][y]+cr_cost,cr_2s+a[x-1][y]-1},{x-1,y}});
+                    int cnt0=0,cnt2=0;
+                    if(a[x-1][y]==0) cnt0=1;
+                    if(a[x-1][y]==2) cnt2=1;
+                    
+                    ms.insert({{{cr_2s+cnt2,{cr_0s+cnt0,cost[x-1][y]+cr_cost}},cr_path},{x-1,y}});
+                    cr_path.pop_back();
+                }
+                
+                if(y-1>=0)
+                {
+                    cr_path.pb({x,y-1});
+                    // ms.insert({{cost[x][y-1]+cr_cost,cr_2s+a[x][y-1]-1},{x,y-1}});
+                    int cnt0=0,cnt2=0;
+                    if(a[x][y-1]==0) cnt0=1;
+                    if(a[x][y-1]==2) cnt2=1;
+                    ms.insert({{{cr_2s+cnt2,{cr_0s+cnt0,cost[x][y-1]+cr_cost}},cr_path},{x,y-1}});
+                    cr_path.pop_back();
+                }
+                
+                if(x+1<n)
+                {
+                    cr_path.pb({x+1,y});
+                    // ms.insert({{cost[x+1][y]+cr_cost,cr_2s+a[x+1][y]-1},{x+1,y}});
+                    int cnt0=0,cnt2=0;
+                    if(a[x+1][y]==0) cnt0=1;
+                    if(a[x+1][y]==2) cnt2=1;
+                    ms.insert({{{cr_2s+cnt2,{cr_0s+cnt0,cost[x+1][y]+cr_cost}},cr_path},{x+1,y}});
+                    cr_path.pop_back();
+                }
+                
+                if(y+1<m)
+                {
+                    cr_path.pb({x,y+1});
+                    // ms.insert({{cost[x][y+1]+cr_cost,cr_2s+a[x][y+1]-1},{x,y+1}});
+                    int cnt0=0,cnt2=0;
+                    if(a[x][y+1]==0) cnt0=1;
+                    if(a[x][y+1]==2) cnt2=1;
+                    ms.insert({{{cr_2s+cnt2,{cr_0s+cnt0,cost[x][y+1]+cr_cost}},cr_path},{x,y+1}});
+                    cr_path.pop_back();
+                }
+                
+                
+            }
+            
+            sort(paths.begin(),paths.end());
+            
+            // int ans=paths[0].first;
+            // for(int i=0;i<paths.size();++i)
+            // {
+            //     // if(paths[i].first==ans)
+            //     // {
+            //     //     if(paths[i].second==2)
+            //     // }
+                
+            //     cout<<paths[i].first<<" "<<paths[i].second<<endl;
+            // }
+            
+            // cout<<paths[0].first<<" "<<paths[0].second<<endl;
+            
+            // 2s 0s path
+            
+            // vector< pair< pair<int,pair<int,int>>,vector<pair<int,int>>> >paths;
+            
+            
+            
+            int cs=1e12;
+            int ct=0;
+            
+            pair<int,int>p;
+            
+            
+            vector<pair<int,int>>ans = paths[0].second;
+            for(int i=0;i<ans.size();++i)
+            {
+                // cout<<ans[i].first<<" "<<ans[i].second<<endl;
+                if(cost[ans[i].first][ans[i].second]<cs && a[ans[i].first][ans[i].second]==0)
+                {
+                    p=ans[i];
+                    cs=cost[ans[i].first][ans[i].second];
+                }
+                
+                if( a[ans[i].first][ans[i].second]==0 ) {
+                    ct++;
+                }
+                
+                
+            }
+            
+            if(cs==1e12) break;
+            cout<<"1 "<<p.first<<" "<<p.second<<endl;
+            ct--;
+            
+            a[p.first][p.second]=1;
+            
+            if(ct==0) break;
+            
+            // -----
+            
+            int cs1=1e12;
+            int ct1=0;
+            
+            pair<int,int>p1;
+            for(int i=0;i<ans.size();++i)
+            {
+                // cout<<ans[i].first<<" "<<ans[i].second<<endl;
+                if(cost[ans[i].first][ans[i].second]<cs1 && a[ans[i].first][ans[i].second]==0)
+                {
+                    p1=ans[i];
+                    cs1=cost[ans[i].first][ans[i].second];
+                }
+                
+                // if( a[ans[i].first][ans[i].second]==0 ) {
+                //     ct1++;
+                // }
+                
+            }
+            
+            cout<<"2 "<<p1.first<<" "<<p1.second<<endl;
+            a[p1.first][p1.second]=2;
+            
+            
+            
+        }
+        
+    }
+}
+
+									------------------
+
+
+
+

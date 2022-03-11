@@ -1,0 +1,3458 @@
+									AAKASH BISHNOI
+										IIIT ALLAHABHD
+								prepared codes
+									---------------
+
+[1]. MAX sum subarray in array ($$$$)
+		[c] Kadane's Algorithm
+[2]. Fenwick tree (Binary index tree) $$$$$$$$$$$$$$ (VERY IMPORTANT) (Short form of segment tree)
+	[c]. Inversion count
+[3]. Shortest path between two nodes
+[4]. Bridges in a graph 
+[5]. Sum of the nodes of a subtree ($$$$)
+[7]. Number of loop in a graph
+[8]. MAXIMUN Sum of a submatrix in a matrix
+[8]. Dijkshtra Algorithm
+[9]. Kruskal's Algorithm [MST]-- ( Minimum spanning tree )
+[10] Prim's Algorithm (2nd method og MST)
+[11] GRAPH : if(has cycle) YES
+	     else NO
+[12] All Paths From Source to Target
+[13] sub-array sum equal to K 
+[14] Is there a subset with SUM equal to K
+[15] Subarray Sums Divisible by K
+[16] Max sum path in a TREE (from one node to another)
+[17] find the sum of K continuous elements of an Arr using Sliding window technique
+[18] String = 11106 Ans: AAJF(1,1,10,6) & KJF(11,10,6)
+[19] Egg dropping problem
+[20] max(a[i]^a[j]) in an array (n=100005)
+[21] max(a[i]&a[j]) in an array (n=100005)
+[22] Bitmasking (n*2^n)
+[23] Palindrome substring count (n^2) (Hashing for palindrome substrings)
+[24] Find string in a 2D Matrix
+[25] Longest path in a directed graph (DP)
+[26] search suggestion system (Leetcode)
+[27] max(j-i) where a[j]>a[i]
+[28] Range sum/min query ||segment tree|| (https://cses.fi/problemset/task/1646/)
+[29] path from A->B in matrix
+[30] No. of rectangles in 2D plan
+[31] Evaluate expression true;
+[32] **NGR (nearest greater to right next largest element)
+[33] **nearest smaller to left
+[34] **consecutive smaller to equal in left
+[35] **max rectangle area in histogram
+[36] max xor subarray using Trie()
+[37] no of path is weighted graph from node 1 to n;
+[38] Distance from a node to all other in a tree
+[39] snake and ladder
+[40] Priority queue using Linked List
+[41] Median of streaming array [$$]
+[42] Merge k sorted linked list [$$]
+--------------------------------------------
+
+									CODE TEMPLATE
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+ 
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	
+}
+							[1]. MAX/MIN sum subarray in array ($$$$)
+
+							[a] simple code without position of subarray
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+//MY TEMPLATE
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	
+    int n;
+    cin>>n;
+    int a[n];
+    f(i,0,n) cin>>a[i];
+    
+    int ans = a[0], sum = 0, min_sum = 0;
+
+    for (int r = 0; r < n; ++r) {
+        sum += a[r];
+        ans = max(ans, sum - min_sum);
+        min_sum = min(min_sum, sum);
+    }
+    
+    cout<<ans;
+}
+
+					[b] code with the position of subarray in l and r terms
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+ 
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+ 
+    int n;
+    cin>>n;
+    int a[n];
+    f(i,0,n) cin>>a[i];
+    
+    int ans = a[0], ans_l = 0, ans_r = 0;
+    int sum = 0, min_sum = 0, min_pos = -1;
+    
+    for (int r = 0; r < n; ++r) {
+        sum += a[r];
+        int cur = sum - min_sum;
+        if (cur > ans) {
+            ans = cur;
+            ans_l = min_pos + 1;
+            ans_r = r;
+        }
+        if (sum < min_sum) {
+            min_sum = sum;
+            min_pos = r;
+        }
+    }
+    
+    cout<<ans_l<<" "<<ans_r<<endl;
+    cout<<ans;
+}
+
+									[c] Kadane's Algorithm
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+ 
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+ 
+    int n;
+    cin>>n;
+    int a[n];
+    f(i,0,n) cin>>a[i];
+    
+    int ans = a[0], ans_l = 0, ans_r = 0;
+    int sum = 0, minus_pos = -1;
+    
+    for (int r = 0; r < n; ++r) {
+        sum += a[r];
+        if (sum > ans) {
+            ans = sum;
+            ans_l = minus_pos + 1;
+            ans_r = r;
+        }
+        if (sum < 0) {
+            sum = 0;
+            minus_pos = r;
+        }
+    }
+    
+    cout<<ans_l<<" "<<ans_r<<endl;
+    cout<<ans;
+}
+
+
+							[d] MIN sum subarray 
+
+	int sum=INT_MAX,ans2=INT_MAX;
+        
+        for(int r=0;r<n;++r)
+        {
+            if(sum>0) sum=a[r];
+            else sum+=a[r];
+            
+            ans2=min(ans2,sum);
+        }
+
+	cout<<ans2;
+
+
+						[2]. Fenwick tree (Binary index tree) $$$$$$$$$$$$$$ (VERY IMPORTANT)
+								(Short form of segment tree)
+	NOTE : use 1 based indexing (must)..........
+				
+								[a]. Simple l to r sum
+#include <bits/stdc++.h>
+using namespace std;
+
+#define Testcases int t;cin>>t;while(t--)
+#define f1(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define f(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define popcount __builtin_popcount
+
+//MY TEMPLATE
+ll bit[100005]={0},n;
+// j=remove last bit of i
+// i is index of bit array
+// bit[i]=sum from j+1 to i
+void update(int i, int x)// create bit array
+{
+    for(;i<=n;i+=((i)&(-i))){
+        bit[i]+=x;	//add x in bit[i] $$
+    }
+}
+int sum(int i) // sum of the array from 1 to i
+{
+    int ans=0;
+    for(;i>0;i-=((i)&(-i)))
+    {
+        ans+=bit[i];
+    }
+    return ans;
+}
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int q;
+    cin>>n>>q;
+    
+    int a[n+1];
+    f(i,1,n){
+        cin>>a[i];
+        update(i,a[i]);
+    } 
+    
+    while(q--)
+    {
+        int l,r;cin>>l>>r;
+        
+        cout<<(sum(r)-sum(l-1))<<endl;
+    }
+ }
+
+					[b]. sum from l to r and update the value of a[idx] to x (two types query)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define Testcases int t;cin>>t;while(t--)
+#define f1(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define f(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define popcount __builtin_popcount
+
+//MY TEMPLATE
+ll bit[100005]={0},n;
+// j=remove last bit of i
+// i is index of bit array
+// bit[i]=sum from j+1 to i
+void update(int i, int x)// create bit array
+{
+    for(;i<=n;i+=((i)&(-i))){
+        bit[i]+=x;  //add x in bit[i] $$
+    }
+}
+int sum(int i) // sum of the array from 1 to i
+{
+    int ans=0;
+    for(;i>0;i-=((i)&(-i)))
+    {
+        ans+=bit[i];
+    }
+    return ans;
+}
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int q;
+    cin>>n>>q;
+    
+    int a[n+1];
+    f(i,1,n){
+        cin>>a[i];
+        update(i,a[i]);
+    } 
+    
+    while(q--)
+    {
+        int type;cin>>type;
+        
+        if(type==0){
+            int idx,uv;
+            cin>>idx>>uv;
+            update(idx,uv-a[idx]);//update difference 
+            a[idx]=uv;
+        }
+        else{
+            int l,r;cin>>l>>r;
+            cout<<(sum(r)-sum(l-1))<<endl;
+        }
+    }
+ }
+
+
+								[c]. Inversion count $$$$$$$$$
+								Condition : a[i]>a[j] if i<j;
+
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N = 1e5+10;
+long long bit[N];
+
+void update(int i, int x){
+	for(; i < N; i += (i&-i))
+		bit[i] += x;
+}
+
+long long sum(int i){
+	int ans = 0;
+	for(; i > 0; i -= (i&-i))
+		ans += bit[i];
+	return ans;
+}
+
+int main(){
+	int n,q;
+	cin >> n>>q;
+	long long a[n+10];
+	map<long long,int> mp;
+	for(int i = 1;i <= n; ++i){
+		cin >> a[i];
+		mp[a[i]];
+	}
+
+
+	// compression of numbers for the case where a[i] > 10 ^ 6
+	int ptr = 1;
+	for(auto &pr : mp){
+		pr.second = ptr++;
+	}
+
+	for(int i = 1; i <= n; ++i){
+		a[i] = mp[a[i]];
+	}
+
+	// Finding Inversion count
+
+
+	long long inv[100005]={0};
+	for(int i = 1; i<= n; ++i){
+		inv[i]= (sum(N-5) - sum(a[i]));
+		update(a[i], 1);
+	}
+    
+	for(int i=1;i<=n;++i){
+	    inv[i]+=inv[i-1];
+	}
+	
+    while(q--)
+    {
+        int l,r;
+        cin>>l>>r;
+        
+        cout<<(inv[r]-inv[l-1])<<endl;
+    }
+
+}
+
+-------------------------------------------------------------------------
+
+								[3]. Shortest path between two nodes
+ 
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    //
+    int n,m,a,b;
+    cin>>n>>m;
+    cin>>a>>b;
+    
+    vector<int>v[n+2];
+    while(m--)
+    {
+        int x,y;
+        cin>>x>>y;
+        v[x].pb(y);
+        v[y].pb(x);
+    }
+    
+    //
+    // vector<vector<int>> adj;  // adjacency list representation
+    // int n; // number of nodes
+    // int s; // source vertex
+    
+    queue<int> q;
+    vector<bool> used(n);
+    vector<int> d(n), p(n);
+    
+    q.push(a);
+    used[a] = true;
+    p[a] = -1;
+    while (!q.empty()) 
+    {
+        int x = q.front();
+        q.pop();
+        for (int i : v[x]) 
+        {
+            if (!used[i]) 
+            {
+                used[i] = true;
+                q.push(i);
+                d[i] = d[x] + 1;
+                p[i] = x;
+            }
+        }
+    }
+    //
+    if (!used[b]) 
+    {
+        cout << "No path!";
+    } 
+    else 
+    {
+        vector<int> path;
+        for (int i = b; i != -1; i = p[i])
+            path.push_back(i);
+            
+        reverse(path.begin(), path.end());
+        cout << "Path: ";
+        for (int i : path)
+            cout << i << " ";
+    }
+    //
+}
+
+---------------------------------------------------------
+
+
+							[4]. Bridges in a graph ($$$$)
+
+
+About : if we remove an edge of a graph then the graph convert into two disconnectd parts, then it's call, this is the brigde edge of the graph.
+
+Code :
+
+#include <bits/stdc++.h>
+#include <vector>
+ 
+using namespace std;
+ 
+const int MAX_N = 300005;
+ 
+int bridgec;
+vector<int> adj [MAX_N];
+int lvl [MAX_N];
+int dp [MAX_N];
+
+
+void visit (int vertex) 
+{
+    
+    dp[vertex] = 0;
+  
+    for (int nxt : adj[vertex]) 
+    {
+      
+        if (lvl[nxt] == 0) 
+        { 
+            /* edge to child */
+            lvl[nxt] = lvl[vertex] + 1;
+            visit(nxt);
+            dp[vertex] += dp[nxt];
+        } 
+        else if (lvl[nxt] < lvl[vertex]) 
+             {
+                 /* edge upwards */
+                 dp[vertex]++;
+             } 
+             else if (lvl[nxt] > lvl[vertex]) 
+                { 
+                    /* edge downwards */
+                    dp[vertex]--;
+                }
+            
+    }
+ 
+         /* the parent edge isn't a back-edge, subtract 1 to compensate */
+      dp[vertex]--;
+     
+      if (lvl[vertex] > 1 && dp[vertex] == 0) {
+            bridgec++;
+      }
+}
+ 
+int main () {
+  /* problem statement: given a connected graph. calculate the number of bridges. */
+  ios::sync_with_stdio(false);
+ 
+  int vertexc, edgec;
+  cin >> vertexc >> edgec;
+ 
+  for (int i = 0; i < edgec; i++) 
+  {
+    int u, v;
+    cin >> u >> v;
+ 
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+  }
+
+ 
+  lvl[1] = 1;
+  visit(1);
+
+  cout << bridgec << endl;
+}
+
+
+--------------------------------------
+
+
+								[5]. Sum of the nodes of a subtree ($$$$)
+
+CODE : 
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define ll long long
+
+ll visit[100]={0},sum[100]={0},a[100];
+vector<int>v[100];
+
+
+int dfs(int node)
+{
+    visit[node]=1;
+    sum[node]=a[node];
+    
+    for(int i=0;i<v[node].size();++i)
+    {
+        if(visit[v[node][i]]==0)
+        {
+            sum[node]+=dfs(v[node][i]);
+        }
+    }
+    
+    return sum[node];
+}
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    
+    // int a[n+1];
+    // vector<int>v[n+2];
+    
+    for(int i=1;i<=n;++i) a[i]=i;
+    
+    
+    for(int i=0;i<m;++i)
+    {
+        int x,y;
+        cin>>x>>y;
+        
+        v[x].pb(y);
+        v[y].pb(x);
+    }
+    
+    ll s=dfs(1);
+    
+    for(int i=1;i<=n;++i) cout<<sum[i]<<" ";
+}
+
+
+-------------------------------------------------------------
+
+								[6]. Basic recursion code 
+
+
+int ans=0;
+int fun(string s,int n,int i)
+{
+    // int ans=0;
+    
+    
+    if(i>=n) return 0;
+    
+    if(s[i]=='1')
+    {
+        return ans+pow(2,i)+fun(s,n,i+1);
+    }
+    else{
+        return ans+fun(s,n,i+1);
+    }
+    
+    
+    // return ans;
+}
+
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    string s;
+    cin>>n>>s;
+    
+    // ans=fun(s,n,0);
+    
+    cout<<fun(s,n,0);;
+}
+----------------------------------------------
+
+
+							[7]. Number of loop in a graph $$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+#include <bits/stdc++.h> 
+using namespace std; 
+const int N = 100000; 
+
+
+vector<int> graph[N];
+int color[N],par[N],cyclenumber = 0; 
+
+void dfs_cycle(int u, int p) 
+{ 
+
+	if (color[u] == 2) { 
+		return; 
+	} 
+
+
+	if (color[u] == 1) { 
+
+		cyclenumber++; 
+		return; 
+	} 
+	
+	
+	par[u] = p; 
+	color[u] = 1; 
+
+	for (int v : graph[u]) { 
+
+		if (v == par[u]) { 
+			continue; 
+		}
+		dfs_cycle(v, u ); 
+	} 
+	color[u] = 2; 
+} 
+
+ 
+void addEdge(int u, int v) 
+{ 
+	graph[u].push_back(v); 
+	graph[v].push_back(u); 
+} 
+
+int main() 
+{ 
+
+
+    int n,m;
+    cin>>n>>m;
+    
+    for(int i=1;i<=m;++i){
+        int nd1,nd2;
+        cin>>nd1>>nd2;
+        
+        addEdge(nd1,nd2);
+    }
+
+	// call DFS to mark the cycles 
+	dfs_cycle(1, 0 ); 
+    
+    cout<<"Number of loops in the graph : "<<cyclenumber;
+} 
+
+
+---------------------------------------------------
+
+
+							[8]. MAXIMUN Sum of a submatrix in a matrix
+
+#include<bits/stdc++.h> 
+using namespace std; 
+
+int kadane(int arr[], int n) 
+{
+	int sum = 0, maxSum = INT_MIN,flag=(-1); 
+
+	for (int i = 0; i < n; ++i) 
+	{ 
+		sum += arr[i]; 
+		if (sum < 0) 
+		{ 
+			sum = 0; 
+		} 
+		else if (sum > maxSum) 
+		{ 
+			maxSum = sum; 
+			flag++;
+		} 
+	} 
+
+	if (flag != -1) 
+		return maxSum; 
+
+	maxSum = arr[0]; 
+
+	for(int i = 1; i < n; i++) 
+	{ 
+		if (arr[i] > maxSum) 
+		{ 
+			maxSum = arr[i]; 
+		} 
+	} 
+	return maxSum; 
+} 
+
+int main() 
+{ 
+    int n,m;
+    cin>>n>>m;
+    
+    int M[n][m];
+    for(int i=0;i<n;++i)
+    {
+        for(int j=0;j<m;++j)
+        cin>>M[i][j];
+    }
+
+	int maxSum = INT_MIN; 
+	int temp[n], sum; 
+
+	for(int left = 0; left <m; ++left) 
+	{ 
+		memset(temp, 0, sizeof(temp)); 
+		for(int right = left; right < m; ++right) 
+		{ 
+			for(int i = 0; i < n; ++i) 
+				temp[i] += M[i][right]; 
+
+			sum = kadane(temp,n); 
+
+			if (sum > maxSum) 
+			{ 
+				maxSum = sum;
+			} 
+		} 
+	} 
+
+	cout << "Max sum is: " << maxSum << endl; 
+} 
+
+
+'''''''''
+4 5
+1    2   -1    -4   -20
+-8  [-3   4    2]    1
+3   [ 8   10   1]    3
+-4  [-1   1    7]   -6
+
+
+output : 29
+
+-----------------------------------------
+
+
+								[8]. Dijkshtra Algorithm
+
+Note : in this code i find minimum distance of every node from source node(1)  and also find the trace path of min distance from 1 to i-th node.
+
+
+Code : 
+#include <bits/stdc++.h>
+using namespace std;
+
+#define Testcases int t;cin>>t;while(t--)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define popcount __builtin_popcountll
+#define mx 1e18
+
+//TEMPLATE
+//Code start
+
+int vis[100005]={0};
+ll dis[100005];
+vector<pair<int,int>>v[100005];
+int path[100005];
+
+void dijkstra(int node)
+{
+	dis[node]=0;
+
+	multiset<pair<ll,ll>>ms;
+	ms.insert({0,node});
+
+	while(!ms.empty())
+	{
+		pair<ll,ll>p=*ms.begin();
+		ms.erase(ms.begin());
+		ll x=p.second;
+		
+
+		if( vis[x]==1 ) continue;
+         	vis[x] = 1;
+
+		for(int i=0;i<v[x].size();++i){
+			int e = v[x][i].first; 
+			ll wt = v[x][i].second;
+
+			if(dis[e]> wt + dis[x]){
+				dis[e]=wt+dis[x];
+				path[e]=x;
+				ms.insert({dis[e],e});
+			}
+		}
+	}
+}
+
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    ll n,m;
+	cin>>n>>m;
+	
+	for(int i=0;i<m;++i){
+		int x,y,w;
+		cin>>x>>y>>w;
+
+		v[x].pb({y,w});
+		v[y].pb({x,w});
+	}
+
+	for(int i=0;i<100005;++i) dis[i]=mx;
+
+	dijkstra(1);
+	
+	if(vis[n]==0){
+	    cout<<(-1);
+	}
+	else{
+	    vector<int> p;
+        int current = n;
+        while(current != 1) {
+            p.pb(current);
+            current = path[current];
+        }
+        p.push_back(1);
+        
+        reverse(p.begin(), p.end());
+        for(int x : p) {
+            printf("%d ", x);
+        }
+	}
+	
+}
+
+
+-----------------------------------------------
+
+
+						[9]. Kruskal's Algorithm [MST]-- ( Minimum spanning tree )
+
+Note : get a tree from a graph such that the sum of all edge's weight is minimum.
+
+CODE :::
+
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+
+using namespace std;
+const int MAX = 1e4 + 5;
+int id[MAX], nodes, edges;
+pair <long long, pair<int, int> > p[MAX];
+
+void initialize()
+{
+    for(int i = 0;i < MAX;++i)
+        id[i] = i;
+}
+
+
+int root(int x)
+{
+    while(id[x] != x)
+    {
+        id[x] = id[id[x]];
+        x = id[x];
+    }
+    return x;
+}
+
+void union1(int x, int y)
+{
+    int p = root(x);
+    int q = root(y);
+    id[p] = id[q];
+}
+
+long long kruskal(pair<long long, pair<int, int> > p[])
+{
+    int x, y;
+    long long cost, minimumCost = 0;
+    for(int i = 0;i < edges;++i)
+    {
+        // Selecting edges one by one in increasing order from the beginning
+        x = p[i].second.first;
+        y = p[i].second.second;
+        
+        cost = p[i].first;
+        
+        // Check if the selected edge is creating a cycle or not
+        if(root(x) != root(y))
+        {
+            minimumCost += cost;
+            union1(x, y);
+        }    
+    }
+    return minimumCost;
+}
+
+int main()
+{
+    int x, y;
+    long long weight, cost, minimumCost;
+    initialize();
+    cin >> nodes >> edges;
+    for(int i = 0;i < edges;++i)
+    {
+        cin >> x >> y >> weight;
+        p[i] = make_pair(weight, make_pair(x, y));
+    }
+    
+    // Sort the edges in the ascending order
+    sort(p, p + edges);
+    
+    minimumCost = kruskal(p);
+    
+    cout << minimumCost << endl;
+    
+    for(int i=1;i<=nodes;++i) cout<<i<<" "<<id[i]<<endl;
+    return 0;
+}
+
+---------------------------------------------------------
+
+							[10]. Prim's Algorithm (2nd method og MST)
+
+Note : Use min_prioritty_queue
+
+CODE ::
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <functional>
+#include <utility>
+
+using namespace std;
+const int MAX = 1e4 + 5;
+typedef pair<long long, int> PII;
+bool marked[MAX];
+vector <PII> adj[MAX];
+
+long long prim(int x)
+{
+    priority_queue<PII, vector<PII>, greater<PII> > Q;
+    int y;
+    long long minimumCost = 0;
+    PII p;
+    Q.push(make_pair(0, x));
+    while(!Q.empty())
+    {
+        // Select the edge with minimum weight
+        p = Q.top();
+        Q.pop();
+        x = p.second;
+        // Checking for cycle
+        if(marked[x] == true)
+            continue;
+        minimumCost += p.first;
+        marked[x] = true;
+        for(int i = 0;i < adj[x].size();++i)
+        {
+            y = adj[x][i].second;
+            if(marked[y] == false)
+                Q.push(adj[x][i]);
+        }
+    }
+    return minimumCost;
+}
+
+int main()
+{
+    int nodes, edges, x, y;
+    long long weight, minimumCost;
+    cin >> nodes >> edges;
+    for(int i = 0;i < edges;++i)
+    {
+        cin >> x >> y >> weight;
+        adj[x].push_back(make_pair(weight, y));
+        adj[y].push_back(make_pair(weight, x));
+    }
+    // Selecting 1 as the starting node
+    minimumCost = prim(1);
+    cout << minimumCost << endl;
+    return 0;
+}
+
+----------------------------------------------------
+
+					[**] Question Link (https://www.codechef.com/POPU2021/problems/POPPUSH5)
+
+NOTE :  Graph related question.
+	>> there is a tree, have n-1 edges. And weight of every edge is either 1 or 2. We have to cover all the paths, those who taken edge weight 2. Output 	   is minimum number of paths, which cover all the 2's.
+
+CODE :
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+vector<pair<int,int>>v[100005];
+int dfs(int x,int par)
+{
+    int ans=0;
+    for(int i=0;i<v[x].size();++i)
+    {
+        if((v[x][i].first)!=par)
+        {
+            int y=dfs((v[x][i].first),x);
+            ans+=max(y,(v[x][i].second)-1);
+        }
+    }
+    return ans;
+}
+
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    // int t;  cin>>t;
+    // while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        for(int i=1;i<n;++i)
+        {
+            int x,y,w;
+            cin>>x>>y>>w;
+            v[x].pb({y,w});
+            v[y].pb({x,w});
+        }
+        
+        cout<<dfs(1,0);
+        
+    }
+}
+
+									[11] GRAPH : if(has cycle) YES
+										     else NO
+
+
+CODE :
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=100005;
+
+vector<int>v[N];
+int vis[N];
+
+bool dfs(int u, int pr)
+{
+    vis[u]=1;
+    
+    for(int i : v[u])
+    {
+        if(!vis[i]){
+            if(dfs(i,u)) return true;
+        } else {
+            if(i!=pr){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        
+        int n,m;
+        cin>>n>>m;
+        for(int i=0;i<m;++i){
+            int x,y;
+            cin>>x>>y;
+            v[x].pb(y);
+            v[y].pb(x);
+        }
+        
+        int flag=0;
+        for(int i=0;i<n;++i){
+            
+            if(!vis[i]){
+                if(!dfs(i,-1)) {
+                    flag++; break;
+                }
+            }
+        }
+        
+        if(flag) cout<<"no"<<endl;
+        else cout<<"yes"<<endl;
+        
+    }
+}
+
+
+								--------------------------------
+
+
+								[12] All Paths From Source to Target
+
+
+NOTE : https://assets.leetcode.com/uploads/2020/09/28/all_2.jpg [ for more detail about ques ]
+CODE : 
+
+#define pb push_back
+class Solution {
+public:
+    vector<int>v[20];
+    vector<int>el;
+    vector<vector<int>>ans;
+    
+    int dfs(int u, int n)
+    {
+        if(u==n-1) { el.push_back(n-1); ans.pb(el); el.pop_back(); return 1; }
+        
+        for(int i : v[u]){
+            el.pb(u);
+            int x=dfs(i,n);
+            
+            if(x){
+                el.pop_back();
+                // return 1;
+            } else return -1;
+        }
+        return 1;
+    }
+    
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        
+        int n=graph.size();
+        for(int i=0;i<graph.size();++i){
+            for(int j=0;j<graph[i].size();++j){
+                int x=graph[i][j];
+                v[i].push_back(x);
+            }
+        }
+        
+        for(int i=0;i<v[0].size();++i)
+        {
+            el.clear();
+            el.push_back(0);
+            dfs(v[0][i],n);
+            
+            // ans.push_back(el);
+        }
+        
+        return ans;
+    }
+};
+
+
+
+								--------------------------------
+									
+								[13] sub-array sum equal to K 
+
+NOTE : O(n), mp[sum-k] is mapped then cnt++(sum+=a[i]); Means we are finding subarray, then if sum-k is a sum of subarray. if it is mapped, this mean between that mapped value and current i, there is a subarray with sum equal to K.
+
+CODE : 
+int subarraySum(vector<int>& nums, int k) {
+        
+        map<int,int>mp;
+        mp[0]++;
+        int n=nums.size();
+        
+        int cnt=0,sum=0;
+        for(int i=0;i<n;++i)
+        {
+            sum+=nums[i];
+            
+            cnt+=mp[sum-k];
+            mp[sum]++;
+        }
+        
+        return cnt;
+    }
+
+
+							    ------------------------------------
+
+							[14] Is there a subset with SUM equal to K [dp]
+
+CODE : 	
+								[1] recursive
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=1005;
+
+int a[N],n,sum;
+
+int fun(int last, int sum)
+{
+    if(sum==0) return 1;
+    if(last<0) return 0;
+    
+    if(a[last]>sum) return fun(last-1,sum);
+    
+    return fun(last-1,sum)||fun(last-1,sum-a[last]);
+}
+
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        // int n;
+        cin>>n>>sum;
+        
+        // int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        if(fun(n-1,sum)) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+         
+        
+        
+    }
+}
+
+
+								[2] recursion + DP
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=1005;
+
+int a[N],n,sum;
+int dp[N][N];
+
+int fun(int last, int sum)
+{
+    if(sum==0) return 1;
+    if(last<0) return 0;
+    
+    if(dp[last][sum]!=-1) return dp[last][sum];
+    
+    if(a[last]>sum) dp[last][sum]= fun(last-1,sum);
+    
+    dp[last][sum]= fun(last-1,sum)||fun(last-1,sum-a[last]);
+    
+    return dp[last][sum];
+}
+
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        // int n;
+        cin>>n>>sum;
+        
+        for(int i=0;i<=n;++i) {
+            for(int j=0;j<=sum;++j) {
+                dp[i][j]=-1;
+            }
+        }
+        
+        // int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        if(fun(n-1,sum)) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+         
+        
+        
+    }
+}
+
+								[3] without recursion and DP
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=1005;
+
+int a[N],n,sum;
+int dp[N][N];
+
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        // int n;
+        cin>>n>>sum;
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        for(int i=0;i<=n;++i) {
+            dp[i][0]=1;
+        }
+        
+        for(int i=1;i<=sum;++i) dp[0][i]=0;
+        
+        
+        for(int i=1;i<=n;++i)
+        {
+            for(int j=1;j<=sum;++j)
+            {
+                if(j<a[i-1]) {
+                    dp[i][j]=dp[i-1][j];
+                } else {
+                    dp[i][j]=dp[i-1][j]||dp[i-1][j-a[i-1]];
+                }
+            }
+        }
+        
+        // cout<<dp[n][sum]<<endl;
+        
+        if(dp[n][sum]) cout<<"yes"<<endl;
+        else cout<<"no"<<endl;
+        
+    }
+}
+
+
+							   -----------------------------------
+
+							[15] Subarray Sums Divisible by K [$$$$$$$$]
+
+
+NOTE : same logic as "[13] sub-array sum equal to K". ONE THING MORE THAT IF sum(0,i)%k==sum(0,j)%m, where i<j; then sum(i+1,j)%k==0.....
+
+CODE :
+
+int n=A.size(),sum=0,cnt=0;
+        map<int,int>mp;
+        mp[0]=1;
+        
+        for(int i=0;i<n;++i)
+        {
+            sum=(sum+(A[i]%K)+K)%K;
+            
+            // if(sum<K) sum+=K;
+            
+            cnt+=mp[sum];
+            mp[sum]++;
+        }
+        
+        return cnt;
+
+
+---------
+ANOTHER VERSION : at least 2 elements are in sum if a[]
+
+CODE : 
+ll n=nums.size(),sum=0,cnt=0;
+        map<ll,int>mp;
+        mp[0]=1;
+        
+        for(int i=0;i<n;++i)
+        {
+            sum=(sum+(nums[i]%k)+k)%k;
+            
+            // if(sum<K) sum+=K;
+            
+            cnt+=mp[sum];
+            mp[sum]++;
+        }
+        
+        int e=0;
+        for(int i=0;i<n;++i) {
+            
+            if(nums[i]%k==0) e++;
+        }
+        
+        if((cnt-e)) return true;
+        else return false;
+
+
+								--------------------------------
+
+
+							[16] LENGTH OF SUBSTRING WITH SUM x, which is divisible by k
+
+
+NOTE : Given an array of positive integers nums, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by p.
+
+code : 
+int minSubarray(vector<int>& A, int p) {
+        int n = A.size(), res = n, need = 0, cur = 0;
+        for (auto a : A)
+            need = (need + a) % p;
+        unordered_map<int, int> last = {{0, -1}};
+        for (int i = 0; i < n; ++i) {
+            cur = (cur + A[i]) % p;
+            last[cur] = i;
+            int want = (cur - need + p) % p;
+            if (last.count(want))
+                res = min(res, i - last[want]);
+        }
+        return res < n ? res : -1;
+
+
+								----------------------------------------
+
+
+								[16] Max sum path in a TREE
+
+			
+							[i] from any node to any other
+
+NOTE : SAME METHOD, AS FINDING LONGEST PATH FROM LEFT & RIGHT CHILDS'S ANSWERS
+
+CODE :
+
+#include <bits/stdc++.h>
+#define pb push_back
+const int N=200005;
+using namespace std;
+
+vector<int>v[N];
+int vis[N],lev[N],a[N];
+
+int fun(int x)
+{
+	if(v[x].size()==1 && vis[v[x][0]]==1) {
+		lev[x]=a[x];
+		return a[x];
+	}
+
+	vis[x]=1;
+
+	vector<int>tmp;
+	for(int j=0;j<v[x].size();++j)
+	{
+		int i=v[x][j];
+		if(vis[i]==0) {
+			int h=fun(i);
+			tmp.pb(h);
+		}
+	}
+	
+	sort(tmp.begin(),tmp.end());
+	int sz=tmp.size(),lrm=0;
+	sz--;
+	if(sz>=0 ) lrm=max(tmp[sz]+a[x],max(0,a[x]));
+	
+	if(sz>=0) lev[x]+=max(0,tmp[sz]); sz--;
+	if(sz>=0) lev[x]+=max(0,tmp[sz]);
+	lev[x]+=a[x];
+	
+	return lrm;
+}
+
+int main()
+{
+
+	int n;
+	cin>>n;
+	
+	for(int i=1;i<=n;++i) cin>>a[i];
+
+	for(int i=1;i<n;++i) {
+		int x,y;
+		cin>>x>>y;
+		v[x].pb(y);
+		v[y].pb(x);
+	}
+
+    fun(1);
+    
+    // cout<<"Path sum(one node to another node), where i-th node is included in path sum : ";
+	for(int i=1;i<=n;++i) {
+		cout<<lev[i]<<" ";
+	}
+	cout<<endl;
+	
+}
+
+								[ii] from ane leaf nofe to another leaf node
+
+NOTE : SAME LOGIC AS ABOVE
+
+CODE : 
+
+#include <bits/stdc++.h>
+#define pb push_back
+const int N=200005;
+using namespace std;
+
+vector<int>v[N];
+int vis[N],lev[N],a[N];
+
+int fun(int x)
+{
+	if(v[x].size()==1 && vis[v[x][0]]==1) {
+		lev[x]=a[x];
+		return a[x];
+	}
+
+	vis[x]=1;
+
+	vector<int>tmp;
+	for(int j=0;j<v[x].size();++j)
+	{
+		int i=v[x][j];
+		if(vis[i]==0) {
+			int h=fun(i);
+			tmp.pb(h);
+		}
+	}
+	
+	sort(tmp.begin(),tmp.end());
+	int sz=tmp.size(),lrm=0;
+	sz--;
+	if(sz>=0 ) lrm=tmp[sz]+a[x];
+	
+	if(sz>=0) lev[x]+=tmp[sz]; sz--;
+	if(sz>=0) lev[x]+=tmp[sz];
+	lev[x]+=a[x];
+	
+	return lrm;
+}
+
+int main()
+{
+
+	int n;
+	cin>>n;
+	
+	for(int i=1;i<=n;++i) cin>>a[i];
+
+	for(int i=1;i<n;++i) {
+		int x,y;
+		cin>>x>>y;
+		v[x].pb(y);
+		v[y].pb(x);
+	}
+
+    fun(1);
+    
+    // cout<<"Path sum(one node to another node), where i-th node is included in path sum : ";
+	for(int i=1;i<=n;++i) {
+		cout<<lev[i]<<" ";
+	}
+	cout<<endl;
+	
+}
+									
+
+								-------------------------------------------
+
+					[17] find the sum of K continuous elements of an Arr using Sliding window technique
+
+CODE  : 
+
+{
+        int n,k;
+        cin>>n>>k;
+        
+        int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        int ans=0,sum=0;
+        for(int i=0;i<n;++i)
+        {
+            sum+=a[i];
+            
+            if(i>=k) {
+                
+                sum-=a[i-k];
+            }
+            
+            if(i>=(k-1))
+            {
+                ans=max(ans,sum);
+            }
+        }
+        
+        cout<<ans<<endl;
+}
+
+
+								-------------------------------------
+
+
+							[18] String= 11106 Ans: AAJF(1,1,10,6) & KJF(11,10,6)
+
+NOTE : secret code to string; total numbers of strings ??
+CODE :
+ 
+const int N=105;
+
+class Solution {
+public:
+    int dp[N];
+    int fun(string r, int i, int sz)
+    {
+        if(i>sz) return 0;
+        if(i==sz) return 1;
+
+        if(dp[i]!=-1) return dp[i];
+
+        int x=fun(r,i+1,sz);
+        int y=0;
+
+        if((i+1)<sz) {
+
+            int z=r[i]-'0'; z*=10;
+            z+=r[i+1]-'0';
+
+            if(z<=26) y=fun(r,i+2,sz);
+            else y=0;
+        }
+
+        return dp[i]=x+y;
+
+    }
+    
+    int numDecodings(string s) {
+        
+        if(s[0]=='0') return 0;
+        
+        string r="";
+        int ans=1;
+        
+        for(int i=0;i<s.size();++i)
+        {
+            if(s[i]=='0') return 0;
+            
+            if((i+1)<s.size() && s[i+1]=='0') 
+            {
+                if(s[i]=='1' || s[i]=='2') {
+                    for(int j=0;j<=r.size();++j) dp[j]=-1;
+                    
+                    if(r.size()) ans*=fun(r,0,r.size());
+                    r="";
+                    i++;
+                    
+                } else {
+                    return 0;
+                }
+                
+            } 
+            else 
+            {
+                r+=s[i];
+            }
+        }
+        
+        cout<<r<<endl;
+        
+        if(r.size()) {
+            for(int j=0;j<=r.size();++j) dp[j]=-1;
+            ans*=fun(r,0,r.size());
+        }
+        
+        return ans;
+    }
+};
+
+
+								   ---------------------------------
+
+									[19] Egg dropping problem
+
+CODE : 
+
+const int N=105;
+const int M=10005;
+class Solution {
+public:
+    
+    int dp[N][M];
+    int fun(int e, int f)
+    {
+        if(f==0 || f==1) return f;
+        if(e==1) return f;
+        
+        if(dp[e][f]!=-1) return dp[e][f];
+        
+        int mn=INT_MAX;
+        int l=1,r=f;
+        while(l<=r)
+        {
+            int mid=(l+r)/2;
+            int left=fun(e-1,mid-1);
+            int right=fun(e,f-mid);
+            
+            int tmp= 1+max(left,right);
+            
+            if(left<right) {
+                l=mid+1;
+            } else {
+                r=mid-1;
+            }
+            
+            mn=min(mn,tmp);
+        }
+        
+        return dp[e][f]=mn;
+    }
+    
+    int superEggDrop(int e, int f) {
+        
+        for(int i=0;i<=e;++i) {
+            for(int j=0;j<=f;++j) {
+                dp[i][j]=-1;
+            }
+        }
+        
+        return fun(e,f);
+    }
+};
+
+
+									---------------------------------
+
+
+									[20] max(a[i]^a[j])
+
+CODE : 
+
+int findMaximumXOR(vector<int>& nums) {
+        
+        int x=0,y=0;
+        for(int i=31;i>=0;i--)
+        {
+            x=x|(1<<i);
+            
+            set<int>st;
+            for(int j=0;j<nums.size();++j)
+            {
+                st.insert(x&nums[j]);
+            }
+            
+            int z=y|(1<<i);
+            for(auto it : st)
+            {
+                if(st.count((it)^z)) {
+                    y=y|(1<<i); 
+                    break;
+                }
+            }
+        }
+        
+        return y;
+    }
+
+
+									-----------------------------
+
+
+								[21] max(a[i]&a[j]) in an array (n=100005)
+
+CODE : 
+
+	int n;
+        cin>>n;
+        
+        int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        int y=0;
+        for(int i=31;i>=0;i--)
+        {
+            int x=y|(1<<i);
+            
+            int cnt=0;
+            for(int j=0;j<n;++j)
+            {
+                if((a[j]&x)==x) cnt++;
+            }
+            
+            if(cnt>=2) {
+                y=y|(1<<i);
+            }
+        }
+        
+        cout<<y<<endl;
+
+
+									-------------------------------
+
+
+							$$$$$$$$$$$$$$$$$$$$$$$$$ [22] Bitmasking $$$$$$$$$$$$$$$$$$$$$$$$
+
+				NOTE : thoda explanation :(
+
+int n;
+int cost[n][n];
+
+   _0_1_
+0: |1 3|
+1: |4 3|
+
+int dp[(1<<n)]={int_max};
+
+for(int mask=0;mask<(1<<n);mask++)
+{
+    int x=__builtin_popcount(mask);
+    
+    for(int j=0;j<n;++j)
+    {
+        
+        if(!(1<<j)&mask)
+        {
+            dp[mask|(1<<j)]=min( dp[mask|(1<<j)], dp[mask] + cost[x][j] )
+        }
+    }
+    
+}
+
+   _0_1_
+0: |1 3|
+1: |4 3|
+
+
+int n=2;
+
+mask 0 : 00 
+    x=0
+    dp[1]=dp[0]+cost[0][0] = 0+1 = 1
+    dp[2]=dp[0]+cost[0][1] = 0+3 = 3
+
+mask 1 : 01
+    x=1
+    dp[1] --
+    dp[3]= dp[1]+cost[1][1] = 1+3 = 4
+ 
+mask 2 : 10
+    x=1
+    dp[3]= min( dp[3], dp[2]+cost[1][0] ) = min( 4, 3+4 ) = 4
+    --
+    
+mask 3 : 11
+    x=2
+    --
+    --
+
+return dp[3] => 4
+
+----------------------
+
+1 3
+4 3
+
+1 3 
+- 4 
+4 - 
+- - 
+
+00
+01
+10
+11
+
+----
+   _0_1_2_
+0: |1 2 3|
+1: |5 3 4|
+2: |6 3 2|
+
+mask 0 : 000
+    x=0
+    dp[1]=1
+    dp[2]=2
+    dp[4]=3
+    
+mask 1 : 001
+    x=1
+    --
+    dp[3]=min(dp[3], dp[1]+cost[1][1]) = 1+3 = 4
+    dp[5]=min(dp[5], dp[1]+cost[1][2]) = 1+4 = 5
+    
+mask 2 : 010
+    x=1
+    dp[3]=min(dp[3], dp[2]+cost[1][0]) = min( 4, 2+5) = 4
+    --
+    dp[6]=min(dp[6], dp[2]+cost[1][2]) = 2+4 = 6
+    
+mask 3 : 011
+    x=2
+    --
+    --
+    dp[7]=min(dp[7], dp[3]+cost[2][2]) = 4+2 = 6
+
+1 2 3 
+- 4 5 
+4 - 6 
+- - 6 
+5 6 - 
+- 6 - 
+6 - - 
+- - - 
+
+000
+001
+010
+011
+100
+101
+110
+111
+
+---------
+
+
+
+								CODE : OUTPUT in dp[(1<<n)-1];
+
+int minimumXORSum(vector<int>& nums1, vector<int>& nums2) {
+        
+        int n=nums1.size();
+        long long cost[n][n];
+        for(int i=0;i<n;++i) for(int j=0;j<n;++j) cost[i][j]=(nums1[i]^nums2[j]);
+        
+        long long dp[(1<<n)];
+        for(int i=0;i<(1<<n);++i) dp[i]=INT_MAX;
+        
+        dp[0]=0;
+        for(int mask=0;mask<(1<<n);mask++)
+        {
+            int x=__builtin_popcount(mask);
+            
+            for(int j=0;j<n;++j)
+            {
+                if(mask&(1<<j)) {  }
+                else {
+                    dp[mask|(1<<j)]=min( dp[mask|(1<<j)], dp[mask] + cost[x][j] );
+                }
+            }
+        }
+        
+        return dp[(1<<n)-1];
+    }
+
+
+								-----------------------------
+
+
+							[23]. Palindrome substring count (n^2)
+
+NOTE : dp[i][j]=1 means str(i,j) is palindrome.
+
+CODE : 
+
+    int dp[N][N];
+    
+    int countSubstrings(string s) {
+        
+        memset(dp,0,sizeof(dp));
+        int n=s.size();
+        
+        for(int i=0;i<s.size();++i) {
+            dp[i][i]=1;
+            if(i>0 && s[i]==s[i-1]) dp[i-1][i]=1;
+        }
+        
+        for(int i=3;i<=n;++i)
+        {
+            for(int j=0;j<n-i+1;++j)
+            {
+                int x=j+i-1;
+                if(dp[j+1][x-1] && s[j]==s[x]) dp[j][x]=1;
+            }
+        }
+        
+        int cnt=0;
+        for(int i=0;i<n;++i) {
+            for(int j=i;j<n;++j) {
+                if(dp[i][j]) cnt++;
+            }
+        }
+        
+        return cnt;
+    }
+
+
+								---------------------------------------
+
+								   [24] Find string in a 2D Matrix
+
+CODE : 
+
+class Solution {
+public:
+    int n,m,sz;
+    
+    bool fun(vector<vector<char>>& b, string s, int i, int j, int idx)
+    {
+        if(idx==s.size()) return true;
+        
+        if(i<0 || j<0 || i>=n || j>=m || s[idx]!=b[i][j])  return false;
+        
+        char c=b[i][j];
+        b[i][j]='*';
+        bool ans=fun(b,s,i+1,j,idx+1)|fun(b,s,i-1,j,idx+1)|fun(b,s,i,j+1,idx+1)|fun(b,s,i,j-1,idx+1);
+        b[i][j]=c;
+        
+        return ans;
+    }
+    
+    bool exist(vector<vector<char>>& b, string s) {
+        
+        n=b.size(),m=b[0].size(),sz=s.size();
+        for(int i=0;i<n;++i)
+        {
+            for(int j=0;j<m;++j) {
+                if(b[i][j]==s[0]) {
+                    if(fun(b,s,i,j,0)) return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+
+
+									--------------------
+
+								[25] Longest path in a directed graph (DP)
+
+note : longest path from node a to b in one directional graph
+
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=100005;
+
+vector<int>v[N];
+int dp[N];
+
+int fun(int x)
+{
+    if(dp[x]!=-1) return dp[x];
+    
+    int cnt=0;
+    for(int i : v[x])
+    {
+        cnt=max(cnt,fun(i));
+    }
+    
+    cnt++;
+    return dp[x]=cnt;
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        
+        // int a[n];
+        
+        for(int i=0;i<m;++i){
+            int x,y;
+            cin>>x>>y;
+            v[x].pb(y);
+        }
+        
+        // ---
+        memset(dp,-1,sizeof(dp));
+        
+        int ans=1;
+        for(int i=1;i<=n;++i)
+        {
+            if(dp[i]==-1)
+            {
+                ans=max(ans,fun(i));
+            }
+        }
+        
+        // for(int i=1;i<=n;++i) cout<<dp[i]<<" "; cout<<endl;
+        
+        cout<<(--ans)<<endl;
+        
+    }
+}
+
+
+								----------------------------
+
+							    [26] search suggestion system (Leetcode)
+
+NOTE : using Trie; link:- (https://leetcode.com/problems/search-suggestions-system/)
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+
+// #define pb push_back
+class Trie {
+public :
+    
+    bool end=false;
+    Trie* children[27]={};
+    Trie() {
+        
+    }
+};
+
+// class Solution {
+// public:
+    
+    Trie* node = new Trie();
+    vector<vector<string>> v;
+    vector<string>lc;
+    
+    void insert(string s)
+    {
+        Trie* cr = node;
+        for(int i=0;i<s.size();++i)
+        {
+            int x=s[i]-'a';
+            if(!cr->children[x]) cr->children[x] = new Trie();
+            cr=cr->children[x];
+        }
+        cr->end=true;
+    }
+    
+    void fun(Trie* cr, string s)
+    {
+        if(lc.size()==3) return ;
+        if(cr->end) {
+            lc.pb(s);
+            // s.pop_back();
+            // return ;
+        }
+        
+        for(int i=0;i<26;++i) {
+            if(cr->children[i]) 
+            {
+                s+=(i+'a');
+                fun(cr->children[i],s);
+                s.pop_back();
+            }
+            if(lc.size()==3) return ;
+        }
+        
+        if(lc.size()==3) return ;
+        // if(cr->children[s[i]-'a']) fun(cr->children[s[i]-'a'],s,i+1)
+    }
+    
+    void find(string s)
+    {
+        Trie* cr = node;
+        
+        int flag=0;
+        for(int i=0;i<s.size();++i)
+        {
+            if(!cr->children[s[i]-'a']) { flag++; break; }
+            cr=cr->children[s[i]-'a'];
+        }
+        if(flag) return;
+        
+        
+        fun(cr,s);
+    }
+    
+    
+    vector<vector<string>> suggestedProducts(vector<string>& all, string sr) {
+        
+        for(int i=0;i<all.size();++i) {
+            insert(all[i]);
+        }
+        
+        for(int i=0;i<sr.size();++i)
+        {
+            lc.clear();
+            string str=sr.substr(0,i+1);
+            find(str);
+            
+            v.pb(lc);
+        }
+        
+        return v;
+    }
+
+
+// private :
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        vector<string>word;
+        for(int i=0;i<n;++i) {
+            string ss;
+            cin>>ss;
+            word.pb(ss);
+        }
+        
+        string src;
+        cin>>src;
+        
+        vector<vector<string>>ans;
+        ans=suggestedProducts(word,src);
+        
+        
+        for(int i=0;i<ans.size();++i)
+        {
+            for(int j=0;j<ans[i].size();++j)
+            {
+                cout<<ans[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+    }
+}
+
+
+// };
+
+
+									------------------------------
+
+									[27] max(j-i), where a[j]>a[i]
+
+NOTE : intern rejection :(
+							## FIRST METHOD O(nlog(n))
+CODE :
+	int n;
+        cin>>n;
+        
+        int a[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        
+        int b[n];
+        b[n-1]=a[n-1];
+        for(int i=n-2;i>=0;i--) b[i]=max(a[i],b[i+1]);
+        
+        int ans=0;
+        for(int i=0;i<n;++i)
+        {
+            int l=i+1,r=n-1;
+            
+            int tmp=0;
+            while(l<=r)
+            {
+                int mid=(l+r)/2;
+                
+                if(a[i]<=b[mid]) {
+                    tmp=max(tmp,mid);
+                    l=mid+1;
+                } else r=mid-1;
+            }
+            
+            ans=max(ans,tmp-i);
+        }
+        
+        cout<<ans;
+
+
+							## SECOND METHOD -> O(n)
+
+code : 
+	int n;
+        cin>>n;
+        
+        int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        int minL[n],maxR[n];
+        minL[0]=a[0];
+        maxR[n-1]=a[n-1];
+        
+        for(int i=1;i<n;++i) minL[i]=min(a[i],minL[i-1]);
+        for(int i=n-2;i>=0;i--) maxR[i]=max(a[i],maxR[i+1]);
+        
+        for(int i=0;i<n;++i) cout<<minL[i]<<" "; cout<<endl;
+        for(int i=0;i<n;++i) cout<<maxR[i]<<" "; cout<<endl;
+        
+        int i=0,j=0;
+        int ans=0;
+        while(i<n && j<n)
+        {
+            if(minL[i]<=maxR[j])
+            {
+                ans=max(ans,abs(i-j));
+                j++;
+            }
+            else i++;
+        }
+        
+        cout<<ans;
+        
+									 ------------------        
+
+								[28] Range sum/min query ||segment tree||
+
+NOTE : find l to r sum or min element in an array using segment tree.
+
+CODE :
+#include <bits/stdc++.h>
+#define int long long
+#define pb push_back
+using namespace std;
+
+vector<int> v;
+
+int fun(int l, int r, int left, int right, int cr)
+{
+	if(r<left || l>right) return INT_MAX;
+	if(left<=l && r<=right) return v[cr];
+
+	int mid=(l+r)/2;
+	return min(fun(l,mid,left,right,2*cr),fun(mid+1,r,left,right,2*cr+1));
+}
+
+signed main()
+{
+	// --
+
+	int n,q,n1;
+	cin>>n>>q;
+	n1=n;
+
+	while(__builtin_popcount(n)!=1)
+	{
+		n++;
+	}
+	v.resize(2*n);
+
+	for(int i=0;i<n1;++i) {
+		cin>>v[i+n];
+	}
+	for(int i=n-1;i>=1;i--)
+	{
+		v[i]=min(v[2*i],v[2*i+1]);
+	}
+
+	while(q--)
+	{
+		int l,r;
+		cin>>l>>r;
+        	l--,r--;
+		cout<<fun(0,n-1,l,r,1)<<endl;
+	}
+
+	return 0;
+}
+
+
+									--------------
+
+								[29] path from A->B in matrix
+
+NOTE : '.' on | '#' off
+Code : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=10005;
+
+int a[N][N],vis[N][N];
+int n,m;
+vector<char>path;
+
+void fun(int i, int j, int ans)
+{   
+    while(1)
+    {
+        if(ans==0) break;
+        if(i-1>=0 && a[i-1][j]==ans-1) {
+            path.pb('D');
+            i--;
+            ans--;
+            continue;
+        }
+        
+        if(j-1>=0 && a[i][j-1]==ans-1) {
+            path.pb('R');
+            j--;
+            ans--;
+            continue;
+        }
+        
+        if(i+1<n && a[i+1][j]==ans-1) {
+            path.pb('U');
+            i++;
+            ans--;
+            continue;
+        }
+        
+        if(j+1<m && a[i][j+1]==ans-1) {
+            path.pb('L');
+            j++;
+            ans--;
+            continue;
+        }
+    }
+}
+
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        memset(a,-1,sizeof(a));
+        cin>>n>>m;
+        
+        int x,y;
+        int bx,by;
+        vector<vector<char>>v(n,vector<char>(m));
+        for(int i=0;i<n;++i)
+        {
+            string s;
+            cin>>s;
+            for(int j=0;j<m;++j) {
+                v[i][j]=s[j];
+                if(s[j]=='A') x=i,y=j,a[i][j]=0;
+                if(s[j]=='B') bx=i,by=j;
+            }
+        }
+        
+        queue<pair<int,int>>q;
+        q.push({x,y});
+        while(!q.empty())
+        {
+            int k=q.size();
+            while(k--)
+            {
+                pair<int,int>p=q.front();
+                q.pop();
+                
+                int i=p.first,j=p.second;
+                vis[i][j]=1;
+                
+                if(i-1>=0 && vis[i-1][j]==0 && v[i-1][j]=='.') a[i-1][j]=a[i][j]+1,q.push({i-1,j});
+                if(i+1<n && vis[i+1][j]==0 && v[i+1][j]=='.') a[i+1][j]=a[i][j]+1,q.push({i+1,j});
+                if(j-1>=0 && vis[i][j-1]==0 && v[i][j-1]=='.') a[i][j-1]=a[i][j]+1,q.push({i,j-1});
+                if(j+1<m && vis[i][j+1]==0 && v[i][j+1]=='.') a[i][j+1]=a[i][j]+1,q.push({i,j+1});
+            }
+        }
+        
+        
+        int ans=INT_MAX;
+        if(bx-1>=0 && v[bx-1][by]=='.') ans=min(ans,a[bx-1][by]);
+        if(by-1>=0 && v[bx][by-1]=='.') ans=min(ans,a[bx][by-1]);
+        if(bx+1<n && v[bx+1][by]=='.') ans=min(ans,a[bx+1][by]);
+        if(by+1<m && v[bx][by+1]=='.') ans=min(ans,a[bx][by+1]);
+        
+        if(ans==1e9) {
+            cout<<"No";
+            exit(0);
+        }
+        cout<<"Yes"<<endl;
+        cout<<ans+1<<endl;
+        
+        a[bx][by]=ans+1;
+        fun(bx,by,ans+1);
+        
+        for(int i=path.size()-1;i>=0;i--) cout<<path[i]<<" "; cout<<endl;
+    }
+}
+
+input : 
+5 8
+########
+#.A#...#
+#.##.#B#
+#......#
+########
+
+o/p : 
+Yes
+9
+L D D R R R R R U 
+
+									--------------
+
+								[30] No. of rectangles in 2D plan
+
+Note : rectangle's edges will parallel to x and y axis.
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t;
+    while(1)
+    {
+        int n;
+        cin>>n;
+        
+        if(n==0) break;
+        
+        // int a[n];
+        
+        // for(int i=0;i<n;++i){
+        //     cin>>a[i];
+        // }
+        
+        // ---
+        
+        map<int,vector<int>>mp;
+        
+        for(int i=0;i<n;++i)
+        {
+            int x,y;
+            cin>>x>>y;
+            mp[x].pb(y);
+        }
+        
+        
+        map<pair<int,int>,int>ed;
+        for(auto it : mp)
+        {
+            vector<int>v;
+            v=it.second;
+            sort(v.begin(),v.end());
+            
+            // cout<<it.first<<" : ";
+            // for(int i=0;i<v.size();++i) cout<<v[i]<<" "; cout<<endl;
+            
+            for(int i=0;i<v.size();++i)
+            {
+                for(int j=i+1;j<v.size();++j)
+                {
+                    ed[{v[i],v[j]}]++;
+                }
+            }
+        }
+        
+        
+        int ans=0;
+        for(auto it : ed)
+        {
+            int x=it.second;
+            x=x*(x-1)/2;
+            ans+=x;
+        }
+        cout<<ans<<endl;
+        
+        
+        // int zero;
+        // cin>>zero;
+    }
+}
+
+									----------------
+
+								[31] Evaluate expression to true
+
+code : almost ready code but giving wrong answer -_-
+
+#include<bits/stdc++.h>
+using namespace std;
+
+const int N=155;
+string s;
+int mod=1003;
+int dp[N][N];
+int fun(int i, int j, char action)
+{
+    if(i>j) return 0;
+    if(i==j)
+    {
+        if(action=='T') {
+            if(s[i]=='T') return 1;
+            else return 0;
+        }
+        else {
+            if(s[i]=='F') return 1;
+            else return 0;
+        }
+    }
+
+    if(dp[i][j]!=-1) return dp[i][j];
+
+    int tmp=0;
+    for(int k=i+1;k<=j-1;k+=2)
+    {
+        int lT=fun(i,k-1,'T');
+        int lF=fun(i,k-1,'F');
+        int rT=fun(k+1,j,'T');
+        int rF=fun(k+1,j,'F');
+
+        if(s[k]=='&')
+        {
+            if(action=='T') tmp=tmp+(lT*rT);
+            else tmp=tmp+(lT*rF)+(lF*rT)+(lF*rF);
+        }
+        else
+        {
+            if(s[k]=='|')
+            {
+                if(action=='T') tmp=tmp+(lT*rF)+(lF*rT)+(lT*rT);
+                else tmp=tmp+(rF*lF);
+            }
+            else {
+                if(s[k]=='^')
+                {
+                    if(action=='T') tmp=tmp+(lT*rF)+(lF*rT);
+                    else tmp=tmp+(lT*rT)+(lF*rF);
+                }
+            }
+        }
+        tmp%=mod;
+    }
+    return dp[i][j]=tmp;
+}
+
+int cnttrue(string A) {
+    memset(dp,-1,sizeof(dp));
+    int n=A.length();
+    s=A;
+    // cout<<s<<endl;
+    return fun(0,n-1,'T');
+
+}
+
+
+int main()
+{
+    string A;
+    cin>>A;
+    
+    cout<<cnttrue(A);
+}
+
+
+
+									-------- stcak section ----------
+
+								[32] Nearest greater to next right (NGR)
+note : use stack $$
+code : 
+int n;
+    cin>>n;
+
+    int a[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>a[i];
+    }
+
+    stack<int>st;
+    vector<int>v;
+
+    for(int i=n-1;i>=0;i--)
+    {
+        if(st.size()==0)
+        {
+            v.push_back(-1);
+        }
+        else
+        {
+            if(st.size()>0 && st.top()>a[i]) {
+                v.push_back(st.top());
+            }
+            else{
+                while(st.size()>0 && st.top()<a[i]) st.pop();
+                if(st.size()==0) v.pb(-1);
+                else v.pb(st.top());
+            }
+        }
+        st.push(a[i]);
+    }
+
+    reverse(v.begin(),v.end());
+
+    for(int i=0;i<v.size();++i) cout<<v[i]<<" ";
+    cout<<endl;
+
+
+NOTE : nearest greater in left -> reverse of above code mean for loop will run from 0 to n-1; that's all for this problem.
+
+
+
+									--------------
+
+								[33] nearest smaller to left
+
+code :
+{
+    int n;
+    cin>>n;
+
+    int a[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>a[i];
+    }
+
+    stack<int>st;
+    vector<int>v;
+
+    for(int i=0;i<n;i++)
+    {
+        if(st.size()==0)
+        {
+            v.push_back(-1);
+        }
+        else
+        {
+            if(st.size()>0 && st.top()<a[i]) {
+                v.push_back(st.top());
+            }
+            else{
+                while(st.size()>0 && st.top()>a[i]) st.pop();
+                if(st.size()==0) v.pb(-1);
+                else v.pb(st.top());
+            }
+        }
+        st.push(a[i]);
+    }
+
+    // reverse(v.begin(),v.end());
+
+    for(int i=0;i<v.size();++i) cout<<v[i]<<" ";
+    cout<<endl;
+}
+
+NOTE : nearest smaller in right -> reverse of above code mean for loop will run from n-1 to 0; that's all for this problem.
+
+									-----------
+
+								[34] consecutive smaller to equal in left
+
+code : 
+{
+    int n;
+    cin>>n;
+
+    int a[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>a[i];
+    }
+
+    stack<pair<int,int> > st;
+    vector<int>v;
+
+    for(int i=0;i<n;i++)
+    {
+        if(st.size()==0)
+        {
+            v.push_back(1);
+        }
+        else
+        {
+            if(st.size()>0 && st.top().first>a[i]) {
+                v.push_back(i-st.top().second);
+            }
+            else{
+                while(st.size()>0 && st.top().first<a[i]) st.pop();
+                if(st.size()==0) v.pb(1);
+                else v.pb(i-st.top().second);
+            }
+        }
+        st.push({a[i],i});
+    }
+
+    // reverse(v.begin(),v.end());
+
+    for(int i=0;i<v.size();++i) cout<<v[i]<<" ";
+    cout<<endl;
+}
+
+input : 
+7
+100 80 60 70 60 75 85
+
+output : 
+1 1 1 2 1 4 6 
+
+									----------------------
+
+								[35] max rectangle area in hostogram
+code :
+{
+    int n;
+    cin>>n;
+
+    int a[n];
+    for(int i=0;i<n;++i)
+    {
+        cin>>a[i];
+    }
+
+    stack<pair<int,int> > st;
+    vector<int>left,right;
+
+    // for nearset smaller to left
+    for(int i=0;i<n;i++)
+    {
+        if(st.size()==0)
+        {
+            left.push_back(-1);
+        }
+        else
+        {
+            if(st.size()>0 && st.top().first<a[i]) {
+                left.push_back(st.top().second);
+            }
+            else{
+                while(st.size()>0 && st.top().first>a[i]) st.pop();
+                if(st.size()==0) left.pb(-1);
+                else left.pb(st.top().second);
+            }
+        }
+        st.push(make_pair(a[i],i));
+    }
+    for(int i=0;i<left.size();++i) cout<<left[i]<<" ";
+    cout<<endl;
+
+
+    // for nearset smaller to right
+    while(st.size()) st.pop();
+    for(int i=n-1;i>=0;i--)
+    {
+        if(st.size()==0)
+        {
+            right.push_back(n);
+        }
+        else
+        {
+            if(st.size()>0 && st.top().first<a[i]) {
+                right.push_back(st.top().second);
+            }
+            else{
+                while(st.size()>0 && st.top().first>a[i]) st.pop();
+                if(st.size()==0) right.pb(n);
+                else right.pb(st.top().second);
+            }
+        }
+        st.push(make_pair(a[i],i));
+    }
+
+    reverse(right.begin(),right.end());
+    for(int i=0;i<right.size();++i) cout<<right[i]<<" ";
+    cout<<endl;
+
+    // now calculate area
+
+    int ans=0;
+    for(int i=0;i<n;++i)
+    {
+          ans=max(ans,a[i]*(right[i]-left[i]-1));
+    }
+
+    cout<<ans<<endl; // max area
+}
+
+									------------------------
+
+								[36] Max xor subarray using Trie() $$
+
+
+note : same algo use for finding max value of a pair a[i]^a[j];
+code : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+class Trie {
+public :
+    int end = 0;
+    Trie* children[2]={};
+    Trie() {}
+};
+
+Trie* node = new Trie();
+
+void insert(int preXor)
+{
+    Trie* cr = node;
+    for(int i=31;i>=0;i--)
+    {
+        bool y=preXor&(1<<i);
+        
+        if(!cr->children[y]) cr->children[y]=new Trie();
+        cr=cr->children[y];
+    }
+    cr->end=preXor;
+}
+
+int find(int preXor)
+{
+    Trie* cr = node;
+    for(int i=31;i>=0;i--)
+    {
+        bool y=preXor&(1<<i);
+        
+        if(cr->children[1-y]) cr=cr->children[1-y];
+        else if(cr->children[y]) cr=cr->children[y];
+    }
+    
+    return (preXor^(cr->end));
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        int a[n];
+        
+        for(int i=0;i<n;++i){
+            cin>>a[i];
+        }
+        
+        // ---
+        
+        int preXor=0,ans=0;
+        for(int i=0;i<n;++i)
+        {
+            preXor^=a[i];
+            insert(preXor);
+	    ans=max(ans,preXor);
+            ans=max(ans,find(preXor));
+        }
+        
+        cout<<ans;
+    }
+}
+
+									-------------------------
+
+							[37] no of path is weighted graph from node 1 to n;
+
+code : 
+#define ll long long
+const int N=205;
+const ll MAXX=1e15;
+#define pb push_back
+class Solution {
+public:
+    
+    ll mod=1e9+7;
+    
+    int countPaths(int n, vector<vector<int>>& roads) {
+        
+        vector<int>v[N];
+        ll time[N][N],dis[N];
+        int paths[N],vis[N];
+        
+        for(int i=0;i<roads.size();++i)
+        {
+            int x=roads[i][0],y=roads[i][1];
+            ll wt=roads[i][2];
+            v[x].pb(y);
+            v[y].pb(x);
+            time[x][y]=wt;
+            time[y][x]=wt;
+        }
+        for(int i=0;i<N;++i) dis[i]=MAXX,paths[i]=0,vis[i]=0;
+        
+        int node=0;
+        dis[node]=0;
+        paths[0]=1;
+
+        multiset<pair<ll,int>>ms;
+        ms.insert({0,node});
+
+        while(ms.size())
+        {
+            pair<ll,int>p=*ms.begin();
+            ms.erase(ms.begin());
+            int x=p.second;
+            
+            if(vis[x]==1) continue;
+            vis[x]=1;
+            
+            for(auto i : v[x])
+            {
+                ll wt=time[x][i];
+                
+                if(dis[i]>dis[x]+wt)
+                {
+                    dis[i]=dis[x]+wt;
+                    ms.insert({dis[i],i});
+                    paths[i]=paths[x];
+                }
+                else {
+                    if(dis[i]==dis[x]+wt) paths[i]=(paths[i]%mod+paths[x]%mod)%mod;
+                }
+            }
+        }
+        
+        return (paths[n-1]%mod);
+    }
+};
+
+									---------------
+
+
+							[38] Distance from a node to all other
+
+note : sum of the distances between the i-th node in the tree and all other nodes.
+code : 
+
+#define pb push_back
+const int N=30004;
+class Solution {
+public:
+    vector<int>v[N];
+    vector<int>cnt,res;
+    
+    void dfs(int x, int pr)
+    {
+        for(int i : v[x])
+        {
+            if(i==pr) continue;
+            dfs(i,x);
+            cnt[x]+=cnt[i];
+            res[x]+=res[i]+cnt[i];
+        }
+    }
+    
+    void dfs1(int x, int pr)
+    {
+        for(int i : v[x])
+        {
+            if(i==pr) continue;
+            res[i]=res[x]-cnt[i]+cnt.size()-cnt[i];
+            dfs1(i,x);
+        }
+    }
+    
+    vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& ed) {
+        
+        // v.resize(n);
+        for(int i=0;i<ed.size();++i)
+        {
+            v[ed[i][0]].pb(ed[i][1]);
+            v[ed[i][1]].pb(ed[i][0]);
+        }
+        
+        cnt.assign(n,1);
+        res.assign(n,0);
+        
+        dfs(0,-1);
+        dfs1(0,-1);
+        
+        return res;
+    }
+};
+
+
+
+									---------------
+
+								[39] Snake and ladder
+code : 
+int Solution::snakeLadder(vector<vector<int> > &lad, vector<vector<int> > &snk) {
+    
+    int a[100]={0};
+    // a[st_ladder]=end_ladder
+    for(int i=0;i<lad.size();++i)
+    {
+        a[lad[i][0]]=lad[i][1];
+    }
+    // a[st_snake]=end_snake
+    for(int i=0;i<snk.size();++i)
+    {
+        a[snk[i][0]]=snk[i][1];
+    }
+
+    multiset<pair<int,int>>ms;
+    ms.insert({0,1});
+    int vis[101]={0};
+
+    int ans=1e7;
+    while(ms.size())
+    {
+        pair<int,int>p=*ms.begin();
+        ms.erase(ms.begin());
+        int x=p.second;
+
+        if(vis[x]) continue;
+        vis[x]=1;
+
+        if(x==100) {
+            ans=min(ans,p.first);
+        }
+
+        for(int i=x+1;i<=x+6;++i)
+        {
+            if(a[i]==0) {
+                ms.insert({p.first+1,i});
+                continue;
+            }
+            ms.insert({p.first+1,a[i]});
+        }
+    }
+
+    if(ans==1e7) return -1;
+    return ans;
+}
+
+										----------
+
+
+								[40] Priority queue using Linked list
+Code : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+struct Node {
+    int data;
+    int prio;
+    struct Node* next;
+};
+
+Node* newNode(int x, int p)
+{
+    Node* tmp = new Node();
+    tmp->data=x;
+    tmp->prio=p;
+    
+    tmp->next=NULL;
+    return tmp;
+}
+
+void push(Node** root, int x, int p)
+{
+    Node* cr = (*root);
+    Node* tmp = newNode(x,p);
+    
+    if((cr->prio)>p)
+    {
+        tmp->next=cr;
+        (*root)=tmp;
+    }
+    else
+    {
+        while(cr->next && (cr->prio)<p) {
+            cr=cr->next;
+        }
+        
+        tmp->next=cr->next;
+        cr->next=tmp;
+    }
+}
+
+void print(Node* cr)
+{
+    while(cr)
+    {
+        cout<<cr->data<<" "<<cr->prio<<endl;
+        cr=cr->next;
+    }
+}
+
+void top(Node** cr)
+{
+    cout<<(*cr)->data<<" "<<(*cr)->prio;
+    cout<<endl;
+}
+
+void pop(Node** cr)
+{
+    Node* tmp = *cr;
+    (*cr)=(*cr)->next;
+    free(tmp);
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        
+        int n;
+        cin>>n;
+        
+        Node* root;
+        for(int i=0;i<n;++i)
+        {
+            int x,p;
+            cin>>x>>p;
+            
+            if(i==0) {
+                root = newNode(x,p);
+            }
+            else {
+                push(&root,x,p);
+            }
+        }
+        
+        while(root)
+        {
+            top(&root);
+            pop(&root);
+        }
+        
+        // print(root);
+    }
+}
+
+									------------------------
+
+								[41] Median of streaming integers $$$$
+
+Code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        
+        int n;
+        cin>>n;
+        
+        multiset<int>mx,mn;
+        while(n--)
+        {
+            
+            int x;
+            cin>>x;
+            
+            // insertion part
+            mx.insert(x);
+            mn.insert(*mx.begin());
+            mx.erase(mx.begin());
+            
+            if(mn.size()>mx.size())
+            {
+                auto it = mn.end();
+                it--;
+                
+                mx.insert(*it);
+                mn.erase(it);
+            }
+            
+            // median find part
+            cout<<"Median is current stream : ";
+            if(mx.size()>mn.size()) {
+                cout<<(*mx.begin())<<endl;
+            }
+            else {
+                auto it = mn.end(); it--;
+                
+                int ans=(*it)+(*mx.begin());
+                cout<<(ans/2)<<endl;
+            }
+            
+        }
+    }
+}
+
+									----------------
+
+								[42] Merge K sorted linked list $$$$
+Code : 
+
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        
+        multiset<pair<int,ListNode*>>ms;
+        for(int i=0;i<lists.size();++i)  {
+            if(lists[i])
+                ms.insert({lists[i]->val,lists[i]});
+        }
+        
+        ListNode* ans = new ListNode(0);
+        ListNode* str = ans;
+        
+        while(ms.size())
+        {
+            pair<int,ListNode*> cur = *ms.begin();
+            ms.erase(ms.begin());
+            ListNode* node = cur.second;
+            
+            str->next=node;
+            str=str->next;
+            
+            if(node->next!=NULL) ms.insert({node->next->val,node->next});
+        }
+        
+        return ans->next;
+    }
+};
+
+								    ------------------------
+
+
+
+
+
+
+
+

@@ -1,0 +1,2813 @@
+								AAKASH BISHNOI
+						Indian Institute of Information Technology, Allahabad
+[0] Some basic points							-------------------------------------
+[1] basic template
+[3]. max/min value between two nodes
+[4]. Entry and exit time code
+[6]. THE RAT IN MAZE (Unique Grid Problem) $$$$$
+[7]. SUB-MATRIX PROBLEM
+[8]. Floyd-Warshall Algorithm
+[9]. |||||a ki power b|||||
+[10] Bubble Sort
+[11] binart tree problem(find the no. of paths which have bitwise AND(&) is ODD)
+[12].(i) unique grid(original matrix me values update ho rahi hai)
+	(ii) $$$$$$$$$ Modified code $$$$
+[13] Longest path in a tree
+[14] find all the prime divisor from 1 to 1e6 (Sieve Code)
+[15] LCA (find only parent of a1 and a2) (Lowest Common Ancestor)
+[16] Binary Lifting (to find k-th parent fo a node in bit time) $$$
+[17] Topological sort
+[18] STRONGLY CONNECTED GRAPH 
+[OR] Souvik's Code ( STRONGLY CONNECTED GRAPH )
+[19] Show all paths from (0,0) to (n,m) in a grid (Matrix)
+[20] No. of all factors of a number (1<=n<=1e18) or (1<=n<=1e9)
+[21] Heap Sort
+[22] Quick Sort
+[23] Selestion Sort & Insertion Sort 
+[23] Convert a string S to an another string R using adjacent swapping
+[24] TREE construction $$$$$$$$$$$$$$$$$$$$$
+[25] Two pointer method 
+[26] Longest increasing subsequnce
+[27] Longest common subsequence $$$$$$$$$$$$$
+[28] Subset sum problem
+[29] Merge_Sort
+[30] Counting SORT
+[31] longest palindrome substring
+[32] find all permutation of an array of length n
+[33] Find all permutation of n element 
+[34] Bellman Ford Algorithm
+[35] Counting Sort
+[36] Radix Sort
+[37] Prefic sum array and KMP and Z-algorithm
+[38] Merge K sorted array
+-------------------------
+
+									[0] some points
+=> stiring s;
+bool val = next_permutation(s.begin(),s.end());
+if(val==true) cout<<"next pemutation is : "<<s<<endl;
+else cout<<"no any next permu....";
+
+=> we get a number form sum of any subset (some of many values) of a fibonacci series. and that number has no consecutive 1's in binary representation.
+
+=> string to int
+string s="111";
+
+stringstream to_int(s);
+int x=0;
+to_int>>x;
+
+cout<<x<<endl;
+
+ ||or||
+
+string s="111";
+int y=stoi(s);
+cout<<y;
+									-------------------
+
+									[1] Basic template 
+#include <bits/stdc++.h>
+using namespace std;
+
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+//MY TEMPLATE
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin>>t;
+    while(t--)
+    {
+		int n;
+		cin>>n;
+		long long a[n];
+		f(i,0,n) cin>>a[i];
+		
+	}
+}
+
+								[[[[OR]]]]
+
+#include <bits/stdc++.h>
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define ll long long
+using namespace std;
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+	cin>>n;
+	long long a[n];
+	f(i,0,n) cin>>a[i];
+    }
+}
+
+					[2].REVERSE SORT INBUILT FUNCTION IN C++ : sort(a,a+n,greater<>());
+						[2].(i) sum = accumulate(v.begin(), v.end(), 0LL); (sum of vector in one step)
+
+							[3]. max/min value between two nodes
+								(https://ideone.com/qWJpc2)
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	int n,e;
+	cin>>n>>e;
+	int a[n+1],vis[n+1]={0},val[n+1]={0};
+	
+	for(int i=1;i<=n;++i)
+	{
+		cin>>a[i];
+	}
+	vector<int>v[n+1];
+	for(int i=1;i<=e;++i)
+	{
+		int x,y;
+		cin>>x>>y;
+		v[x].push_back(y);
+		v[y].push_back(x);
+	}
+	int src,des,flag=0;
+	cin>>src>>des;
+	
+	queue<int>q;
+	q.push(src);
+	val[src]=a[src];
+	
+	while(!q.empty())
+	{
+		int x=q.front();
+		q.pop();
+		vis[x]=1;
+		
+		for(int i=0;i<v[x].size();++i)
+		{
+			if(vis[v[x][i]]==0)
+			{
+				if(val[x]<a[v[x][i]])
+				{
+					val[v[x][i]]=a[v[x][i]];
+					vis[v[x][i]]=1;
+				}
+				else
+				{
+					val[v[x][i]]=val[x];
+					vis[v[x][i]]=1;
+				}
+				q.push(v[x][i]);
+			}
+			if(v[x][i]==des)
+			{
+				flag++;
+				break;
+			}
+		}
+		if(flag!=0) break;
+	}
+	cout<<val[des];
+	// for(int i=1;i<=n;++i)
+	// {
+	// 	cout<<val[i]<<" ";
+	// }
+}
+
+							[4]. Entry and exit time code
+
+							(https://ideone.com/KNwDEz)
+#include <bits/stdc++.h>
+using namespace std;
+int t=0,entry[10],exits[10],vis[10]={0};
+vector<int>v[10];
+void dfs(int x)
+{
+	vis[x]=1;	entry[x]=t;
+	for(auto it : v[x])//.begin();it!=v[x].end(),++it)
+	{
+		if(vis[it]==0)
+		{
+			t++;
+			dfs(it);
+		}
+		exits[x]=t;
+	}
+	exits[x]=t;
+}
+int main() {
+	int n;
+	cin>>n;
+ 
+	for(int i=1;i<=n;++i)
+	{
+		int x,y;
+		cin>>x>>y;
+		v[x].push_back(y);
+		v[y].push_back(x);
+	}
+	for(int i=1;i<=7;++i)
+	{
+		for(int j=0;j<v[i].size();++j)
+		cout<<v[i][j]<<" ";
+		cout<<endl;
+	}
+	dfs(1);
+	for(int i=1;i<8;++i)
+	cout<<entry[i]<<" "<<exits[i]<<endl;
+}
+////////input
+6
+1 2
+1 3
+2 4
+2 5
+3 6
+3 7
+////////output 
+0 6
+1 3
+4 6
+2 2
+3 3
+5 5
+6 6
+
+
+							[5]. vector<pair<int,int>>v[ ]; SYNTAX
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    vector<pair<int,pair<int,int>>>v[5];
+    // vector<pair<int,int>>v[5];
+    for(int i=0;i<5;++i)
+    {
+        int a,b;
+        cin>>a>>b;
+        v[i].push_back({a,{a,b}}); 
+    }
+    
+    
+    for(int i=0;i<5;++i)
+    {
+        pair<int,pair<int,int>>p=*v[i].begin();
+        cout<<p.first<<" "<<p.second.first<<" "<<p.second.second<<endl;
+    }
+    // for(int i=0;i<5;++i)
+    // {
+    //     vector<pair<int,int>>p=*v[i].begin();
+    //     cout<<p.first<<" "<<p.second<<endl;
+    // }
+}
+
+							[6]. THE RAT IN MAZE (Unique Grid Problem) $$$$$
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int a[1000][1000];
+
+int Maze(int x,int y,int x1,int y1) 
+{ 
+    queue<pair<int, int> > q; 
+    q.push(make_pair(x, y)); 
+
+    int count = 0; 
+    
+    while (!q.empty()) { 
+    
+        pair<int, int> p = q.front();
+        q.pop(); 
+        
+    // cout<<p.first<<" "<<p.second<<endl;//
+    
+        if (p.first == x1 && p.second == y1) 
+            count++; 
+
+        if ((p.first + 1) <= x1 && a[p.first + 1][p.second] == 1) { 
+            q.push(make_pair(p.first + 1, p.second)); 
+        }
+        
+        if ((p.second + 1) <= y1 && a[p.first][p.second + 1] == 1) { 
+            q.push(make_pair(p.first, p.second + 1)); 
+        } 
+    } 
+    return count; 
+} 
+
+int main() 
+{ 
+
+    int n,m;
+    cin>>n>>m;
+    
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        cin>>a[i][j];
+    }
+    int x,y,x1,y1;
+    cin>>x>>y>>x1>>y1;
+
+    cout << Maze(x,y,x1,y1); 
+
+    return 0; 
+}
+//input
+5 5
+1 1 0 1 1
+0 1 1 1 0
+0 1 1 1 0
+1 1 1 1 0
+1 0 0 1 1
+1 1 5 5
+//output
+6
+
+								[7].	SUB-MATRIX PROBLEM
+#include <bits/stdc++.h>
+#define f(i,a,b) for(int i=a;i<b;++i)
+#define ll long long 
+using namespace std;
+
+
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n,k;
+    cin>>n>>k;
+    int a[n][n];
+    for(int i=0;i<n;++i)
+    {
+        for(int j=0;j<n;++j)
+        cin>>a[i][j];
+    }
+    
+    int sum[n][n]={0};
+    sum[0][0]=a[0][0];
+    
+    for(int i=1;i<n;++i)
+        sum[0][i]=a[0][i]+sum[0][i-1];
+        
+    for(int i=1;i<n;++i)
+        sum[i][0]=a[i][0]+sum[i-1][0];
+        
+    for(int i=1;i<n;++i)
+    {
+        for(int j=1;j<n;++j)
+        sum[i][j]=a[i][j]+sum[i-1][j]+sum[i][j-1]-sum[i-1][j-1];
+    }
+    //sum representation
+    // for(int i=0;i<n;++i){
+    //     for(int j=0;j<n;++j)
+    //         cout<<sum[i][j]<<" ";
+    //     cout<<endl;
+    // }
+    //all ok
+    
+    long long flag=0;
+    f(h,0,n)
+    {
+        f(i,h,n)
+        {
+            f(j,h,n)
+            {
+                ll ans=sum[i][j];
+                if(i-(h+1) >=0) ans-=sum[i-h-1][j];
+                if(j-(h+1) >=0) ans-=sum[i][j-h-1];
+                if(i-(h+1) >=0 && j-(h+1) >=0) ans+=sum[i-h-1][j-h-1];
+                
+                // cout<<ans<<" ";
+                if(ans>=k)
+                {
+                    cout<<"YES"<<endl;
+                    cout<<(i-h+1)<<" "<<(j-h+1)<<" "<<(i+1)<<" "<<(j+1)<<endl;
+                    flag++;
+                    break;
+                }
+                if(flag!=0) break;
+            }
+            // cout<<endl;
+            if(flag!=0) break;
+        }
+        if(flag!=0) break;
+    }
+    
+    if(flag==0) cout<<"NO"<<endl;
+    
+}
+
+
+								[8].  Floyd-Warshall Algorithm
+
+>>>>>>>>>>>>>>in the case of negative weighted edge
+
+for (int k = 0; k < n; ++k) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (d[i][k] < INF && d[k][j] < INF) //yeh line check karti hai ki do node ke bich me path hai ya nahi
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]); 
+        }
+    }
+}
+int cnt=0;
+for (int k = 0; k < n; ++k) {
+    for (int i = 0; i < n; ++i) {
+	if(d[i][j]<0 && i==j) cnt++;
+	}
+}
+
+cnt=number of infinite loops
+
+:|:|:|:|:|::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+								[9].|||||a ki power b|||||
+
+m=1e9+7;
+Calling ans=expo(a,b,m);
+
+long long expo(long long a,long long b,long long m)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return (expo((a*a)%m,b/2,m))%m;
+	return (a)%m*(expo((a*a)%m,b/2,m))%m;
+}
+		OR
+
+long long expo(long long a,long long b)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return expo((a*a),b/2);
+	return (a)*(expo((a*a),b/2));
+}
+
+		OR
+
+long long expo(long long a,long long b)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return (expo((a*a)%m,b/2))%m;
+	return (a)%m*(expo((a*a)%m,b/2))%m;
+}
+
+
+							|||||||||a/b by inverse modulo||||||||||||
+m=1e9+7;
+Calling ans=a*expo(b,m-2,m);
+
+long long expo(long long a,long long b,long long m)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return (expo((a*a)%m,b/2,m))%m;
+	return (a)%m*(expo((a*a)%m,b/2,m))%m;
+}
+
+		OR
+
+long long expo(long long a,long long b)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return (expo((a*a)%m,b/2))%m;
+	return (a)%m*(expo((a*a)%m,b/2))%m;
+}
+
+									[10]. Bubble Sort
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+int n,t;
+cin>>n;
+int s[n];
+for(int i=0;i<n;i++)
+{
+cin>>s[i];
+}
+for(int i=0;i<n-1;i++)
+{
+ for(int j=0;j<n-i-1;j++)
+ {
+  if(s[j]>s[j+1])
+  {
+  t=s[j];
+  s[j]=s[j+1];
+  s[j+1]=t;
+  }
+ }
+}
+for(int i=0;i<n;i++)
+{
+cout<<s[i]<<" ";
+}
+}
+
+					[11].binart tree problem(find the no. of paths which have bitwise AND(&) is ODD)
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+int main() 
+{
+    int n=100000;
+    vector<int>v[100002];
+    for(int i=1;(2*i+1)<=n;++i)
+    {
+        v[i].push_back(2*i);
+        v[i].push_back(2*i+1);
+    }
+    // all right
+    int cnt[100001]={0};cnt[1]=1;
+    queue<int>q;
+    
+    q.push(1);
+    while(!q.empty())
+    {
+        int x=q.front();
+        q.pop();
+        
+        if(x%2!=0 && cnt[x]==0) cnt[x]+=1;
+        
+        for(int i=0;i<v[x].size();++i)
+        {
+            if(v[x][i]%2!=0 && x%2!=0)
+            {
+                cnt[v[x][i]]=cnt[x]+1;
+            }
+            
+            q.push(v[x][i]);
+        }
+    }
+    
+    map<long long ,long long >mp;long long int g=0;
+    for(int i=1;i<=100000;++i)
+    {
+        if(cnt[i]>1)
+        {
+            mp[i]=((cnt[i])*(cnt[i]-1))/2+g;
+            g=mp[i];
+        }
+    }
+    // all right
+    // check only
+    // for(auto iiit : mp)
+    // {
+    //     if(iiit.first<=31) cout<<iiit.first<<" "<<iiit.second<<endl;
+    //     else break;
+    // }
+    //
+    int t;cin>>t;
+    while(t--){
+        long long int N,sum=0,ans=0;
+        cin>>N;
+        if(N==1|| N==2) {cout<<0<<endl;continue;}
+        if(N==3 || N==4 || N==5 || N==6) {cout<<1<<endl;continue;}
+        if(N==7 || N==8 || N==9 || N==10) {cout<<3<<endl;continue;}
+        
+        map<long long ,long long >:: iterator it,itt;
+        if(N%2!=0)
+        {
+            it=mp.upper_bound(N/2);it--;
+            itt=mp.lower_bound(N);
+
+            if((*itt).first!=N)
+            {
+                itt--;
+            }
+        }
+        else
+        {
+            it=mp.lower_bound(N/2);it--;
+            itt=mp.lower_bound(N);itt--;
+        }
+        ans=((*itt).second-(*it).second);
+        cout<<ans<<endl;
+    }
+    //check only
+    // for(auto iiit : mp)
+    // {
+    //     if(iiit.first<=31) cout<<iiit.first<<" "<<iiit.second<<endl;
+    //     else break;
+    // }
+    // for(int i=1;i<=31;++i) cout<<i<<" "<<cnt[i]<<endl;
+}
+
+
+
+
+										[12].
+							(i) unique grid(original matrix me values update ho rahi hai)
+
+
+					NOTE : THIS IS PERFECT SOLUTION, TESTED BY ATCODER Qs(https://atcoder.jp/contests/dp/tasks/dp_h)
+
+#include<bits/stdc++.h> 
+using namespace std; 
+// #define R 4 
+// #define C 4 
+int maze[1001][1001];
+  
+int countPaths(int R,int C) 
+{ 
+    if (maze[0][0]==-1) 
+        return 0; 
+  
+    for (int i=0; i<R; i++) 
+    { 
+        if (maze[i][0] == 0) 
+            maze[i][0] = 1; 
+        else
+            break; 
+    } 
+    for (int i=1; i<C; i++) 
+    { 
+        if (maze[0][i] == 0) 
+            maze[0][i] = 1; 
+        else
+            break; 
+    } 
+  
+    for (int i=1; i<R; i++) 
+    { 
+        for (int j=1; j<C; j++) 
+        { 
+            if (maze[i][j] == -1) 
+                continue; 
+            if (maze[i-1][j] > 0) 
+                maze[i][j] = (maze[i][j] + maze[i-1][j]); 
+            if (maze[i][j-1] > 0) 
+                maze[i][j] = (maze[i][j] + maze[i][j-1]); 
+        } 
+    } 
+    return (maze[R-1][C-1] > 0)? maze[R-1][C-1] : 0; 
+} 
+  
+// Driver code 
+int main() 
+{ 
+    int n,m;
+    cin>>n>>m;
+    // int maze[R][C] =  {{0,  0, 0, 0}, 
+    //                   {0, -1, 0, 0}, 
+    //                   {-1, 0, -1, -1}, 
+    //                   {0,  0, 0, 0}}; 
+    for(int i=0;i<n;++i)
+    {
+        for(int j=0;j<m;++j)
+        cin>>maze[i][j];
+    }
+    
+    cout << countPaths(n,m); 
+    return 0; 
+}
+//input
+5 5
+1 1 0 1 1
+0 1 1 1 0
+0 1 1 1 0
+1 1 1 1 0
+1 0 0 1 1
+//output
+number of ways : 6 
+
+
+							(ii) 	$$$$$$$$$ Modified code $$$$
+
+
+#include<bits/stdc++.h> 
+using namespace std; 
+int maze[1000][1000],dp[1000][1000]={0};
+
+int countPaths(int n,int m) 
+{ 
+	if (maze[0][0]==-1) 
+		return 0; 
+
+	// Initializing the leftmost column 
+	for (int i=0; i<n; i++) 
+	{ 
+		if (maze[i][0] == 1) 
+			dp[i][0]=1;//maze[i][0] = 1; 
+		else
+			break; 
+	} 
+
+	// Similarly initialize the topmost row 
+	for (int i=1; i<m; i++) 
+	{ 
+		if (maze[0][i] == 1) 
+			dp[0][i]=1;//maze[0][i] = 1; 
+		else
+			break; 
+	} 
+
+	for (int i=1; i<n; i++) 
+	{ 
+		for (int j=1; j<m; j++) 
+		{ 
+			if (maze[i][j] == 0)//-1 
+				continue; 
+
+			if (dp[i-1][j] > 0)//if (maze[i-1][j] > 0) 
+				dp[i][j] = (dp[i][j] + dp[i-1][j]);//maze[i][j] = (maze[i][j] + maze[i-1][j]); 
+
+			if (dp[i][j-1] > 0)//if (maze[i][j-1] > 0) 
+				dp[i][j] = (dp[i][j] + dp[i][j-1]);//maze[i][j] = (maze[i][j] + maze[i][j-1]); 
+		} 
+	} 
+
+	return (dp[n-1][m-1] > 0)? dp[n-1][m-1] : 0; //(maze[n-1][m-1] > 0)? maze[n-1][m-1] : 0; 
+} 
+
+// Driver code 
+int main() 
+{ 
+	
+	int n,m;
+	cin>>n>>m;
+	for(int i=0;i<n;++i)
+	{
+	    for(int j=0;j<m;++j)
+	    {
+	        cin>>maze[i][j];
+	    }
+	}
+	long long ans=countPaths(n,m);
+	cout << ans;
+	
+  cout<<endl;
+  for(int i=0;i<n;++i)
+  {
+    for(int j=0;j<m;++j)
+      cout<<dp[i][j]<<" ";
+    cout<<endl;
+  }
+	return 0; 
+} 
+
+
+
+								[13]. Longest path in a tree
+
+Approach : firstly find the level of every node from 1. Then after find the lowest level node in the tree and again find level of every node from lowest node.
+								[i] part 1 (part 2 is modified version of part 1)
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+
+int main() 
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        vector<int>v[n+1];
+        int vis[n+1]={0};
+        int lev[n+1]={0};
+        
+        f(i,1,n)
+        {
+            int x,y;cin>>x>>y;
+            v[x].pb(y);
+            v[y].pb(x);
+        }
+        
+        queue<int>q;
+        q.push(1);
+        lev[1]=0;
+        while(!q.empty())
+        {
+            int x=q.front();
+            vis[x]=1;
+            q.pop();
+            
+            f(i,0,v[x].size())
+            {
+                if(vis[v[x][i]]==0)
+                {
+                    vis[v[x][i]]=1;
+                    lev[v[x][i]]=lev[x]+1;
+                    q.push(v[x][i]);
+                }
+            }
+        }
+        // f(i,1,n+1) cout<<lev[i]<<" ";cout<<endl;
+        //ok
+        int z=0,y;
+        
+        fe(i,1,n)
+        {
+            if(lev[i]>z)
+            {
+                z=lev[i];
+                y=i;
+            }
+        }
+        //ok and
+        
+        int lev1[n+1]={0};
+        int vis1[n+1]={0};
+        
+        queue<int>q1;
+        q1.push(y);
+        lev1[y]=1;
+        while(!q1.empty())
+        {
+            int x=q1.front();
+            vis1[x]=1;
+            q1.pop();
+            
+            f(i,0,v[x].size())
+            {
+                if(vis1[v[x][i]]==0)
+                {
+                    vis1[v[x][i]]=1;
+                    lev1[v[x][i]]=lev1[x]+1;
+                    q1.push(v[x][i]);
+                }
+            }
+        }
+        f(i,1,n+1) cout<<lev1[i]<<" ";cout<<endl;
+        //okkkkk
+        // f(i,1,n+1)
+        // {
+            
+        // }
+    }
+}
+
+							[ii] part 2 (contains vis, lev and path of longest length)
+
+CODE : 
+#define pb push_back
+const int N=20005;
+
+class Solution {
+public:
+    vector<int>v[N];
+    int lev[N],vis[N],par[N];
+    
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        
+        for(int i=0;i<edges.size();++i) {
+            int x=edges[i][0],y=edges[i][1];
+            v[x].pb(y);
+            v[y].pb(x);
+        }
+        
+        queue<int>q;
+        q.push(0);
+        lev[0]=0;
+        while(!q.empty())
+        {
+            int x=q.front();
+            vis[x]=1;
+            q.pop();
+            
+            for(int i : v[x])
+            {
+                if(vis[i]==0)
+                {
+                    vis[i]=1;
+                    lev[i]=lev[x]+1;
+                    q.push(i);
+                }
+            }
+        }
+        
+        int z=0,y=0;
+        for(int i=0;i<n;++i)
+        {
+            if(lev[i]>z)
+            {
+                z=lev[i];
+                y=i;
+            }
+        }
+        
+        // part 1 end()
+        
+        for(int i=0;i<N;++i) { vis[i]=0,lev[i]=0; }
+        
+        queue<int>q1;
+        q1.push(y);
+        lev[y]=1;
+        par[y]=-1;
+        
+        while(!q1.empty())
+        {
+            int x=q1.front();
+            vis[x]=1;
+            q1.pop();
+            
+            for(int i : v[x])
+            {
+                if(vis[i]==0)
+                {
+                    vis[i]=1;
+                    lev[i]=lev[x]+1;
+                    q1.push(i);
+                    par[i]=x;
+                }
+            }
+        }
+        
+        // part 2 end()
+        
+        int mxl=0,nd=0;
+        for(int i=0;i<n;++i) {
+            if(lev[i]>mxl) {
+                mxl=lev[i];
+                nd=i;
+            }
+        }
+        
+        vector<int>path,ans;
+        while(1)
+        {
+            path.pb(nd);
+            
+            nd=par[nd];
+            if(nd==-1) break;
+        }
+        
+        int rs=path.size();
+        if(rs%2) {
+            int ch=rs/2;
+            ans.pb(path[ch]);
+        } else {
+            int ch=rs/2;
+            ans.pb(path[ch]); ch--;
+            ans.pb(path[ch]);
+        }
+        
+        return ans;
+    }
+};
+
+								[iii]
+NOTE : path find in a single dfs call
+CODE : 
+
+// DESCRIPTION
+// i-th node calls fun for his all childs and every child will return their height from bottom(from leaf node)
+// and i-th node takes max of height from all and return 1+maxHeight
+// if i-th node is included in longest path then lev[x]= 1+ sum of two max height from all of his childs.
+
+
+#include <bits/stdc++.h>
+#define pb push_back
+const int N=200005;
+using namespace std;
+
+vector<int>v[N];
+int vis[N],lev[N];
+
+int fun(int x)
+{
+	if(v[x].size()==1 && vis[v[x][0]]==1) {
+		lev[x]=1;
+		return 1;
+	}
+
+	vis[x]=1;
+
+	vector<int>tmp;
+	for(int j=0;j<v[x].size();++j)
+	{
+		int i=v[x][j];
+		if(vis[i]==0) {
+			int h=fun(i);
+			tmp.pb(h);
+		}
+	}
+	
+	sort(tmp.begin(),tmp.end());
+	int sz=tmp.size(),lrm=0;
+	sz--;
+	if(sz>=0) lrm=tmp[sz]+1;
+	if(sz>=0) lev[x]+=tmp[sz]; sz--;
+	if(sz>=0) lev[x]+=tmp[sz];
+	lev[x]++;
+	
+	return lrm;
+}
+
+int main()
+{
+
+	int n;
+	cin>>n;
+
+	for(int i=1;i<n;++i) {
+		int x,y;
+		cin>>x>>y;
+		v[x].pb(y);
+		v[y].pb(x);
+	}
+
+    fun(1);
+    
+    cout<<"Path length, where i-th node is included in path : ";
+	for(int i=1;i<=n;++i) {
+		cout<<lev[i]<<" ";
+	}
+	cout<<endl;
+	
+}
+
+
+								--------------------------------------
+
+
+
+
+						[14]. find all the prime divisor from 1 to 1e6 (Sieve Code)
+
+vector<ll>v[N+1];
+    fe(i,2,N)
+    {
+        int n1=i;
+        if(n1%2==0)
+        {
+            while(n1>0 && n1%2==0)
+            {
+              v[i].push_back(2);
+              n1/=2;
+            }
+        }
+    
+        for(int j=3;j<=sqrt(n1);j+=2)
+        {
+            if(n1%j==0)
+            {
+                while(n1>0 && n1%j==0)
+                {
+                    v[i].push_back(j);
+                    n1/=j;
+                }
+            }
+        }
+        if(n1>2) v[i].push_back(n1);
+    }
+
+
+
+						[15]. LCA (find only parent of a1 and a2)
+							(Lowest Common Ancestor)
+Approach :- 
+[i]	find parent of all nodes
+[ii]	find level of all nodes
+[iii]	make level of a1 and a2 if their level are node equal
+[iv]	and find LCA of a1 and a2
+
+CODE :-
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+int lev1[100000]={0},vis[100000]={0},parent[100000]={0};
+
+//Find level and parent of every node
+void dfs(int node,vector<int>v[])
+{
+    vis[node]=1;
+    
+    for(int i=0;i<v[node].size();++i)
+    {
+        if(!vis[v[node][i]])
+        {
+            lev1[v[node][i]]=lev1[node]+1;
+            parent[v[node][i]]=node;
+            dfs(v[node][i],v);
+        }
+    }
+}
+//make level equal for finding LCA
+int levelEqual(int a1,int a2)
+{
+    while(1)
+    {
+        a1=parent[a1];
+        if(lev1[a1]==lev1[a2])  break;
+    }
+    
+    return a1;
+}
+//print LCA of node a1 an a2 
+int FindParent(int a1 ,int a2)
+{
+    while(1)
+    {
+        if(parent[a1]==parent[a2])
+        {
+            cout<<parent[a1]<<endl;
+            return 0;
+        }
+        else{
+            a1=parent[a1];
+            a2=parent[a2];
+        }
+    }
+}
+//
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	
+    int n,m;
+    cin>>n>>m;
+    
+    vector<int>v[n+1];
+    f(i,0,m)
+    {
+        int x,y;
+        cin>>x>>y;
+        v[x].pb(y);
+        v[y].pb(x);
+    }
+    
+    lev1[1]=1;parent[1]=(-1);
+    dfs(1,v);
+    
+    // fe(i,1,n) cout<<lev1[i]<<" ";cout<<endl;
+    // fe(i,1,n) cout<<parent[i]<<" ";
+    
+    //all ok
+    
+    int q;cin>>q;
+    while(q--)
+    {
+        int a1,a2;
+        cin>>a1>>a2;
+        
+        if(lev1[a1]==lev1[a2])
+        {
+            FindParent(a1,a2);
+        }
+        else{
+            if(lev1[a1]>lev1[a2])
+            {
+                a1=levelEqual(a1,a2);
+                FindParent(a1,a2);
+                // break;
+            }
+            else{
+                a2=levelEqual(a2,a1);
+                FindParent(a1,a2);
+                // break;
+            }
+        }
+    }
+}
+
+
+						[16].https://www.geeksforgeeks.org/sum-of-bitwise-or-of-all-pairs-in-a-given-array/
+
+Let k1 be the count of set bits at i'th position. Total number of pairs with i'th set bit would be k1C2 = k1*(k1-1)/2 (Count k1 means there are k1 numbers which have i’th set bit). Every such pair adds 2i to total sum. Similarly, there are total k0 values which don’t have set bits at i’th position. Now each element (which have not set the bit at the i’th position can make pair with k1 elements (ie., those elements which have set bits at the i’th position), So there are total k1 * k0 pairs and every such pair also adds 2i to total sum.
+
+sum = sum + (1<<i) * (k1*(k1-1)/2) + (1<<i) * (k1*k0)
+
+
+
+								[16] Binary Lifting 
+
+NOTE : TO FIND K-th PARENT OF A NODE IN BIT TIME(USING BIT MANIPULATION)
+CODE : 
+vector<vector<int>>v;
+    TreeAncestor(int n, vector<int>& parent) {
+        
+        vector<vector<int>>par(n, vector<int>(20));
+        for(int i=0;i<parent.size();++i) par[i][0]=parent[i];
+        
+        for(int i=1;i<20;++i)
+        {
+            for(int j=0;j<parent.size();++j)
+            {
+                if(par[j][i-1]==-1) par[j][i]=-1;
+                else par[j][i]=par[par[j][i-1]][i-1];
+            }
+        }
+        swap(v,par);
+    }
+    
+    int getKthAncestor(int node, int k) {
+        
+        for(int i=0;i<20;++i)
+        {
+            if((k>>i)&1) {
+                node=v[node][i];
+                if(node==-1) return -1;
+            }
+        }
+        return node;
+    }
+
+
+
+								[17] Topological sort
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+int vis[100002]={0};vector<int>v1;
+int dfs(int node, vector<int>v[])
+{
+    vis[node]=1;
+    
+    f(i,0,v[node].size())
+    {
+        if(vis[v[node][i]]==0)
+        {
+            vis[v[node][i]]=1;
+            dfs(v[node][i],v);
+        }
+    }
+    v1.pb(node);
+}
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	
+    int n,m;
+    cin>>n>>m;
+    
+    vector<int>v[n+1];
+    f(i,0,m)
+    {
+        int x,y;
+        cin>>x>>y;
+        v[x].pb(y);
+    }
+    
+    dfs(1,v);
+    
+    f(i,0,v1.size())
+    {
+        cout<<v1[i]<<" ";
+    }
+}
+
+			
+								[18]. STRONGLY CONNECTED GRAPH 
+
+
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define f(i,w1,w2) for(int i=w1;i<w2;++i)
+#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
+#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
+#define ll long long int
+#define pb push_back
+#define p(x) printf("%d",x)
+#define s(x) scanf("%d",&x)
+#define bitcount __builtin_popcount
+
+//MY TEMPLATE
+//STRONGLY CONNECTED GRAPH
+int vis[100];
+vector<int>v1,v2;
+
+int update()
+{
+    f(i,0,100) vis[i]=0;
+}
+//
+int dfs1(int node,vector<int>v[])
+{
+    vis[node]=1;
+    f(i,0,v[node].size())
+    {
+        if(vis[v[node][i]]==0)
+        {
+            dfs1(v[node][i],v);
+        }
+    }
+    v1.pb(node);
+}
+//
+int dfs2(int node,vector<int>vr[])
+{
+    vis[node]=1;
+    v2.pb(node);
+    f(i,0,vr[node].size())
+    {
+        if(vis[vr[node][i]]==0)
+        {
+            dfs2(vr[node][i],vr);
+        }
+    }
+    
+}
+//
+int main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	
+    int n,m;
+    cin>>n>>m;
+    
+    vector<int>v[n+1],vr[n+1];
+    f(i,0,m)
+    {
+        int x,y;
+        cin>>x>>y;
+        v[x].pb(y);
+        vr[y].pb(x);
+    }
+    update();
+    // f(i,0,10) cout<<vis[i]<<" "; cout<<endl;
+    f(i,1,n+1)
+    {
+        if(vis[i]==0)
+        dfs1(i,v);
+    }
+    f(i,0,v1.size()) cout<<v1[i]<<" "; cout<<endl;//
+    
+    update();
+    // f(i,0,10) cout<<vis[i]<<" "; cout<<endl;
+    int numberOFcomp=0;
+    f(i,1,n+1)
+    {
+        int h=v1[n-i];
+        if(vis[h]==0)
+        {
+            numberOFcomp++;
+            // cout<<h<<"   ";
+            dfs2(h,vr);
+            f(j,0,v2.size())
+            {
+                cout<<v2[j]<<" ";
+            }
+            cout<<endl;
+            v2.clear();
+        }
+    }
+    cout<<"numberOFcomp"<<" : "<<numberOFcomp;
+    
+}
+//input
+// 5 5
+// 2 1
+// 3 2
+// 1 3
+// 1 4
+// 4 5
+
+                1
+
+            2- - - -3     4
+                              5
+
+
+
+//output
+5 4 2 3 1 
+1 2 3 
+4 
+5
+numberOFcomp : 3
+
+
+						[OR] Souvik's Code ( STRONGLY CONNECTED GRAPH )
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define mod 1000000007
+#define pb push_back
+#define ppb pop_back
+#define cs(n) cout<<n<<" "
+#define cn(n) cout<<n<<"\n"
+#define rep(i,j,k) for(int i=j;i<k;i++)
+#define rrep(i,j,k) for(int i=j;i>=k;i--)
+#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+vector<vector<int> >v(10005, vector<int>()), rv(10005, vector<int>());
+vector<bool>visited(10005, false), rvisited(10005, false);
+int totka = 0;
+vector<pair<int , int> >s;
+ll bin(ll a, ll b)
+{
+	if (b == 0)
+		return 1;
+	if (b % 2 == 0)
+		return bin((a * a) % mod , b / 2) % mod;
+	return ((a % mod) * (bin((a * a) % mod , b / 2) % mod)) % mod;
+}
+void dfs(int i) {
+	totka++;
+	visited[i] = true;
+	rep(k, 0, v[i].size()) {
+		if (visited[v[i][k]] == false) {
+			dfs(v[i][k]);
+		}
+	}
+	totka++;
+	s.push_back({totka, i});
+}
+void dfs1(int i) {
+	rvisited[i] = true;
+	rep(k, 0, rv[i].size()) {
+		if (rvisited[rv[i][k]] == false) {
+			dfs1(rv[i][k]);
+		}
+	}
+}
+void solve()
+{
+	int n, m;
+	cin >> n >> m;
+	while (m--) {
+		int a, b;
+		cin >> a >> b;
+		v[a].pb(b);
+		rv[b].pb(a);
+	}
+	rep(i, 1, n + 1) {
+		if (visited[i] == false) {
+			dfs(i);
+		}
+	}
+	int ans = 0;
+	sort(s.rbegin(), s.rend());
+	rep(i, 0, s.size()) {
+		int a = s[i].second;
+		if (rvisited[a] == false) {
+			ans++;
+			dfs1(a);
+		}
+	}
+	cout << ans;
+}
+int main()
+{
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r" , stdin);
+	freopen("output.txt" , "w" , stdout);
+#endif
+	fastio;
+	int t;
+	//cin >> t;
+	t = 1;
+	while (t--)
+	{
+		solve();
+	}
+#ifndef ONLINE_JUDGE
+	cout << "\nTime Elapsed: " << 1.0 * clock() / CLOCKS_PER_SEC << " sec\n";
+#endif
+	return 0;
+}
+
+//////////////////////////
+
+						[19] Show all paths from (0,0) to (n,m) in a grid (Matrix)
+
+------------
+
+int b[5][5],n,m;
+char a[5][5];
+bool flag=false;
+
+int fun(int x,int y)
+{
+    // cout<<"Yes\n";
+    
+    if(a[x][y]=='*' || x>=n || y>=m) return 0;
+    
+    if((x==(n-1) && y==(m-1)) || b[x][y]==1)
+    {
+        flag=true;
+        b[x][y]=1;
+        return 1;
+    }
+    
+    if((x+1<n && y<m) || (x<n && y+1<m))
+    {
+        int z=fun(x+1,y)+fun(x,y+1);
+        if(z>=1)
+        {
+            b[x][y]=1;
+            if(x>0 || y>0) return 1;
+        }
+    }
+    
+}
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    // int t;  cin>>t;
+    // while(t--)
+    {
+        
+        cin>>n>>m;
+        
+        
+        for(int i=0;i<n;++i)
+        {
+            for(int j=0;j<m;++j)
+            cin>>a[i][j];
+        }
+        
+        int f=fun(0,0);
+        
+        cout<<flag<<endl;
+        
+        for(int i=0;i<n;++i)
+        {
+            for(int j=0;j<m;++j)
+            {
+                cout<<b[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+    }
+}
+
+-> input
+4 5
+.....
+.**..
+....*
+*....
+
+--> output
+1 1 1 1 0 
+1 0 0 1 0 
+1 1 1 1 0 
+0 1 1 1 1 
+
+----------------------------------------------------------------
+
+							[20] No. of all factors of a number (1<=n<=1e18) or (1<=n<=1e9)
+Complexity : n^(1/3)
+
+CODE :
+
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    
+    int p[1000001]={0};
+	p[0]=1;
+	p[1]=1;
+
+	for(int i=2;i*i<=1000000;i++)
+	{ 
+		if(p[i]==0)
+		{ 
+			for(int j=i*i;j<=1000000;j=j+i)
+			p[j]=1;
+		}
+	}
+	
+	vector<int>v;
+	for(int i=2;i<=1000000;i++)
+	{ 
+		if(p[i]==0)
+		v.push_back(i);
+	}
+    
+    int t;  cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        
+		int ans=1;
+        	for(int i=0;i<v.size();i++)
+		{ 
+			int l=v[i]*v[i]*v[i];
+			if(l>n)
+			break;
+			
+			int cnt = 1;
+            		while(n%v[i]==0)
+            		{
+                  		n= n/v[i];
+                  		cnt = cnt + 1;
+            		}
+            		ans = ans * cnt;
+		}
+		
+		
+		    	int x=sqrt(n);
+			if (p[n]==0)
+			{
+			            ans = ans * 2;
+			}
+			else if (p[x]==0)
+			{
+			    ans = ans * 3;
+			}
+			else if (n != 1)
+			            ans = ans * 4;
+			            
+			            
+			    
+	    cout<<ans<<endl;        
+        
+    }
+    
+}
+
+----
+
+								Pseudo Code :
+
+N = input()
+primes = array containing primes till 10^6
+ans = 1
+for all p in primes :
+            if p*p*p > N:
+                  break
+            count = 1
+            while N divisible by p:
+                  N = N/p
+                  count = count + 1
+            ans = ans * count
+if N is prime:
+            ans = ans * 2
+else if N is square of a prime:
+            ans = ans * 3
+else if N != 1:
+            ans = ans * 4
+
+
+						-------------------------------------------------------------------
+
+									[21] Heap Sort
+
+CODE :
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+void max_heapify(int a[],int i,int n)
+{
+    int l,r,lar;
+    l=2*i;
+    r=(2*i)+1;
+    
+    if(l<=n && a[l]>a[i])
+        lar=l;
+    else
+        lar=i;
+        
+    if(r<=n && a[r]>a[lar])
+        lar=r;
+    
+    if(lar!=i)
+    {
+        swap(a[i],a[lar]);
+        max_heapify(a,lar,n);
+    }   
+}
+
+void build_max_heap(int a[],int n)
+{
+    for(int i=n/2;i>=1;i--)
+        max_heapify(a,i,n);    
+        
+}
+
+void heapsort(int a[],int n)
+{
+    build_max_heap(a,n);
+    
+    for(int i=n;i>=2;i--)
+    {
+        swap(a[1],a[i]);
+        n=n-1;
+        max_heapify(a,1,n);       
+    }    
+}
+
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    cin>>n;
+    
+    int a[n+1];
+    a[0]=0;
+    for(int i=1;i<=n;++i) cin>>a[i];
+    
+    heapsort(a,n);
+    
+    for(int i=1;i<=n;++i) cout<<a[i]<<" ";
+}
+
+					---------------------------------------------------------------------------
+
+									[22] Quick Sort
+
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+int partition(int a[],int p,int r)
+{
+    int x=a[r];
+    int i=p-1;
+    for(int j=p;j<=r-1;j++)
+    {
+        if(a[j]<=x)
+        {
+            i=i+1;
+            swap(a[i],a[j]);
+        }
+    }
+    swap(a[i+1],a[r]);
+    return i+1;
+}
+
+void quick_sort(int a[],int p,int r)
+{
+    int q=(p+r)/2;
+    if(p<r)
+    {
+        q=partition(a,p,r);
+        quick_sort(a,p,q-1);
+        quick_sort(a,q+1,r);      
+    }
+}
+
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int n;
+    cin>>n;
+    
+    int a[n];
+    for(int i=0;i<n;++i) cin>>a[i];
+    
+    quick_sort(a,0,n-1);
+    
+    for(int i=0;i<n;++i) cout<<a[i]<<" ";
+}
+
+					-------------------------------------------------------------
+
+
+
+								[23] Selestion Sort & Insertion Sort 
+
+CODE : 
+
+					// selection sort
+    for(int i=0;i<n-1;++i)
+    {
+        int mn=a[i];
+        for(int j=i+1;j<n;++j)
+        {
+            if(a[j]<a[i]){
+                swap(a[i],a[j]);
+                break;
+            }
+        }
+    }
+    
+				    // insertion sort
+    for(int i=1;i<n;++i)
+    {
+        int x=a[i],j=i-1;
+        
+        while(j>=0 && a[j]>x){
+            
+            a[j+1]=a[j];
+            j--;
+        }
+        a[j+1]=x;
+    }
+
+						-------------------------------------------------------------
+
+					   	 [23] Convert a string S to an another string R using adjacent swapping
+
+NOTE : Minimum swapping required to convert S into R.
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    string s,r;
+    cin>>s>>r;
+    
+    int i = 0, j = 0, size=s.size(); 
+    int result = 0; 
+  
+    while (i < size) { 
+        j = i; 
+  
+        while (s[j] != r[i]) { 
+            j += 1; 
+        } 
+  
+        while (i < j) { 
+  
+            char temp = s[j]; 
+            s[j] = s[j - 1]; 
+            s[j - 1] = temp; 
+            j -= 1; 
+            result += 1; 
+        } 
+        i += 1; 
+    } 
+    // return result; 
+    
+    cout<<result;
+}
+							-----------------------------------------------
+
+
+							[24]. TREE construction $$$$$$$$$$$$$$$$$$$$$
+
+PROBLEM LINK : https://www.hackerearth.com/challenges/competitive/january-circuits-21/approximate/tree-construction-7b3cb288/
+CODE : But code is not clear yet ;)
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+int n,s,p[100005],cnt[100005];
+
+int func(int k)
+{
+	int val=0,m=n,ex=1,d=1;
+	
+	while(m>0){
+		val+=min(ex,m)*d;
+		m-=min(ex,m);
+		ex*=k;
+		d++;
+	}
+	return val;
+}
+
+signed main(){
+    
+// 	int t; cin>>t;
+// 	while(t--)
+    {
+        cin>>n>>s;
+    	if(s>n*(n+1)/2||s<2*n-1){
+    		cout<<"-1\n";
+    		exit(0);
+    	}
+    	
+    	int k=1,cur=2,i;
+    	while(func(k)>s){
+    	    k++;
+    	}
+    	
+    	for(i=1;i<=n;i++){
+        	cnt[i]=1;
+    	}
+    	
+    	s=n*(n+1)/2-s;
+    	i=n;
+    	while(s){
+    		while(cnt[cur]/k>=cnt[cur-1])
+    		{
+    		    cur++;
+    		}
+    		
+    		if(i-cur>s){
+    			cnt[i-s]++;
+    			cnt[i]--;
+    			break;
+    		}
+    		s-=i-cur;
+    		cnt[cur]++;
+    		cnt[i]--;
+    		i--;
+    	}
+    	vector<vector<int>> v(n+1);
+    	int j=1;
+    	i=1;
+    	while(cnt[i]){
+    		while(cnt[i]){
+    			v[i].push_back(j);
+    			cnt[i]--;
+    			j++;
+    		}
+    		i++;
+    	}
+    	for(i=2;i<=n;i++)
+    	{
+        	for(j=0;j<v[i].size();j++)
+            	p[v[i][j]]=v[i-1][j/k];
+    	}
+    	
+    // 	cout<<"Yes\n";
+    	for(i=2;i<=n;i++)
+    	cout<<p[i]<<" "<<i<<endl;
+    	
+    }
+}
+
+
+							------------------------------------------------------
+
+
+								[25] Two pointer method 
+
+NOTE : To find a pair of {a[i],b[j]} such that, a[i]+b[j]=x
+
+CODE :
+	int n,m,x;
+        cin>>n>>m>>x;
+        int a[n],b[m];
+        for(int i=0;i<n;++i) cin>>a[i];
+        for(int i=0;i<m;++i) cin>>b[i];
+        
+        sort(a,a+n); sort(b,b+m);
+        
+        for(int i = 0, j = m - 1; i < n && j >= 0;) {
+            if(a[i] + b[j] > x) {
+                j--;
+            } else if(a[i] + b[j] < x) {
+                i++;
+            } else {
+                printf("%d + %d = %d\n", a[i], b[j], x);
+                i++; j--;
+            }
+        }
+
+
+							-------------------------------------------------------
+
+
+								[26] Longest increasing subsequnce
+
+Expainantion :
+
+	Input  : arr[] = {3, 10, 2, 11}
+	LIS[] = {1, 1, 1, 1} (initially)
+	Iteration-wise simulation :
+
+	arr[2] > arr[1] {LIS[2] = max(LIS [2], LIS[1]+1)=2}
+	arr[3] < arr[1] {No change}
+	arr[3] < arr[2] {No change}
+	arr[4] > arr[1] {LIS[4] = max(LIS [4], LIS[1]+1)=2}
+	arr[4] > arr[2] {LIS[4] = max(LIS [4], LIS[2]+1)=3}
+	arr[4] > arr[3] {LIS[4] = max(LIS [4], LIS[3]+1)=3}
+
+Code : 
+
+	int n;
+        cin>>n;
+        
+        int a[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        
+        int lis[n+1];
+        lis[0]=1;
+        
+        for(int i=1;i<n;++i)
+        {
+            lis[i]=1;
+            for(int j=0;j<i;++j)
+            {
+                if(a[i]>a[j])
+                {
+                    lis[i]=max(lis[i],lis[j]+1);
+                }
+            }
+        }
+        
+        int ans=-1;
+        for(int i=0;i<n;++i) ans=max(ans,lis[i]);
+        cout<<ans<<endl;
+
+							--------------------------------------------------------
+
+
+								[27] Longest common subsequence $$$$$$$$$$$$$
+
+
+Note : print lenght and subsequence
+
+CODE :
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+#define popcount __builtin_popcountll
+#define endl "\n"
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    // int t;  cin>>t;
+    // while(t--)
+    {
+        string s1,s2;
+        cin>>s1>>s2;
+        
+        int n=s1.size(),m=s2.size();
+        
+        int dp[n+2][m+2];
+        for(int i=0;i<=n;++i)
+        {
+            for(int j=0;j<=m;++j)
+            {
+                if(i==0 || j==0) dp[i][j]=0;
+                else
+                {
+                    if(s1[i-1]==s2[j-1]) dp[i][j]=dp[i-1][j-1]+1;
+                    else dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        
+	//lenght of subsequence
+        cout<<dp[n][m]<<endl;
+        
+        
+        int x=n,y=m;
+        vector<char>v;
+        while(1)
+        {
+            if(s1[x-1]==s2[y-1])
+            {
+                v.pb(s1[x-1]);
+                x--;
+                y--;
+            }
+            else
+            {
+                if(dp[x-1][y]>dp[x][y-1]){
+                    x--;
+                }
+                else{
+                    y--;
+                }
+            }
+            if(x==0 || y==0) break;
+        }
+        
+	// print subsequence itself
+        for(int i=v.size()-1;i>=0;i--) cout<<v[i];
+        cout<<endl;
+    }
+}
+
+							----------------------------------------------------
+
+								     [28] Subset sum problem
+
+Note : It is given, an array 'a' of 'n' size and a value 'k'. We have to find is there any subset possible, whose sum is equal to k or not, in array 'a'.
+
+CODE : 
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int dp[6][12];
+    for(int i=0;i<6;++i) dp[i][0]=1;
+    for(int i=1;i<12;++i) dp[0][i]=0;
+    
+    // int t;  cin>>t;
+    // while(t--)
+    {
+        int n,k;
+        cin>>n>>k;
+        
+        int a[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        
+        for(int i=1;i<=n;++i)
+        {
+            for(int j=1;j<=k;++j)
+            {
+                if(a[i-1]<=j)
+                    dp[i][j]=dp[i][j-a[i-1]]|dp[i-1][j];
+                else
+                    dp[i][j]=dp[i-1][j];
+            }
+        }
+        
+        cout<<dp[n][k]<<endl;
+    }
+}
+
+
+OUTPUT is : True or False (0 or 1 || Yes or Not)
+
+							-----------------------------------------------
+
+								[29] Merge_Sort
+CODE :
+
+void Merge(int a[], int l, int mid, int r)
+{
+    int n=mid-l+1,m=r-mid;
+    int larr[n],rarr[m];
+    
+    for(int i=0;i<n;++i) larr[i]=a[l+i];
+    for(int i=0;i<m;++i) rarr[i]=a[mid+1+i];
+    
+    int i=0,j=0,k=l;
+    
+    while(i<n && j<m)
+    {
+        if(larr[i]<=rarr[j])
+        {
+            a[k]=larr[i];
+            i++;
+        }
+        else{
+            a[k]=rarr[j];
+            j++;
+        }
+        k++;
+    }
+    
+    while(i<n){
+        a[k]=larr[i];
+        i++; k++;
+    }
+    
+    while(j<m){
+        a[k]=rarr[j];
+        j++; k++;
+    }
+}
+
+void Merge_Sort(int a[],int l, int r)
+{
+    if(l<r)
+    {
+        int mid=(l+r)/2;
+        Merge_Sort(a,l,mid);
+        Merge_Sort(a,mid+1,r);
+        Merge(a,l,mid,r);
+    }
+    else return;
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        int a[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        
+        Merge_Sort(a,0,n-1);
+        
+        for(int i=0;i<n;++i) cout<<a[i]<<" "; cout<<endl;
+    }
+}
+
+							-----------------------------------------------
+
+
+								[30] Counting SORT
+Note : hashing method is used here.
+CODE :
+{
+        int n;
+        cin>>n;
+        
+        int a[n],mn=10000;
+        for(int i=0;i<n;++i) { cin>>a[i]; mn=min(mn,a[i]); }
+        
+        int b[100]={0};
+        for(int i=0;i<n;++i) b[a[i]-mn]++;
+        for(int i=1;i<100;++i) b[i]+=b[i-1];
+        
+        int c[100]={0};
+        for(int i=0;i<n;++i){
+            c[b[a[i]-mn]-1]=a[i];
+            b[a[i]-mn]--;
+        }
+        
+        for(int i=0;i<n;++i) a[i]=c[i];
+        
+        for(int i=0;i<n;++i) cout<<a[i]<<" "; cout<<endl;
+}
+
+						---------------------------------------------------------
+
+								[31] longest palindrome substring
+CODE :
+
+	int n;
+        cin>>n;
+        
+        string s; cin>>s;
+        
+        int h[n][n]={0};
+        
+        int shuru=0,len=1;
+        for(int i=0;i<n;++i) h[i][i]=1;
+        for(int i=0;i<n-1;++i){
+            if(s[i]==s[i+1]){
+                h[i][i+1]=1;
+                shuru=i; len=2;
+            }
+        }
+        
+        for(int l=3;l<=n;++l)
+        {
+            for(int i=0;i<n-l+1;++i)
+            {
+                int end=i+l-1;
+                
+                if(s[i]==s[end] && h[i+1][end-1]==1){
+                    h[i][end]=1;
+                    
+                    shuru=i;
+                    len=l;
+                }
+            }
+        }
+        
+        cout<<shuru<<" "<<len<<endl;
+        for(int i=shuru;i<shuru+len;++i) cout<<s[i]; cout<<endl;
+
+							-----------------------------------------------------
+
+						[32] find all permutation of an array of length n
+NOTE : there are n! combination.
+
+Code :
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+int n,a[100];
+
+void fun(int l, int r)
+{
+    // if(l<r) return ;
+    if(l==r){
+        for(int i=0;i<n;++i) cout<<a[i]<<" "; cout<<endl;
+    }
+    else{
+        for(int j=l;j<=r;++j)
+        {
+            swap(a[l],a[j]);
+            
+            fun(l+1,r);
+            
+            swap(a[l],a[j]);
+        }
+    }
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        // int n;
+        cin>>n;
+        
+        // int a[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        
+        fun(0,n-1);
+    }
+}
+
+								------------------------------
+
+							[33] Find all permutation of n element 
+Code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+vector<int>per;
+int cnt=0;
+
+int fun(int n)
+{
+	if((int)per.size()==n)
+	{
+		cnt++;
+		cout<<"permutation #"<<cnt<<": ";
+        	for(int i=0;i<n;++i) cout<<per[i]<<" "; cout<<endl;
+		return 0;
+	}
+
+
+	for(int i=1;i<=n;++i)
+	{
+		int flag=0;
+		for(int j=0;j<per.size();++j){
+			if(per[j]==i) flag++;
+		}
+		if(flag>0) continue;
+
+		per.pb(i);
+		fun(n);
+		per.pop_back();
+	}
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+
+		for(int i=1;i<=n;++i){
+			per.pb(i);
+			fun(n);
+			per.pop_back();
+		}
+    }
+}
+
+								-----------------------------------
+
+								[34] Bellman Ford Algorithm
+
+Code :
+#include<bits/stdc++.h>
+using namespace std;
+#define INF LONG_LONG_MAX
+ int main()
+ {
+     int n,m,a,b,w,i,j;
+     cin>>n>>m;
+     vector< pair <int,int> > edges;
+     int wt[n+1][n+1];
+     while(m--)
+     {
+         cin>>a>>b>>w;
+         edges.push_back({a,b});
+         wt[a][b]=wt[b][a]=w;
+     }
+     long long dist[n+1];
+     for(i=1;i<=n;i++)
+     {
+         dist[i]=INF;
+     }
+     dist[1]=0;
+     for(i=0;i<n-1;i++)
+     {
+         for(j=0;j<edges.size();j++)
+         {
+             a=edges[j].first;
+             b=edges[j].second;
+             if(dist[a]<INF)
+             {
+                 dist[b]=min(dist[b],wt[a][b]+dist[a]);
+             }
+         }
+     }
+     for(i=1;i<=n;i++)
+     {
+         cout<<dist[i]<<" ";
+     }
+     return 0;
+ }
+
+
+										---------------------
+
+
+								[35] Counting Sort
+
+NOTE : time complexity is O(N) [this is sort is valid for 0<=a[i]<=1e6(almost) ]
+
+CODE : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=100005;
+
+int cnt[N];
+void counting(int a[], int n)
+{
+    for(int i=0;i<n;++i) cnt[a[i]]++;
+    for(int i=1;i<N;++i) cnt[i]+=cnt[i-1];
+    
+    int h[n];
+    for(int i=0;i<n;++i)
+    {
+        h[cnt[a[i]]-1]=a[i];
+        cnt[a[i]]--;
+    }
+    
+    for(int i=0;i<n;++i) a[i]=h[i];
+}
+
+signed main() 
+{IOS;
+    
+    memset(cnt,0,sizeof(cnt));
+    
+    int n;
+    cin>>n;
+    
+    int a[n];
+    for(int i=0;i<n;++i) cin>>a[i];
+    
+    counting(a,n);
+    
+    for(int i=0;i<n;++i) cout<<a[i]<<" ";
+    cout<<endl;
+}
+
+									-------------------------
+
+								[36] Radix Sort
+
+NOTE : same as counting sort, jonly 2 or 3 more lines are added. 	TIME COMPLEXITY : (total digits in mx)*n
+
+CODE : 
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+const int N=100005;
+
+int fun(int a[], int n)
+{
+    int mx=a[0];
+    for(int i=1;i<n;++i) mx=max(mx,a[i]);
+    return mx;
+}
+
+void counting(int a[], int n, int ex)
+{
+    int cnt[10]={0};
+    for(int i=0;i<n;++i) cnt[(a[i]/ex)%10]++;
+    for(int i=1;i<10;++i) cnt[i]+=cnt[i-1];
+    
+    int h[n];
+    for(int i=n-1;i>=0;i--)
+    {
+        h[cnt[(a[i]/ex)%10]-1]=a[i];
+        cnt[(a[i]/ex)%10]--;
+    }
+    
+    for(int i=0;i<n;++i) a[i]=h[i];
+}
+
+signed main() 
+{IOS;
+    
+    int n;
+    cin>>n;
+    
+    int a[n];
+    for(int i=0;i<n;++i) cin>>a[i];
+    
+    // --
+    
+    int mx=fun(a,n);
+    
+    for(int i=1;(mx/i)>0;i*=10)
+    {
+        counting(a,n,i);
+    }
+    
+    for(int i=0;i<n;++i) cout<<a[i]<<" ";
+    cout<<endl;
+}
+
+
+
+									-----------------------
+
+								      [37] Prefix sum array && KMP
+
+Note : s[0...i]==s[n-i-1....n-1]; prefix len==suffix len
+Code : 
+    string s;
+    cin>>s;
+    
+    int n=s.size();
+    int pre[n]={0};
+    int j;
+    
+    for(int i=1;i<n;++i)
+    {
+        int j=pre[i-1];
+        
+        while(j>0 && s[i]!=s[j]) j=pre[j-1];
+        
+        if(s[i]==s[j]) j++;
+        pre[i]=j;
+    }
+    
+    for(int i=0;i<n;++i) cout<<pre[i]<<" ";
+
+
+      							  	      || Z - Algorithm ||
+
+// KMP [ find if the r is present in s or not, if exist then return all starting index of where from r is starting ]
+// Ex. : s=kakashi,r=ka
+// OP : 0,2
+
+
+    string r;
+    cin>>r;
+    
+    int i=0;
+    j=0;
+    
+    while(i<s.size())
+    {
+        if(s[i]==r[j]) {
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j==0) i++;
+            else j=pre[j-1];
+        }
+        
+        if(j==r.size())
+        {
+            cout<<(i-r.size())<<" ";
+            j=pre[j-1];
+        }
+    }
+
+
+									[ Perfect Z-algorithm ]
+
+code : 
+string s,r;
+        cin>>s;
+        cin>>r;
+        
+        string tmp=r;
+        tmp+='#';
+        tmp+=s;
+        s=tmp;
+        
+        cout<<s<<endl;
+        
+        int n=s.size();
+        int pre[n]={0};
+        int j;
+        
+        for(int i=0;i<r.size();++i) pre[i]=i;
+        for(int i=r.size()+1;i<n;++i)
+        {
+            int j=pre[i-1];
+            
+            while(j>0 && s[i]!=s[j]) j=pre[j-1];
+            
+            if(s[i]==s[j]) j++;
+            pre[i]=j;
+        }
+        
+        for(int i=0;i<n;++i) cout<<pre[i]<<" ";
+        cout<<endl;
+        
+        // finding part
+        
+        int i=r.size()+1;
+        j=0;
+        
+        while(i<s.size())
+        {
+            if(s[i]==r[j]) {
+                i++;
+                j++;
+            }
+            else
+            {
+                if(j==0) i++;
+                else j=pre[j-1];
+            }
+            
+            if(j==r.size())
+            {
+                // cout<<(i-r.size()-r.size()-1)<<" ";
+                cout<<(i-r.size())<<" ";
+                j=pre[j-1];
+            }
+        }
+        
+
+input : s=kakashi
+	r=ka
+	modifieg s=ka#kakahsi
+
+output : print s(modified) = ka#kakashi
+	 (prefix and suffix alogs) = 0 1 0 1 2 1 2 0 0 0 
+	 ans = 3 5 (starting point of r form where it(r) is starting in s).
+    
+
+									-----------------------
+
+
+								[38] Merge K sorted Array
+
+code : 
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define int long long
+#define pb push_back
+
+vector<int> merge(vector<int>v1, vector<int>v2)
+{
+    vector<int>cr;
+    int i=0,j=0;
+    while(i<v1.size() && j<v2.size())
+    {
+        if(v1[i]<=v2[j])
+        {
+            cr.pb(v1[i]);
+            i++;
+        }
+        else {
+            cr.pb(v2[j]);
+            j++;
+        }
+    }
+    while(i<v1.size()) cr.pb(v1[i]),i++;
+    while(j<v2.size()) cr.pb(v2[j]),j++;
+
+    return cr;
+}
+
+vector<int> fun(vector<vector<int> >v, int l, int r)
+{
+    vector<int>cr;
+    if(r-l>1)
+    {
+        int mid=(l+r)/2;
+        vector<int>v1=fun(v,l,mid);
+        vector<int>v2=fun(v,mid+1LL,r);
+        cr=merge(v1,v2);
+    }
+    else{
+        if(r==l) {
+            for(int i=0;i<(int)v[0].size();++i) cr.pb(v[l][i]);
+        }
+        else{
+            cr=merge(v[l],v[r]);
+        }
+    }
+    return cr;
+}
+
+signed main() 
+{IOS;
+    
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+	
+    // --
+    
+    int n,m;
+    cin>>n>>m;
+
+    vector<vector<int> >v(n, vector<int>(m));
+    for(int i=0;i<n;++i) {
+        for(int j=0;j<m;++j) cin>>v[i][j];
+    }
+
+    vector<int>ans=fun(v,0,n-1);
+
+    for(int i=0;i<ans.size();++i) cout<<ans[i]<<" ";
+    cout<<endl;
+}
+
+									------------
+
+
+
+
+
+

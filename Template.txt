@@ -1,0 +1,443 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define pb push_back
+#define int long long
+// const int N = 3e5 + 5;
+
+signed main() 
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;  cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        int a[n];
+        for(int i=0;i<n;++i)
+        {
+            cin>>a[i];
+        }
+        
+        
+    }
+    
+}
+
+
+/*
+             
+    _/﹋\_
+    (҂`_´)
+    <,︻╦╤─҉- - - - - - - - => - => - =>
+    _/﹋\_
+               
+*/
+----------------------------
+
+[-1] Commands for compile codes
+[0] Git
+[1] linear probing  hashing 
+[2] RAT IN MAZE
+[3] N QUEEN
+[4] sort(a,a+n,comp)
+
+---------------------------------------
+
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt","r",stdin);
+		freopen("output.txt","w",stdout);
+	#endif
+
+Command for C code : Terminal
+gcc filename.c
+./a.out
+
+Coammand for C++ code : Terminal
+g++ filename.cpp
+./a.out
+
+Command for C code : CMD
+gcc filename.c
+filename
+
+Command for C++ code : CMD
+g++ filename.cpp
+filename
+
+Command for C code : VS CODE
+gcc filename.c
+./filename
+
+Command for C++ code : VS CODE
+g++ filename.cpp
+./filename
+
+---------------------------
+
+
+									[ Git ]
+
+=> follow these step properly to add files to git repo.
+-git init
+-git status ( this show pending work of a local directory or show status )
+-git add <file name or folder name> ( git add . -> this add all files those have to add aur change or replace files )
+-git commit -m "commit name"
+-git status
+-git remote add origin https://github.com/A-kash02/<repo name>.git
+-git push -u origin master
+
+
+=>other useful command
+->ls -a ( show hidden files )
+->git log (this showing information related to changes, means which change has happened and when was it happened and by whom)
+->git diff <file name> (this is telling about difference between a file before change and after)
+->git checkout <file name> (go 1 step back, mean undo changes)
+->git clone https://github.com/<user name>/<repo name>.git (clone repo to yout system)
+
+[merge and branching]
+
+[1]=> follow these instruction properly
+-git branch <branch name> (create branch)
+-git branch (to show all branches and * sign indicate currect branch )
+-git checkout <branch name> ( to go another branch or branch switch,| when you done all work with branch then save those changes to branch using -git add . and git commit -m "--" etc. )
+-git merge <branch name> (this will branch to master (:q!) )
+-git push origin master -u (final step, push all changes to github)
+
+[2] we can make a branch and merge without terminal, direct from github (it's also simple.)
+
+----------------------------
+
+									[1] linear probing  hashing 
+CODE :
+#include <stdio.h>
+#include <string.h>
+#define s(x) scanf("%d",&x)
+#define p(x) printf("%d ",x)
+#define nl printf("\n")
+
+int main(void) {
+    
+    int n;
+    s(n);
+    
+    struct data
+    {
+        char name[10];
+        char fd[10];
+    }p[n+1];
+    
+    int h[n+1]; for(int i=0;i<n+1;++i) h[i]=-1;
+    for(int i=0;i<n;++i)
+    {
+        scanf("%s",p[i].name);
+        
+        int z=31,sum=0,flag=0;
+        for(int j=0;j<strlen(p[i].name);++j)
+        {
+            int x=p[i].name[j];
+            // p(x);
+            sum+=(z*x);
+            z*=31;
+        }
+        // printf("%s ",p[i].name);
+        // p(sum);
+        sum=sum%n;
+        // p(sum);
+        // nl;
+        
+        for(int j=sum;j<n;++j){
+            if(h[j]==-1){
+                h[j]=i+1;
+                flag++;
+            }
+        }
+        if(flag==0){
+            for(int j=0;j<n;++j){
+                if(h[j]==-1){
+                    h[j]=i+1;
+                }
+            }
+        }
+        
+    }
+    // nl;
+    
+    // char fd[10];
+    scanf("%s",p[0].fd);
+    int y=0,z=31,sum=0;
+    for(int i=0;i<strlen(p[0].fd);++i){
+        int x=p[0].fd[i];
+        sum+=z*x;
+        z*=31;
+    }
+    sum%=n;
+    
+    // for(int i=0;i<4;++i) p(h[i]); nl;
+    
+    int flag=0;
+    for(int i=sum;i<n;++i)
+    {
+        int bl=strcmp(p[0].fd,p[h[i]-1].name);
+        if(bl==0){
+            p(h[i]);
+            printf("%s ",p[h[i]-1].name);
+            flag++;
+             break;
+        }
+    }
+    
+    if(flag==0)
+    {
+        for(int i=0;i<n;++i)
+        {
+            int bl=strcmp(p[0].fd,p[h[i]-1].name);
+            if(bl==0){
+                p(h[i]);
+                printf("%s ",p[h[i]-1].name);
+                flag++;
+                 break;
+            }
+        }
+    }
+}
+
+
+
+-----------------------------------------
+
+									2. [ RAT in MAZE ]
+code :
+
+int a[52][52],flag=0;
+
+int fun(int x, int y, int n)
+{
+	if(x==n && y==n && a[x][y]==1) return 1;
+	if(x>n || y>n) return 0;
+
+	if(a[x][y]==0) return 0;
+
+	flag=fun(x+1,y,n)+fun(x,y+1,n);
+	
+	return flag;
+}
+
+signed main() 
+{IOS;
+    
+    int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+        
+		// int a[n+1][n];
+		flag=0;
+		for(int i=1;i<=n;++i){
+			for(int j=1;j<=n;++j)
+			cin>>a[i][j];
+		}
+		
+		if(fun(1,1,n)==0) cout<<"NOT POSSIBLE\n";
+		else cout<<"POSSIBLE\n";
+
+    }
+}
+
+---------------------------------------
+
+
+										3. [ N Queen ]
+
+Code :
+
+#include <bits/stdc++.h>
+using namespace std;
+#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define pb push_back
+#define int long long
+#define endl "\n"
+
+bool isPossible(vector<vector<char>> &v, int r, int c, int n)
+{
+    for(int i=r; i>=0; --i)
+    {
+        if(v[i][c] == '1')
+            return false;
+    }
+
+    for(int i=r, j=c; i>=0 && j>=0; --i, --j)
+    {
+        if(v[i][j] == '1')
+            return false;
+    }
+
+    for(int i=r, j=c; i>=0 && j<n; --i, ++j)
+    {
+        if(v[i][j] == '1')
+            return false;
+    }
+
+    return true;
+}
+
+void nQueenSolver(vector<vector<char>> &v,int r, int n, bool &check)
+{
+    if(r == n)
+    {
+        for(int i=0; i<n; ++i)
+        {
+            for(int j=0; j<n; ++j)
+                cout << v[i][j] << " ";
+            cout << "\n";
+        }
+
+        exit(0);
+        cout << "\n";
+        check = true;
+        return;
+    }
+
+    for(int i=0; i<n; ++i)
+    {
+        if(isPossible(v, r, i, n))
+        {
+            v[r][i] = '1';
+            nQueenSolver(v, r+1, n, check);
+            v[r][i] = '0';
+        }
+    }
+}
+
+void nQueen(int n)
+{
+    vector<vector<char>> v(n);
+    for(int i=0; i<n; ++i)
+        v[i] = vector<char> (n, '0');
+
+    bool check {false};
+    nQueenSolver(v, 0, n, check);
+    
+    if(!check)
+        cout << "Not possible\n";
+}
+
+signed main() 
+{IOS;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n;
+        cin>>n;
+        
+        nQueen(n);
+    }
+}
+
+								---------------------------------------
+
+								[4] sort(a,a+n,comp)
+
+NOTE : sort according number of bits, Ex. 7, 8 after sort : 8, 7
+
+bool comp(int a,int b){
+	return _builtin_popcount(a)>_builtin_popcount(b);
+}
+....
+sort(a,a+n,comp);
+
+								---------------------------------------
+
+drums
+sun
+laptop
+anvil
+baseball_bat
+ladder
+grapes
+book
+dumbbell
+traffic_light
+wristwatch
+wheel
+shovel
+tennis_recquest [name change ]
+cloud
+headphones
+face
+eye
+lollipop
+power_outlet
+pants
+star [name change]
+
+hot dog [name
+syringe
+stop_sign
+mountain
+smily_face
+bed
+shorts
+shorts
+diving_board
+cell phone
+car [name change
+camera
+square
+moon
+radio
+tent
+line
+triangle
+basketball
+pillow
+t-shirt
+tooth
+paper_clip
+microphone
+pencil
+envelope
+frying_pan
+screwdrriver
+helmet
+bridge
+light_bulb
+key
+donut
+bird [name change
+circle
+beard
+sock
+ice_cream
+moustache
+suitcase
+rainbow
+cookie
+baseball
+bicycle
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
