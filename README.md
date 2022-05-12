@@ -16,4 +16,18 @@
    - [Smart Contract developer](https://t.co/lEqGz4VfHn)
    - [Full stack Web 3](https://t.co/KKwKV0UCWB)
    - [The Complete Guide to Full Stack Ethereum Development](https://t.co/ckN0gV7zB8)
-5. 
+5. x&(-x) = right most set bit <br/>
+   x=100101000 <br/>
+   x=a1b where a=10010, b=000 <br/>
+   -x=(2's complement of x)+1 <br/>
+   -x=(a1b)'+1 <br/>
+   =a'0b'+1 <br/>
+   =a'0111+1 <br/>
+   =a'1000 <br/>
+   -x=a'0b <br/>
+   <br/>
+   now, x&(-x) <br/>
+   =100101000&(a'1b) <br/>
+   right most bit =000001000 <br/>
+   
+   
