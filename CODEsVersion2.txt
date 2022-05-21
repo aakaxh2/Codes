@@ -48,6 +48,7 @@
 [40] Priority queue using Linked List
 [41] Median of streaming array [$$]
 [42] Merge k sorted linked list [$$]
+[43] Matrix chain multiplication 
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -3448,9 +3449,39 @@ public:
 };
 
 								    ------------------------
+								    
+								[43] Matrix chain multiplication
+								
 
+Code : 
+int dp[n][n];
+    int fun(int i, int j, int a[])
+    {
+        
+        if(i>=j) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        int tmp=INT_MAX;
+        for(int k=i;k<=j-1;++k)
+        {
+            int x=fun(i,k,a)+fun(k+1,j,a);
+            int y=a[i-1]*a[k]*a[j];
+            
+            tmp=min(tmp,x+y);
+        }
+        
+        return dp[i][j]=tmp;
+    }
 
+    
+    int matrixMultiplication(int N, int arr[])
+    {
+        // code here
+        memset(dp,-1,sizeof(dp));
+        return fun(1,N-1,arr);
+    }
 
+									------------------------
 
 
 
