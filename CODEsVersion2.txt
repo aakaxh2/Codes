@@ -2707,7 +2707,7 @@ using namespace std;
 const int N=155;
 string s;
 int mod=1003;
-int dp[N][N];
+unordered_map<string,int>mp;
 int fun(int i, int j, char action)
 {
     if(i>j) return 0;
@@ -2723,7 +2723,8 @@ int fun(int i, int j, char action)
         }
     }
 
-    if(dp[i][j]!=-1) return dp[i][j];
+    string z=to_string(i)+'_'+to_string(j)+'_'+action;
+    if(mp.find(z)!=mp.end()) return mp[z];
 
     int tmp=0;
     for(int k=i+1;k<=j-1;k+=2)
@@ -2735,6 +2736,7 @@ int fun(int i, int j, char action)
 
         if(s[k]=='&')
         {
+	    // use mod here if values are not valid
             if(action=='T') tmp=tmp+(lT*rT);
             else tmp=tmp+(lT*rF)+(lF*rT)+(lF*rF);
         }
@@ -2742,12 +2744,14 @@ int fun(int i, int j, char action)
         {
             if(s[k]=='|')
             {
+	    	// use mod here if values are not valid
                 if(action=='T') tmp=tmp+(lT*rF)+(lF*rT)+(lT*rT);
                 else tmp=tmp+(rF*lF);
             }
             else {
                 if(s[k]=='^')
                 {
+		    // use mod here if values are not valid
                     if(action=='T') tmp=tmp+(lT*rF)+(lF*rT);
                     else tmp=tmp+(lT*rT)+(lF*rF);
                 }
@@ -2755,11 +2759,12 @@ int fun(int i, int j, char action)
         }
         tmp%=mod;
     }
-    return dp[i][j]=tmp;
+    mp[z]=tmp%mod;
+    return tmp;
 }
 
 int cnttrue(string A) {
-    memset(dp,-1,sizeof(dp));
+    mp.clear();
     int n=A.length();
     s=A;
     // cout<<s<<endl;
