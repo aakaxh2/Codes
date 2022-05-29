@@ -49,6 +49,7 @@
 [41] Median of streaming array [$$]
 [42] Merge k sorted linked list [$$]
 [43] Matrix chain multiplication 
+[44] Minimum Obstacle Removal to Reach Corner $$
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -3487,6 +3488,76 @@ int dp[n][n];
     }
 
 									------------------------
+
+
+							[44] Minimum Obstacle Removal to Reach Corner $$
+								
+Code : [https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/]
+
+#define pb push_back
+class Solution {
+public:
+    int minimumObstacles(vector<vector<int>>& a) {
+        
+        int n=a.size(), m=a[0].size();
+        int node=n*m;
+        
+        int vis[n+1][m+1];
+        memset(vis, 0, sizeof(vis));
+        
+        int dis[n+1][m+1];
+        for(int i=0;i<=n;++i) for(int j=0;j<=m;++j) dis[i][j]=1e7;
+        dis[0][0]=a[0][0];
+        
+        multiset<pair<int,pair<int,int>>>ms;
+        ms.insert({dis[0][0],{0,0}});
+        
+        while(ms.size())
+        {
+            pair<int,pair<int,int>>p=*ms.begin();
+            ms.erase(ms.begin());
+            
+            int d=p.first;
+            int x=p.second.first, y=p.second.second;
+            if(vis[x][y]) continue;
+            vis[x][y]=1;
+            
+            if(x-1>=0 && vis[x-1][y]==0) {
+                if(dis[x-1][y]>dis[x][y]+a[x][y])
+                {
+                    dis[x-1][y]=dis[x][y]+a[x][y];
+                    ms.insert({dis[x-1][y], {x-1,y}});
+                }
+            }
+            if(x+1<n && vis[x+1][y]==0) {
+                if(dis[x+1][y]>dis[x][y]+a[x][y])
+                {
+                    dis[x+1][y]=dis[x][y]+a[x][y];
+                    ms.insert({dis[x+1][y], {x+1,y}});
+                }
+            }
+            if(y-1>=0 && vis[x][y-1]==0) {
+                if(dis[x][y-1]>dis[x][y]+a[x][y])
+                {
+                    dis[x][y-1]=dis[x][y]+a[x][y];
+                    ms.insert({dis[x][y-1], {x,y-1}});
+                }
+            }
+            if(y+1<m && vis[x][y+1]==0) {
+                if(dis[x][y+1]>dis[x][y]+a[x][y])
+                {
+                    dis[x][y+1]=dis[x][y]+a[x][y];
+                    ms.insert({dis[x][y+1], {x,y+1}});
+                }
+            }
+        }
+        
+        return dis[n-1][m-1];
+        
+    }
+};
+
+								-------------------------
 
 
 
