@@ -40,6 +40,7 @@
 [36] Radix Sort
 [37] Prefic sum array and KMP and Z-algorithm
 [38] Merge K sorted array
+[39] Subaarays count for xor equal to k $$$
 -------------------------
 
 									[0] some points
@@ -2805,6 +2806,44 @@ signed main()
 }
 
 									------------
+									
+								[39] count of subarrays which have xor eq to k
+Note : 
+
+xr=prefix_xor of arr
+y^k=xr
+OR
+y=xr^k
+
+<------xr------------>
+------|---------------
+<--y-> <----k-------->
+
+we have to count these y for every xr
+
+Code :
+int Solution::solve(vector<int> &A, int k) {
+
+    map<int,int>mp;
+
+    int xr=0;
+    int cnt=0;
+    for(int i=0;i<A.size();++i)
+    {
+        xr^=A[i]; // prefix_xor
+
+        if(xr==k) cnt++; // if prefix_xor eq to k then cnt++ means here len of y is 0
+
+        cnt+=mp[xr^k]; // y=xr^k; count of y's
+        mp[xr]++; // update count of y in hash
+    }
+
+    return cnt;
+}
+									-----------------
+
+
+
 
 
 
