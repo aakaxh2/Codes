@@ -41,6 +41,7 @@
 [37] Prefic sum array and KMP and Z-algorithm
 [38] Merge K sorted array
 [39] Subaarays count for xor equal to k $$$
+[40] sum of all bit till N (N<=1e9)
 -------------------------
 
 									[0] some points
@@ -2842,6 +2843,55 @@ int Solution::solve(vector<int> &A, int k) {
 }
 									-----------------
 
+								[40] sum of all bit till N (N<=1e9)
+NOTE : 0<= i <arr.size()
+[i]   first we make bit array for n
+[ii]  loop through array and stop at every set bit 1
+[iii] flip that i-th bit from 1 to 0, then we have choices to mark every bit either 0 or 1 from 0 to i-1, this will make total 2^(i) combinations
+[iv]  total number of 1's in 2^(i) combinations are (2^(i-1))*i
+[v]   if there are bits in array after i-th index, those will be count parallelly with (2^(i-1))*i, and their count will be (2^i)*(count of bits after i-th index)
+
+Link : https://www.interviewbit.com/problems/count-total-set-bits/ 
+code : 
+#define pb push_back
+
+long long int mod=1e9+7;
+long long expo(long long a,long long b)
+{
+	if(b==0)
+	return 1;
+	if(b%2==0)
+	return (expo((a*a)%mod,b/2))%mod;
+	return (a)%mod*(expo((a*a)%mod,b/2))%mod;
+}
+
+int Solution::solve(int n) {
+
+    long long y=__builtin_popcountll(n);
+        
+        vector<int>v;
+        while(n) {
+            v.pb(n%2);
+            n/=2;
+        }
+        
+        long long sum=y;
+        for(int i=0;i<v.size();++i)
+        {
+            if(v[i]==1)
+            {
+                y--;
+                long long x=i;
+                long long int z=(expo(2,x-1)%mod*x%mod)%mod;
+                long long int z1=(y%mod*expo(2,x)%mod)%mod;
+                z=(z1%mod+z%mod)%mod;
+                sum=(sum%mod+z%mod)%mod;
+            }
+        }
+
+        return sum;
+}
+									-----------------------
 
 
 
