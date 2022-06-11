@@ -44,6 +44,7 @@
 [40] sum of all bit till N (N<=1e9)
 [41] Aggressive cows (binary search)
 [42] Allocate books (binary search)
+[43] Median in Matrix
 -------------------------
 
 									[0] some points
@@ -3006,8 +3007,55 @@ int Solution::books(vector<int> &v, int B) {
     return ans;
 }
 									-------------------
+									
+									[43] Median in Matrix
+Code : 
+int fun(vector<int>&v, int x)
+{
+    int l=0,r=v.size()-1;
+    while(l<=r)
+    {
+        int mid=(l+r)/2;
+        
+        if(v[mid]<=x)
+        {
+            l=mid+1;
+        }
+        else {
+            r=mid-1;
+        }
+    }
+    return l;
+}
 
-
+int Solution::findMedian(vector<vector<int> > &v) {
+    
+    int n=v.size(), m=v[0].size();
+    long long int l=0, r=1e9;
+    int k=(n*m)/2;
+    
+    while(l<=r)
+    {
+        long long int mid=(l+r)/2;
+        
+        int cnt=0;
+        for(int i=0;i<n;++i)
+        {
+            cnt+=fun(v[i],mid);
+        }
+        
+        if(cnt<=k)
+        {
+            l=mid+1;
+        }
+        else {
+            r=mid-1;
+        }
+    }
+    
+    return l;
+}
+								--------------------
 
 
 
