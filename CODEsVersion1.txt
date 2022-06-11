@@ -42,6 +42,8 @@
 [38] Merge K sorted array
 [39] Subaarays count for xor equal to k $$$
 [40] sum of all bit till N (N<=1e9)
+[41] Aggressive cows (binary search)
+[42] Allocate books (binary search)
 -------------------------
 
 									[0] some points
@@ -2892,6 +2894,118 @@ int Solution::solve(int n) {
         return sum;
 }
 									-----------------------
+							[41] Aggressive cows (https://www.spoj.com/problems/AGGRCOW/)
+							
+Note : Farmer John has built a new long barn, with N (2 <= N <= 100,000) stalls. The stalls are located along a straight line at positions x1,...,xN (0 <= xi <= 1,000,000,000).
+His C (2 <= C <= N) cows don't like this barn layout and become aggressive towards each other once put into a stall. To prevent the cows from hurting each other, FJ wants to assign the cows to the stalls, such that the minimum distance between any two of them is as large as possible. What is the largest minimum distance?
+code : 
+bool check(int mn, vector<int>&v, int c)
+{
+    int lst=v[0];
+    int cnt=1;
+    for(int i=1;i<v.size();++i)
+    {
+        if(v[i]-lst>=mn)
+        {
+            lst=v[i];
+            cnt++;
+        }
+        
+        if(cnt>=c) break;
+    }
+    
+    if(cnt>=c) return true;
+    return false;
+}
+
+signed main() 
+{IOS;
+    
+    int t;  cin>>t; while(t--)
+    {
+        
+       int n,c;
+       cin>>n>>c;
+       
+       vector<int>v(n);
+       for(int i=0;i<n;++i) cin>>v[i];
+       sort(v.begin(), v.end());
+       
+       int l=1, r=1e9;
+       int ans=-1;
+       while(l<=r)
+       {
+           int mid=(l+r)/2;
+           if(!check(mid, v, c))
+           {
+               r=mid-1;
+           }
+           else {
+               ans=mid;
+               l=mid+1;
+           }
+       }
+       cout<<ans<<endl;
+        
+    }
+}
+									------------------------
+									
+									[42] Allocate books
+									
+Note : https://www.interviewbit.com/problems/allocate-books/
+code : 
+bool check(int barrier, vector<int>&v, int k)
+{
+    int sum=0;
+    int cnt=1;
+    for(int i=0;i<v.size();++i)
+    {
+        if(v[i]>barrier) return false;
+        if(sum+v[i]>barrier)
+        {
+            sum=v[i];
+            cnt++;
+        }
+        else
+        {
+            sum+=v[i];
+        }
+    }
+    
+    if(cnt<=k) return true;
+    return false;
+}
+
+
+int Solution::books(vector<int> &v, int B) {
+    
+    int l=0, r=0;
+    int n=v.size();
+    if(B>n) return -1;
+    
+    for(int i=0;i<n;++i)
+    {
+        l=min(l,v[i]);
+        r+=v[i];
+    }
+    
+    int ans=-1;
+    while(l<=r)
+    {
+        int mid=(l+r)/2;
+        
+        if(check(mid,v,B))
+        {
+            ans=mid;
+            r=mid-1;
+        }
+        else l=mid+1;
+    }
+    
+    return ans;
+}
+									-------------------
 
 
 
