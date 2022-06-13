@@ -45,6 +45,7 @@
 [41] Aggressive cows (binary search)
 [42] Allocate books (binary search)
 [43] Median in Matrix
+[44] Union Find {https://practice.geeksforgeeks.org/problems/union-find/1/#}
 -------------------------
 
 									[0] some points
@@ -3055,8 +3056,90 @@ int Solution::findMedian(vector<vector<int> > &v) {
     
     return l;
 }
-								--------------------
+									--------------------
+									
+									[44] Union find $$$$
+									
+Code : 
+#define int long long
+#define pb push_back
+#define endl "\n"
+#define meme(dp, val) memset(dp, val, sizeof(dp))
 
+const int N=100005;
+int par[N];
+int rk[N];
+
+int find_parent(int x)
+{
+    if(x==par[x]) return x;
+    return par[x]=find_parent(par[x]);
+}
+
+// connect x and y 
+// rk[i] is height of the tree/subtree of i
+// rk[x]=rk[y] => merge anyone to anyone
+// rk[x]<rk[y] => merge x with y means now root will be y
+// rk[x]>rk[y] => merge y with x means now root will be x
+
+// add little tree to larger tree to reduce overall height, if we add larger tree to smaller then overall tree height will be increse
+// else add smaller tree to larger will not affect overall height of the tree.
+
+void union_(int x, int y)
+{
+    x=find_parent(x);
+    y=find_parent(y);
+    
+    if(rk[x]<rk[y]) par[x]=y;
+    else
+    {
+        if(rk[x]>rk[y]) par[y]=x;
+        else par[y]=x, rk[x]++;
+    }
+}
+
+// if both's (x and y) parent are same means they are in same component
+
+int IsConnected(int x, int y)
+{
+    if(find_parent(x)==find_parent(y)) return 1;
+    return 0;
+}
+
+signed main()
+{
+    // int t; cin >> t; while (t--)
+    {
+    	// we are going to combining m components to make a tree of n nodes 
+        int n,m;
+        cin>>n>>m;
+        
+        meme(rk,0);
+        for(int i=0;i<N;++i) par[i]=i;
+        
+        while(m--)
+        {
+            int ty;
+            cin>>ty;
+            
+            int x,y;
+            cin>>x>>y;
+            
+            if(ty==1) // union of x and y
+            {
+                union_(x,y);
+            }
+            else // find if x and y are in same component
+            {
+                if(IsConnected(x,y)) cout<<"yes"<<endl;
+                else cout<<"no"<<endl;
+            }
+        }
+        
+        
+    }
+}
+									---------------
 
 
 
