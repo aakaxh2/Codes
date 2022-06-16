@@ -46,7 +46,7 @@
 [42] Allocate books (binary search)
 [43] Median in Matrix
 [44] Union Find {https://practice.geeksforgeeks.org/problems/union-find/1/#}
-[45] Distance between two point from n points (n=1e9)
+[45] Distance between two point from n points (n=100000)
 -------------------------
 
 									[0] some points
