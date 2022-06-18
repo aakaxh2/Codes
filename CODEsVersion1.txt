@@ -47,6 +47,7 @@
 [43] Median in Matrix
 [44] Union Find {https://practice.geeksforgeeks.org/problems/union-find/1/#}
 [45] Distance between two point from n points (n=100000)
+[46] longest arithmetic progression
 -------------------------
 
 									[0] some points
@@ -3207,6 +3208,53 @@ signed main()
     }
 }
 									---------------------
+									
+								[46] longest increasing progression
+									
+Code : 
+int lengthOfLongestAP(int a[], int n) {
+        
+        if(n<=1) return n;
+        int dp[n][n];
+        for(int i=0;i<n;++i) dp[i][n-1]=2;
+        
+        int mx=2;
+        for(int j=n-2;j>=1;j--)
+        {
+            int i=j-1, k=j+1;
+            while(i>=0 && k<n)
+            {
+                if(a[i]+a[k]>2*a[j])
+                {
+                    dp[i][j]=2;
+                    i--;
+                }
+                else
+                {
+                    if(a[i]+a[k]<2*a[j])
+                    {
+                        k++;
+                    }
+                    else
+                    {
+                        dp[i][j]=dp[j][k]+1;
+                        mx=max(mx, dp[i][j]);
+                        i--,k++;
+                    }
+                }
+            }
+            while(i>=0) dp[i][j]=2, i--;
+        }
+        
+        return mx;
+    }
+    
+									-------------------    
+    
+
+
+
+
 
 
 
