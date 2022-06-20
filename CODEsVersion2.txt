@@ -51,6 +51,7 @@
 [43] Matrix chain multiplication 
 [44] Minimum Obstacle Removal to Reach Corner $$
 [45] Number of path from source to target node in undirected tree/graph [https://atcoder.jp/contests/abc211/submissions/24532256]
+[46] differece of two int strings
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -3625,8 +3626,53 @@ signed main()
 }
 
 									------------
+								[46] difference between two int strings
+								
+Note : this method is used for subtract two very large numbers
 
+string a="11443333311111111100"
+string b="1144422222221111"
+output : "11442188888888889989"
 
+Code : 
+string check(string a,string b){
+    
+    if(a.size()<b.size()) swap(a,b);
+    int n=a.size(), m=b.size();
+    
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    
+    int cr=0;
+    string s="";
+    for(int i=0;i<m;++i)
+    {
+        int diff=(a[i]-'0')-(b[i]-'0')-cr;
+        
+        if(diff<0) {
+            diff+=10;
+            cr=1;
+        }
+        else cr=0;
+        s.push_back(diff+'0');
+    }
+    
+    for(int i=m;i<n;++i)
+    {
+        int diff=(a[i]-'0')-cr;
+        if(diff<0) {
+            diff+=10;
+            cr=1;
+        }
+        else cr=0;
+        s.push_back(diff+'0');
+    }
+    
+    reverse(s.begin(), s.end());
+    return s;
+    
+}
+										---------
 
 
 
