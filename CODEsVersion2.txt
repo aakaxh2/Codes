@@ -52,6 +52,7 @@
 [44] Minimum Obstacle Removal to Reach Corner $$
 [45] Number of path from source to target node in undirected tree/graph [https://atcoder.jp/contests/abc211/submissions/24532256]
 [46] differece of two int strings
+[47] find pair of two node with k in binary search tree $$
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -3673,8 +3674,65 @@ string check(string a,string b){
     
 }
 										---------
+										
+							[47] find pair of two node with k in binary search tree $$
+							
+Note :  this is a two pointer method in binary tree, similar to find two sum pair in array using l pointer ans r pointer;
+	Here, sl.top() is left pointer and sr.top() is right pointer.
 
+Code : 
 
+class Solution {
+public:
+    stack<TreeNode*>sl,sr;
+    
+    void pushL(TreeNode* cr)
+    {
+        while(cr) {
+            sl.push(cr);
+            cr=cr->left;
+        }
+    }
+    
+    void pushR(TreeNode* cr) 
+    {
+        while(cr)
+        {
+            sr.push(cr);
+            cr=cr->right;
+        }
+    }
+    
+    bool findTarget(TreeNode* root, int k) {
+        
+        pushL(root);
+        pushR(root);
+        
+        
+        while(sl.size() && sr.size())
+        {
+            TreeNode* l=sl.top();
+            TreeNode* r=sr.top();
+            if(l==r) break;
+            
+            int x=l->val, y=r->val;
+            if(x+y==k) return true;
+            
+            if(x+y>k)
+            {
+                sr.pop();
+                pushR(r->left);
+            }
+            else
+            {
+                sl.pop();
+                pushL(l->right);
+            }
+        }
+        return false;
+    }
+};
+										---------
 
 
 
