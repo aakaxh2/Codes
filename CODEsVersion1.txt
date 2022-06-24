@@ -49,6 +49,7 @@
 [45] Distance between two point from n points (n=100000)
 [46] longest arithmetic progression
 [47] Rearrange string such that there is no palindrome substring 
+[48] Euclidean algorithm extended
 -------------------------
 
 									[0] some points
@@ -3326,6 +3327,46 @@ signed main()
     }
 }
 									------------
+								[48] Euclidean algorithm extended
+Note : 
+Eq : ax+by=gcd(a,b)
+find x and y ??
+
+Code : 
+int x,y;
+int fun(int a, int b)
+{
+    if(a==0) {
+        x=0, y=1;
+        return b;
+    }
+    int gcd=fun(b%a,a);
+    int x1=y-(b/a)*x;
+    int y1=x;
+    
+    x=x1, y=y1;
+    return gcd;
+}
+
+
+signed main() 
+{
+    {
+        int a,b;
+        cin>>a>>b;
+        
+        int gcd=fun(b%a,a);
+        
+        int x1=y-(b/a)*x;
+        int y1=x;
+        x=x1, y=y1;
+        
+        cout<<"gcd is : "<<gcd<<endl;
+        cout<<"x and y is : "<<x<<", "<<y<<endl;
+    }
+}
+									--------------------
+
 
 
 
