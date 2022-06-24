@@ -53,28 +53,38 @@
 [45] Number of path from source to target node in undirected tree/graph [https://atcoder.jp/contests/abc211/submissions/24532256]
 [46] differece of two int strings
 [47] find pair of two node with k in binary search tree $$
+[48] Bellman Ford algorithm
+[49] Floyd warshall algorithm $$
 --------------------------------------------
 
 									CODE TEMPLATE
 #include <bits/stdc++.h>
 using namespace std;
- 
-#define f(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define bitcount __builtin_popcount
 
-//MY TEMPLATE
- 
-int main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-	
+#define I ios::sync_with_stdio(0);
+#define O cin.tie(0);
+#define S cout.tie(0);
+#define int long long
+#define pb push_back
+#define endl "\n"
+#define srt(v) sort(v.begin(), v.end())
+#define rsrt(v) sort(v.begin(), v.end(), greater<>())
+#define rev(v) reverse(v.begin(), v.end())
+#define meme(dp, val) memset(dp, val, sizeof(dp))
+
+
+signed main() 
+{I;O;S;
+
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+
+    int t;  cin>>t; while(t--)
+    {
+        
+    }
 }
 							[1]. MAX/MIN sum subarray in array ($$$$)
 
@@ -3808,6 +3818,201 @@ public:
     }
 };
 										---------
+									[48] Bellman Ford algorithm
+Note : [https://cp-algorithms.com/graph/bellman_ford.html]
+
+Code : 
+
+vector<pair<pair<int,int>,int>>e;
+
+signed main() 
+{I;O;S;
+    
+    // int t;  cin>>t; while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        
+        for(int i=0;i<m;++i)
+        {
+            int x,y,cost;
+            cin>>x>>y>>cost;
+            
+            e.pb({{x,y}, cost});
+        }
+        
+        
+        int dis[n];
+        for(int i=0;i<n;++i) dis[i]=INT_MAX;
+        dis[0]=0;
+        vector<int>par(n,-1);
+        
+        int isCy;
+        
+        for(int i=0;i<n;++i)
+        {
+            isCy=-1;
+            for(int j=0;j<m;++j)
+            {
+                int a=e[j].first.first, b=e[j].first.second, cost=e[j].second;
+                if(dis[a]<INT_MAX)
+                {
+                    dis[b]=min(dis[b], dis[a]+cost);
+                    par[b]=a;
+                    isCy=b;
+                }
+            }
+        }
+        
+        
+        for(int i=0;i<n;++i)
+        {
+            cout<<i<<" -> "<<dis[i]<<endl;
+        }
+        
+        for(int i=0;i<n;++i) cout<<par[i]<<" "; cout<<endl;
+        
+        if(isCy==-1)
+        {
+            cout<<"there is no negative cycle"<<endl;
+        }
+        else
+        {
+            cout<<isCy<<endl;
+            int y=isCy;
+            for(int i=0;i<n;++i) y=par[y];
+            
+            vector<int>path;
+            for(int cr=y;;cr=par[cr])
+            {
+                path.pb(cr);
+                if(cr==y && path.size()>1) break;
+            }
+            
+            reverse(path.begin(), path.end());
+            
+            cout<<"Negative cycle is : ";
+            for(int i=0;i<path.size();++i) cout<<path[i]<<" ";
+            cout<<endl;
+            
+            
+        }
+        
+        
+    }
+}
+									--------------------
+								[49] Floyd warshall algorithm $$
+
+
+
+Node : 
+	/*
+        
+        after including k-th node
+        
+        case 1 : 
+        new distance means we are considering that path from node i to node j will be passed through node k and distance will be = dis[i][k]+dis[k][j]
+        
+        case 2 :
+        old distance will be remain same as minimum between node i and node j 
+        means inlcuding 1 to k-1 nodes we get shortest distance between node i and node j is  = dis[i][j]
+        and the new node (node k) will not affect min distance between i and j
+        
+        Equation for both the cases is : dis[i][j]=min(dis[i][j], dis[i][k]+dis[k][j]);
+        
+        */
+        
+        
+        
+        
+        /*
+        
+        basic idea behind the algorithm is : 
+        
+        at current time we are at k-th level
+        then the nodes in the shortest path between any node i and j (1<=i,j<=n) have values 1 to k-1
+        means shortest path is becoming considereing node 1 to k-1
+        
+        after k-th level 
+        shortest path will become considereing node 1 to k
+        
+        and so on...
+        
+        */
+
+
+Code : 
+
+// Floyd warshall algorithm :  All pair shortest path 
+    {
+        
+        int N=505, INF=1e12;
+        int dis[N][N];
+        
+        // initialise with infinide distance
+        for(int i=0;i<N;++i)
+        {
+            for(int j=0;j<N;++j)
+            {
+                if(i==j) dis[i][j]=0;
+                else dis[i][j]=INF;
+            }
+        }
+        
+        // n nodes and m edges
+        int n,m;
+        cin>>n>>m;
+        
+        // node are 1 based index i.e. 1,2,3, ... n
+        for(int i=0;i<m;++i)
+        {
+            // weight of edge between node x and node y
+            int x,y,wt;
+            cin>>x>>y>>wt;
+            
+            dis[x][y]=wt;
+        }
+        
+        
+        for(int k=1;k<=n;++k)
+        {
+            for(int i=1;i<=n;++i)
+            {
+                for(int j=1;j<=n;++j)
+                {
+                    if(dis[i][k]!=INF && dis[k][j]!=INF)
+                        dis[i][j]=min(dis[i][j], dis[i][k]+dis[k][j]);
+                }
+            }
+        }
+        
+        // dis[i][j] = min distance between node i and node j
+        for(int i=1;i<=n;++i)
+        {
+            for(int j=1;j<=n;++j) 
+            if(dis[i][j]==INF) cout<<"I "; else cout<<dis[i][j]<<" ";
+            cout<<endl;
+        } 
+    }
+									----------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
