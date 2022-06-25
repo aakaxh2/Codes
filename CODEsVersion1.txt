@@ -50,6 +50,7 @@
 [46] longest arithmetic progression
 [47] Rearrange string such that there is no palindrome substring 
 [48] Euclidean algorithm extended
+[49] Rod cutting problem DP
 -------------------------
 
 									[0] some points
@@ -3365,7 +3366,40 @@ signed main()
         cout<<"x and y is : "<<x<<", "<<y<<endl;
     }
 }
-									--------------------
+									  --------------------
+									[49] ROd cutting problem
+Code : 
+
+#define ll long long
+class Solution{
+  public:
+    
+    unordered_map<ll,int>mp;
+    
+    ll cut(int a[], int n)
+    {
+        if(n==0) return 0;
+        if(n==1) return a[0];
+        
+        if(mp.find(n)!=mp.end()) return mp[n];
+        
+        ll tmp=0;
+	// make a cut of i len and take it's price and call fun for remaining n-i part
+        for(int i=1;i<=n;++i)
+        {
+            tmp=max(tmp, a[i-1]+cut(a,n-i));
+        }
+        
+        return mp[n]=tmp;
+    }
+  
+  
+    int cutRod(int price[], int n) {
+        
+        return cut(price, n);
+    }
+};
+									------------------
 
 
 
