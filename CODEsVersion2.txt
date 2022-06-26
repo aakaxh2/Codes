@@ -1891,6 +1891,17 @@ public:
         if(dp[e][f]!=-1) return dp[e][f];
         
         int mn=INT_MAX;
+	
+	// method 1
+	
+	// for(int i=1;i<=k;++i)
+        // {
+        //     int x=1+max(fun(n-1,i-1),fun(n,k-i));
+        //     mn=min(mn,x);
+        // }
+	
+	// use method 2 if method 1 gives tle
+	
         int l=1,r=f;
         while(l<=r)
         {
@@ -1908,6 +1919,8 @@ public:
             
             mn=min(mn,tmp);
         }
+	
+	// -- end --
         
         return dp[e][f]=mn;
     }
