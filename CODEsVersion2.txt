@@ -1894,9 +1894,9 @@ public:
 	
 	// method 1
 	
-	// for(int i=1;i<=k;++i)
+	// for(int i=1;i<=f;++i)
         // {
-        //     int x=1+max(fun(n-1,i-1),fun(n,k-i));
+        //     int x=1+max(fun(e-1,i-1),fun(e,f-i));
         //     mn=min(mn,x);
         // }
 	
