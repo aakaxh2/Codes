@@ -56,6 +56,7 @@
 [48] Bellman Ford algorithm
 [49] Floyd warshall algorithm $$
 [50] Total number of possible results of OR of all subarrays
+[51] Count of Subarray with given XOR
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -4061,9 +4062,6 @@ int fun(vector<int>v, int k)
         cnt+=mp[xr^k];
         mp[xr]++;
     }
-    
-    for(auto it : mp) cout<<it.first<<" "<<it.second<<endl;
-
     return cnt;
 }
 
