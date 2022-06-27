@@ -55,6 +55,7 @@
 [47] find pair of two node with k in binary search tree $$
 [48] Bellman Ford algorithm
 [49] Floyd warshall algorithm $$
+[50] Total number of possible results of OR of all subarrays
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -4009,13 +4010,64 @@ Code :
         } 
     }
 									----------------
+							[50] Total number of possible results of OR of all subarrays
+Note: [https://leetcode.com/problems/bitwise-ors-of-subarrays/]
+Code :
+int subarrayBitwiseORs(vector<int>& arr) {
+        
+        vector<int>v;
+        int l=0;
+        for(int i=0;i<arr.size();++i)
+        {
+            int r=v.size();
+            v.pb(arr[i]);
+            for(int j=l;j<r;++j)
+            {
+                if(v.back() != (arr[i]|v[j])) v.pb(arr[i]|v[j]);
+            }
+            l=r;
+        }
+        
+        return set(v.begin(), v.end()).size();
+    }
+    
+    
+									---------------
+								[51] Count of Subarray with given XOR
+Note : [https://www.interviewbit.com/problems/subarray-with-given-xor/]
 
+why add mp[xr^k] in cnt ?
+xr=a[0]^a[1]^..^a[i]
+let y=xr^k
+then xr^y=xr^xr^k
+k=xr^y
 
+y=xor of a[0] to a[j] where j<i
+so y^xr will also equal to k means subarray xor from j+1 to i will give k
 
+Code : 
+int fun(vector<int>v, int k)
+{
+    map<int,int>mp;
 
+    int xr=0;
+    int cnt=0;
+    for(int i=0;i<v.size();++i)
+    {
+        xr^=v[i];
 
+        if(xr==k) cnt++;
 
+        cnt+=mp[xr^k];
+        mp[xr]++;
+    }
+    
+    for(auto it : mp) cout<<it.first<<" "<<it.second<<endl;
 
+    return cnt;
+}
+
+									--------------
 
 
 
