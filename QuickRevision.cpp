@@ -1,4 +1,15 @@
-                                                                     // Author : Aakash //
+                                                                     || Author : Aakash ||
+
+
+
+Summary : 
+[] Binary Index Tree
+[] cycle detection in graph
+[] dijkshtra
+[] floyd warshall
+[] prim
+
+
 
 = = = = = = = = BIT [binary index tree] = = = = = = = =
 
