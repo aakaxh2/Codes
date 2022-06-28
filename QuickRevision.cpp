@@ -357,7 +357,80 @@ for(int i=1;i<=n;++i)
 
 
 	
--prim
+= = = = = = = = prim = = = = = = = =
+	
+Code :
+
+int n;
+cin>>n;
+
+for(int i=0;i<n;++i) 
+{
+	int x,y,wt;
+	cin>>x>>y>>wt;
+	v[x].pb({y,wt});
+	v[y].pb({x,wt});
+}
+
+int vis[n+2];
+memset(vis,0,sizeof(vis));
+multiset<pair<int,int>>ms;
+ms.insert({0,0}); // dis, node
+
+
+/*
+currently we have many edges in this graph
+we have to pick n-1 edges such that total weight is min and all nodes are connected 
+i.e. final graph will be a tree with n-1 edges and n nodes
+*/
+
+int cost=0;
+while(ms.size())
+{
+    /*
+    gives lowest weighted edge 
+    */
+    pair<int,int>p=*ms.begin();
+    ms.erase(ms.begin());
+
+    
+    /*
+    current edge detail :
+    edge weight = p.first
+    node one = p.second
+    another node is the parent of x 
+    
+    so parent of x is already taken part in new graph
+    and if x is also taken part in new graph then just skip this edge
+    else go furthure...
+    */
+	
+    int x=p.second;
+    if(vis[x]) continue;
+    vis[x]=1;
+    
+
+    cost+=p.first;
+
+    for(int i=0;i<v[x].size();++i)
+    {
+	int child=v[x][i].first;
+	if(vis[child]==0) {
+	    ms.insert({v[x][i].second,child});
+	}
+    }
+}
+
+cout<<cost<<endl;
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+
+
+
 -kruskal
 -lca
 -binary lifting
