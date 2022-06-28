@@ -81,7 +81,139 @@ void update(int i, int x)
 -bit masking
 
 -bridges in tree
--cycle in graph [4]
+
+
+
+
+= = = = = = = = cycle detection in graph = = = = = = = =
+	=> undirected graph
+	=> directed graph
+
+=> Code : undirected graph
+
+bool dfs(vector<int>v[], int vis[], int x, int pr)
+{
+	/* 
+	vis[x]=1 means dfs is not finished yet for node x 
+	mtlb abhi bhi x ke children aur unke children ke children aur .... pe abhi bhi dfs chal rha hai recursively
+	aur hum gum ke vapas x pe aaye h mtlb x ke niche kisi node se ek aur path se hum x tak pahuch rahe h iska mtlb yaha loop hai
+	*/
+	if(vis[x]==1) return true; 
+	
+	// ye node pura ho chaka hai
+	if(vis[x]==2) return false;
+
+	vis[x]=1;
+	for(int i=0;i<v[x].size();++i)
+	{
+	    int child=v[x][i];
+	    if(child==pr) continue;
+
+	    if(dfs(v,vis,child,x)) return true;
+	}
+	
+	/*
+	vis[x]=2 mtlb node x ke under jite bhi children aur unke aage aur children the un sab pe hum visit karke aa gye h 
+	aur hame koi loop ni mila h 
+	aur ab yaha se niklte hi x pe dfs khatam ho jayega
+	*/
+	vis[x]=2;
+	return false;
+}
+
+
+int n,m;
+cin>>n>>m;
+
+for(int i=1;i<=m;++i) {
+	int x,y;
+	cin>>x>>y;
+	v[x].pb(y);
+	v[y].pb(x);
+}
+
+
+int vis[n+2];
+memset(vis, 0, sizeof(vis));
+
+for(int i=0;i<n;++i)
+{
+    if(vis[i]==0 && dfs(v,vis,i,-1))
+    {
+	cout<<"there is cycle";
+    }
+}
+cout<<"there is no cycle";
+
+
+=> Code : directed graph
+
+bool dfs(vector<int>v[], int vis[], int x, int pr)
+{
+	/* 
+	vis[x]=1 means dfs is not finished yet for node x 
+	mtlb abhi bhi x ke children aur unke children ke children aur .... pe abhi bhi dfs chal rha hai recursively
+	aur hum gum ke vapas x pe aaye h mtlb x ke niche kisi node se ek aur path se hum x tak pahuch rahe h iska mtlb yaha loop hai
+	*/
+	if(vis[x]==1) return true; 
+	
+	// ye node pura ho chaka hai
+	if(vis[x]==2) return false;
+
+	vis[x]=1;
+	for(int i=0;i<v[x].size();++i)
+	{
+	    int child=v[x][i];
+		
+	    /*
+		if(child==pr) continue; 
+		this line is diffrent from undirected graph
+		because there can be edge from x->y ans y->x
+		or x->x
+		so we will skip this part x->y and y->x, i.e. there is a cycle in x and y
+		there is no need to keep parent node with x
+	    */
+
+	    if(dfs(v,vis,child,x)) return true;
+	}
+	
+	/*
+	vis[x]=2 mtlb node x ke under jite bhi children aur unke aage aur children the un sab pe hum visit karke aa gye h 
+	aur hame koi loop ni mila h 
+	aur ab yaha se niklte hi x pe dfs khatam ho jayega
+	*/
+	vis[x]=2;
+	return false;
+}
+
+
+int n,m;
+cin>>n>>m;
+
+for(int i=1;i<=m;++i) {
+	int x,y;
+	cin>>x>>y;
+	v[x].pb(y);
+	v[y].pb(x);
+}
+
+
+int vis[n+2];
+memset(vis, 0, sizeof(vis));
+
+for(int i=0;i<n;++i)
+{
+    if(vis[i]==0 && dfs(v,vis,i,-1))
+    {
+	cout<<"there is cycle";
+    }
+}
+cout<<"there is no cycle";
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
 
 = = = = = = = = dijkshtra = = = = = = = =
 
@@ -123,11 +255,108 @@ void dijkstra(int node)
 }
 
 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 
 
 -bellmon
--floyd warshall
+
+
+
+= = = = = = = = floyd warshall = = = = = = = =
+	
+|| EXPLANATION ||
+	
+this algo works correctly in both directed and undirected graph
+time complexity : o(n^3)
+/*
+        
+        after including k-th node
+        
+        case 1 : 
+        new distance means we are considering that path from node i to node j will be passed through node k and distance will be = dis[i][k]+dis[k][j]
+        
+        case 2 :
+        old distance will be remain same as minimum between node i and node j 
+        means inlcuding 1 to k-1 nodes we get shortest distance between node i and node j is  = dis[i][j]
+        and the new node (node k) will not affect min distance between i and j
+        
+        Equation for both the cases is : dis[i][j]=min(dis[i][j], dis[i][k]+dis[k][j]);
+        
+*/
+
+	
+/*
+        
+        basic idea behind the algorithm is : 
+        
+        at current time we are at k-th level
+        then the nodes in the shortest path between any node i and j (1<=i,j<=n) have values 1 to k-1
+        means shortest path is becoming considereing node 1 to k-1
+        
+        after k-th level 
+        shortest path will become considereing node 1 to k
+        
+        and so on...
+        
+*/
+	
+Code : 
+int N=505, INF=1e12;
+int dis[N][N];
+
+// initialise with infinide distance
+for(int i=0;i<N;++i)
+{
+    for(int j=0;j<N;++j)
+    {
+	if(i==j) dis[i][j]=0;
+	else dis[i][j]=INF;
+    }
+}
+
+// n nodes and m edges
+int n,m;
+cin>>n>>m;
+
+// node are 1 based index i.e. 1,2,3, ... n
+for(int i=0;i<m;++i)
+{
+    // weight of edge between node x and node y
+    int x,y,wt;
+    cin>>x>>y>>wt;
+
+    dis[x][y]=wt;
+}
+
+for(int k=1;k<=n;++k)
+{
+    for(int i=1;i<=n;++i)
+    {
+	for(int j=1;j<=n;++j)
+	{
+	    if(dis[i][k]!=INF && dis[k][j]!=INF)
+		dis[i][j]=min(dis[i][j], dis[i][k]+dis[k][j]);
+	}
+    }
+}
+
+// dis[i][j] = min distance between node i and node j
+for(int i=1;i<=n;++i)
+{
+    for(int j=1;j<=n;++j) 
+    if(dis[i][j]==INF) cout<<"I "; else cout<<dis[i][j]<<" ";
+    cout<<endl;
+} 
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+	
+	
+
+
+
+	
 -prim
 -kruskal
 -lca
