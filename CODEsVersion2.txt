@@ -3,17 +3,17 @@
 								prepared codes
 									---------------
 
-[1]. MAX sum subarray in array ($$$$)
+[1] MAX sum subarray in array ($$$$)
 		[c] Kadane's Algorithm
-[2]. Fenwick tree (Binary index tree) $$$$$$$$$$$$$$ (VERY IMPORTANT) (Short form of segment tree)
+[2] Fenwick tree (Binary index tree) $$$$$$$$$$$$$$ (VERY IMPORTANT) (Short form of segment tree)
 	[c]. Inversion count
-[3]. Shortest path between two nodes
-[4]. Bridges in a graph 
-[5]. Sum of the nodes of a subtree ($$$$)
-[7]. Number of loop in a graph
-[8]. MAXIMUN Sum of a submatrix in a matrix
-[8]. Dijkshtra Algorithm
-[9]. Kruskal's Algorithm [MST]-- ( Minimum spanning tree )
+[3] Shortest path between two nodes
+[4] Bridges in a graph 
+[5] Sum of the nodes of a subtree ($$$$)
+[7] Number of loop in a graph
+[8] MAXIMUN Sum of a submatrix in a matrix
+[8] Dijkshtra Algorithm
+[9] Kruskal's Algorithm [MST]-- ( Minimum spanning tree )
 [10] Prim's Algorithm (2nd method og MST)
 [11] GRAPH : if(has cycle) YES
 	     else NO
