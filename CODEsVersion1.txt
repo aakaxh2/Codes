@@ -2095,6 +2095,35 @@ Code :
         int ans=-1;
         for(int i=0;i<n;++i) ans=max(ans,lis[i]);
         cout<<ans<<endl;
+	
+								METHOD 2ND;
+								
+	Code : 
+	
+        int n;
+        cin>>n;
+        
+        vector<int>v(n);
+        for(int i=0;i<n;++i) cin>>v[i];
+	
+        vector<int>lis;
+        for(int i=0;i<v.size();i++)
+        {
+            auto it=lower_bound(lis.begin(),lis.end(),v[i]);
+            if(it==lis.end())
+            {
+                lis.push_back(v[i]);
+            }
+            else
+            {
+                *it=v[i];
+            }
+        }
+        
+        return (int)lis.size();
+	
+	
+	
 
 							--------------------------------------------------------
 
