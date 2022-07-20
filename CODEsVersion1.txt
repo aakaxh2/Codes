@@ -75,6 +75,22 @@ cout<<x<<endl;
 string s="111";
 int y=stoi(s);
 cout<<y;
+
+
+
+				**Catalan number :**
+				
+c[0]=1
+c[1]=1
+c[2]= c[0]*c[1] + c[1]*c[0]
+c[3]= c[0]*c[2] + c[1]*c[1] + c[2]*c[0]
+c[4]= c[0]*c[3] + c[1]*c[2] + c[2]*c[1] + c[3]*c[0]
+And so on..
+
+Question link related to this topic : https://leetcode.com/problems/unique-binary-search-trees/
+
+
+
 									-------------------
 
 									[1] Basic template 
