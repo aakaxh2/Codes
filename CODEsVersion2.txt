@@ -582,77 +582,90 @@ About : if we remove an edge of a graph then the graph convert into two disconne
 
 Code :
 
-#include <bits/stdc++.h>
-#include <vector>
- 
-using namespace std;
- 
-const int MAX_N = 300005;
- 
-int bridgec;
-vector<int> adj [MAX_N];
-int lvl [MAX_N];
-int dp [MAX_N];
+/* 
+ just take 2 array, one is normal timer and second one is low timer in which a node can be reached from source node.
 
+ [1] if a node is not visited then just go for that node.
+	 after visiting adjacent node update low timer.
+	 and check if low timer of adjacent is greater than main timer of current timer, cosider this edges as bridge.
+ [2] else update low timer with low timer of adjacent timer.
+ 
+*/
 
-void visit (int vertex) 
-{
+#define meme(dp, val) memset(dp, val, sizeof(dp))
+#define pb push_back
+const int N=100005;
+
+class Solution {
+public:
+    vector<int>v[N];
+    int tim[N], low[N], vis[N];
+    vector<vector<int>>ed;
+    int timer=1;
     
-    dp[vertex] = 0;
-  
-    for (int nxt : adj[vertex]) 
+    void fun(int x, int pr)
     {
-      
-        if (lvl[nxt] == 0) 
-        { 
-            /* edge to child */
-            lvl[nxt] = lvl[vertex] + 1;
-            visit(nxt);
-            dp[vertex] += dp[nxt];
-        } 
-        else if (lvl[nxt] < lvl[vertex]) 
-             {
-                 /* edge upwards */
-                 dp[vertex]++;
-             } 
-             else if (lvl[nxt] > lvl[vertex]) 
-                { 
-                    /* edge downwards */
-                    dp[vertex]--;
+        if(vis[x]==1) return ;
+
+        vis[x]=1;
+
+        // if node visited first time then set current timeer
+        low[x]=timer;
+        tim[x]=timer;
+        timer++;
+
+        for(int i=0;i<v[x].size();++i)
+        {
+            int child=v[x][i];
+            if(child==pr) continue;
+
+            // if node is already visited then update current node's low time
+            // this edges can not be a bridge
+            // because it is already connect to any another node, so if we remove this edge it will not separate from main graph
+            if(vis[child]==1)
+            {
+                low[x]=min(low[x], low[child]);
+            }
+            else
+            {
+                // if node is not visited then visit that node and set current timer
+                fun(child,x);
+
+                // update current node's time low time after completing the dfs call
+                low[x]=min(low[x], low[child]);
+
+                // if low time of child(adjacent node) is greater than current node's main time then we can say it is a bridge
+                // because the adjacent node is not connected somewhere else.
+                if(low[child]>tim[x])
+                {
+                    // bridges++;
+                    // ed.pb({x,child});
+                    vector<int>tmp={x,child};
+                    ed.push_back(tmp);
                 }
-            
+            }
+        }
+
     }
- 
-         /* the parent edge isn't a back-edge, subtract 1 to compensate */
-      dp[vertex]--;
-     
-      if (lvl[vertex] > 1 && dp[vertex] == 0) {
-            bridgec++;
-      }
-}
- 
-int main () {
-  /* problem statement: given a connected graph. calculate the number of bridges. */
-  ios::sync_with_stdio(false);
- 
-  int vertexc, edgec;
-  cin >> vertexc >> edgec;
- 
-  for (int i = 0; i < edgec; i++) 
-  {
-    int u, v;
-    cin >> u >> v;
- 
-    adj[u].push_back(v);
-    adj[v].push_back(u);
-  }
-
- 
-  lvl[1] = 1;
-  visit(1);
-
-  cout << bridgec << endl;
-}
+    
+    
+    vector<vector<int>> criticalConnections(int n, vector<vector<int>>& co) {
+        
+        for(int i=0;i<co.size();++i)
+        {
+            int x=co[i][0],y=co[i][1];
+            v[x].pb(y);
+            v[y].pb(x);
+        }
+        
+        
+        meme(vis,0), meme(low, -1), meme(tim, -1);
+        fun(0,-1);
+        
+        return ed;
+        
+    }
+};
 
 
 --------------------------------------
