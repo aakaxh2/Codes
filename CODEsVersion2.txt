@@ -624,7 +624,7 @@ public:
             // because it is already connect to any another node, so if we remove this edge it will not separate from main graph
             if(vis[child]==1)
             {
-                low[x]=min(low[x], low[child]);
+                low[x]=min(low[x], tim[child]);
             }
             else
             {
