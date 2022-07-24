@@ -2178,6 +2178,61 @@ int minimumXORSum(vector<int>& nums1, vector<int>& nums2) {
         
         return dp[(1<<n)-1];
     }
+    
+    
+    
+    
+    							BIT Masking without DP (Recursive solution)
+    
+CODE : 
+    
+const int N=15;
+vector<int>vis;
+map<vector<int>,int>mp;
+
+int fun(int cr, int a[], int b[], int n)
+{
+    if(cr>=n) return 0;
+    if(mp.find(vis)!=mp.end()) return mp[vis];
+    
+    int tmp=INT_MAX;
+    for(int i=0;i<n;++i)
+    {
+        if(vis[i]==0)
+        {
+            vis[i]++;
+            tmp=min(tmp, (a[i]^b[cr])+fun(cr+1,a,b,n));
+            vis[i]--;
+        }
+    }
+    
+    return mp[vis]=tmp;
+}
+
+
+signed main() 
+{I;O;S;
+    
+    // int tc;  cin>>tc; while(tc--)
+    {
+        
+        int n;
+        cin>>n;
+        
+        int a[n], b[n];
+        for(int i=0;i<n;++i) cin>>a[i];
+        for(int i=0;i<n;++i) cin>>b[i];
+        
+        vis.resize(N,0);
+        mp.clear();
+        int ans=fun(0, a, b, n);
+        
+        cout<<ans;
+        
+        
+    }
+}
+    
 
 
 								-----------------------------
