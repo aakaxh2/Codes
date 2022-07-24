@@ -57,6 +57,7 @@
 [49] Floyd warshall algorithm $$
 [50] Total number of possible results of OR of all subarrays
 [51] Count of Subarray with given XOR
+[52] Articulation point 
 --------------------------------------------
 
 									CODE TEMPLATE
@@ -4102,7 +4103,12 @@ int subarrayBitwiseORs(vector<int>& arr) {
     
     
 									---------------
+									
+									
 								[51] Count of Subarray with given XOR
+								
+								
+								
 Note : [https://www.interviewbit.com/problems/subarray-with-given-xor/]
 
 why add mp[xr^k] in cnt ?
@@ -4135,8 +4141,91 @@ int fun(vector<int>v, int k)
 
 									--------------
 
+								[52] Articulation point
+								
+								
+Code : 
 
 
+#define meme(dp, val) memset(dp, val, sizeof(dp))
+const int N=10005;
+#define pb push_back
+
+class Solution {
+  public:
+  
+    int low[N], tim[N], vis[N];
+    int timer=1;
+    vector<int>ed;
+    set<int>st;
+    
+    void fun(int x, int pr, vector<int>v[])
+    {
+        if(vis[x]==1) return ;
+        
+        vis[x]=1;
+        
+        // if node visited first time then set current timeer
+        low[x]=timer;
+        tim[x]=timer;
+        timer++;
+        
+        int cnt=0;
+        for(int i=0;i<v[x].size();++i)
+        {
+            int child=v[x][i];
+            if(child==pr) continue;
+            
+            // if node is already visited then update current node's low time
+            // this edges can not be a bridge
+            // because it is already connect to any another node, so if we remove this edge it will not separate from main graph
+            if(vis[child]==1)
+            {
+                low[x]=min(low[x], tim[child]);
+            }
+            else
+            {
+                cnt++;
+                // if node is not visited then visit that node and set current timer
+                fun(child,x,v);
+                
+                // update current node's time low time after completing the dfs call
+                low[x]=min(low[x], low[child]);
+                
+                // if low time of child(adjacent node) is greater than current node's main time then we can say it is a bridge
+                // because the adjacent node is not connected somewhere else.
+                if(low[child]>=tim[x] && pr!=-1)
+                {
+                    st.insert(x);
+                }
+            }
+        }
+        
+        if(pr == -1 && cnt > 1) {
+            st.insert(x);
+        }
+        
+        
+    }
+
+  
+    vector<int> articulationPoints(int n, vector<int>adj[]) {
+        
+        if(n==0) return {-1};
+        timer=1;
+        meme(vis,0);
+        meme(low,-1), meme(tim, -1);
+        ed.clear();
+        
+        fun(0,-1,adj);
+        
+        for(auto it : st) ed.pb(it);
+        if(ed.size()==0) return {-1};
+        return ed;
+    }
+};
+
+									-------------------
 
 
 
