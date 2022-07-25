@@ -51,6 +51,7 @@
 [47] Rearrange string such that there is no palindrome substring 
 [48] Euclidean algorithm extended
 [49] Rod cutting problem DP
+[50] Bipartite graph
 -------------------------
 
 
@@ -3496,6 +3497,52 @@ class Solution{
     }
 };
 									------------------
+
+									[50] Bipartite graph
+									
+Note : coloring graph with two different colors such that no two adjacent nodes have the same color (Hint1 : having an even length cycle is bipartite and an odd length cycle is not a bipartite graph.)
+
+CODE : 
+vector<int>col(n+1, -1);
+queue<int>q;
+
+for(int i=0;i<n;++i)
+{
+    if(col[i]==-1)
+    {
+	q.push(i);
+	col[i]=0;
+	while(q.size())
+	{
+	    int x=q.front();
+	    q.pop();
+
+	    for(int j=0;j<v[x].size();++j)
+	    {
+		int child=v[x][j];
+		if(col[child]==col[x]) return false;
+		if(col[child]==-1)
+		{
+		    col[child]=(col[x]+1)%2;
+		    q.push(child);
+		}
+	    }
+	}
+    }
+}
+return true;
+									---------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 
