@@ -53,6 +53,7 @@
 [49] Rod cutting problem DP
 [50] Bipartite graph
 [51] Distance between two points
+[52] Sieve latest code
 -------------------------
 
 
@@ -3615,6 +3616,21 @@ signed main()
 
 
 								-------------------------
+
+								[52] Sieve latest code
+Code : 
+ 	int h[N]={0};
+        
+        for(int i=2;i*i<N;++i)
+        {
+            if(h[i]==0)
+            {
+                for(int j=i*i;j<N;j+=i) {
+                    h[j]=1;
+                }
+            }
+        }
+								------------------------
 
 
 
