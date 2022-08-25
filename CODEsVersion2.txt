@@ -1,6 +1,5 @@
-									AAKASH BISHNOI
+									Aakash Bishnoi
 										IIIT ALLAHABHD
-								prepared codes
 									---------------
 
 [1] MAX sum subarray in array ($$$$)
@@ -60,136 +59,9 @@
 [52] Articulation point 
 --------------------------------------------
 
-									CODE TEMPLATE
-#include <bits/stdc++.h>
-using namespace std;
-
-#define I ios::sync_with_stdio(0);
-#define O cin.tie(0);
-#define S cout.tie(0);
-#define int long long
-#define pb push_back
-#define endl "\n"
-#define srt(v) sort(v.begin(), v.end())
-#define rsrt(v) sort(v.begin(), v.end(), greater<>())
-#define rev(v) reverse(v.begin(), v.end())
-#define meme(dp, val) memset(dp, val, sizeof(dp))
-
-
-signed main() 
-{I;O;S;
-
-#ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-#endif
-
-    int t;  cin>>t; while(t--)
-    {
-        
-    }
-}
-							[1]. MAX/MIN sum subarray in array ($$$$)
-
-							[a] simple code without position of subarray
-
-#include <bits/stdc++.h>
-using namespace std;
- 
-#define f(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define bitcount __builtin_popcount
-//MY TEMPLATE
-
-int main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
 	
-    int n;
-    cin>>n;
-    int a[n];
-    f(i,0,n) cin>>a[i];
-    
-    int ans = a[0], sum = 0, min_sum = 0;
+							[1]. MAX/MIN sum subarray in array = Kadane's Algorithm
 
-    for (int r = 0; r < n; ++r) {
-        sum += a[r];
-        ans = max(ans, sum - min_sum);
-        min_sum = min(min_sum, sum);
-    }
-    
-    cout<<ans;
-}
-
-					[b] code with the position of subarray in l and r terms
-
-#include <bits/stdc++.h>
-using namespace std;
- 
-#define f(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define bitcount __builtin_popcount
-
-//MY TEMPLATE
- 
-int main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
- 
-    int n;
-    cin>>n;
-    int a[n];
-    f(i,0,n) cin>>a[i];
-    
-    int ans = a[0], ans_l = 0, ans_r = 0;
-    int sum = 0, min_sum = 0, min_pos = -1;
-    
-    for (int r = 0; r < n; ++r) {
-        sum += a[r];
-        int cur = sum - min_sum;
-        if (cur > ans) {
-            ans = cur;
-            ans_l = min_pos + 1;
-            ans_r = r;
-        }
-        if (sum < min_sum) {
-            min_sum = sum;
-            min_pos = r;
-        }
-    }
-    
-    cout<<ans_l<<" "<<ans_r<<endl;
-    cout<<ans;
-}
-
-									[c] Kadane's Algorithm
-
-#include <bits/stdc++.h>
-using namespace std;
- 
-#define f(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define fe(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define bitcount __builtin_popcount
-
-//MY TEMPLATE
- 
 int main() 
 {
     ios_base::sync_with_stdio(false);
@@ -221,7 +93,7 @@ int main()
 }
 
 
-							[d] MIN sum subarray 
+							=> MIN sum subarray 
 
 	int sum=INT_MAX,ans2=INT_MAX;
         
@@ -241,20 +113,7 @@ int main()
 	NOTE : use 1 based indexing (must)..........
 				
 								[a]. Simple l to r sum
-#include <bits/stdc++.h>
-using namespace std;
 
-#define Testcases int t;cin>>t;while(t--)
-#define f1(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define f(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define popcount __builtin_popcount
-
-//MY TEMPLATE
 ll bit[100005]={0},n;
 // j=remove last bit of i
 // i is index of bit array
@@ -276,8 +135,6 @@ int sum(int i) // sum of the array from 1 to i
 }
 int main() 
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
     
     int q;
     cin>>n>>q;
@@ -298,20 +155,6 @@ int main()
 
 					[b]. sum from l to r and update the value of a[idx] to x (two types query)
 
-#include <bits/stdc++.h>
-using namespace std;
-
-#define Testcases int t;cin>>t;while(t--)
-#define f1(i,w1,w2) for(int i=w1;i<w2;++i)
-#define fr(i,w1,w2) for(int i=w1;i>=w2;i--)
-#define f(i,w1,w2) for(int i=w1;i<=w2;++i)
-#define ll long long int
-#define pb push_back
-#define p(x) printf("%d",x)
-#define s(x) scanf("%d",&x)
-#define popcount __builtin_popcount
-
-//MY TEMPLATE
 ll bit[100005]={0},n;
 // j=remove last bit of i
 // i is index of bit array
@@ -333,8 +176,6 @@ int sum(int i) // sum of the array from 1 to i
 }
 int main() 
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
     
     int q;
     cin>>n>>q;
@@ -503,80 +344,10 @@ int main(){
 
 }
 
--------------------------------------------------------------------------
-
-								[3]. Shortest path between two nodes
- 
-
-int main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    //
-    int n,m,a,b;
-    cin>>n>>m;
-    cin>>a>>b;
-    
-    vector<int>v[n+2];
-    while(m--)
-    {
-        int x,y;
-        cin>>x>>y;
-        v[x].pb(y);
-        v[y].pb(x);
-    }
-    
-    //
-    // vector<vector<int>> adj;  // adjacency list representation
-    // int n; // number of nodes
-    // int s; // source vertex
-    
-    queue<int> q;
-    vector<bool> used(n);
-    vector<int> d(n), p(n);
-    
-    q.push(a);
-    used[a] = true;
-    p[a] = -1;
-    while (!q.empty()) 
-    {
-        int x = q.front();
-        q.pop();
-        for (int i : v[x]) 
-        {
-            if (!used[i]) 
-            {
-                used[i] = true;
-                q.push(i);
-                d[i] = d[x] + 1;
-                p[i] = x;
-            }
-        }
-    }
-    //
-    if (!used[b]) 
-    {
-        cout << "No path!";
-    } 
-    else 
-    {
-        vector<int> path;
-        for (int i = b; i != -1; i = p[i])
-            path.push_back(i);
-            
-        reverse(path.begin(), path.end());
-        cout << "Path: ";
-        for (int i : path)
-            cout << i << " ";
-    }
-    //
-}
-
----------------------------------------------------------
+							------------------------------
 
 
-							[4]. Bridges in a graph ($$$$)
+							[4]. Bridges in a graph
 
 
 About : if we remove an edge of a graph then the graph convert into two disconnectd parts, then it's call, this is the brigde edge of the graph.
@@ -669,259 +440,6 @@ public:
 };
 
 
---------------------------------------
-
-
-								[5]. Sum of the nodes of a subtree ($$$$)
-
-CODE : 
-
-#include<bits/stdc++.h>
-using namespace std;
-
-#define pb push_back
-#define ll long long
-
-ll visit[100]={0},sum[100]={0},a[100];
-vector<int>v[100];
-
-
-int dfs(int node)
-{
-    visit[node]=1;
-    sum[node]=a[node];
-    
-    for(int i=0;i<v[node].size();++i)
-    {
-        if(visit[v[node][i]]==0)
-        {
-            sum[node]+=dfs(v[node][i]);
-        }
-    }
-    
-    return sum[node];
-}
-
-int main()
-{
-    int n,m;
-    cin>>n>>m;
-    
-    // int a[n+1];
-    // vector<int>v[n+2];
-    
-    for(int i=1;i<=n;++i) a[i]=i;
-    
-    
-    for(int i=0;i<m;++i)
-    {
-        int x,y;
-        cin>>x>>y;
-        
-        v[x].pb(y);
-        v[y].pb(x);
-    }
-    
-    ll s=dfs(1);
-    
-    for(int i=1;i<=n;++i) cout<<sum[i]<<" ";
-}
-
-
--------------------------------------------------------------
-
-								[6]. Basic recursion code 
-
-
-int ans=0;
-int fun(string s,int n,int i)
-{
-    // int ans=0;
-    
-    
-    if(i>=n) return 0;
-    
-    if(s[i]=='1')
-    {
-        return ans+pow(2,i)+fun(s,n,i+1);
-    }
-    else{
-        return ans+fun(s,n,i+1);
-    }
-    
-    
-    // return ans;
-}
-
-
-int main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    int n;
-    string s;
-    cin>>n>>s;
-    
-    // ans=fun(s,n,0);
-    
-    cout<<fun(s,n,0);;
-}
-----------------------------------------------
-
-
-							[7]. Number of loop in a graph $$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-#include <bits/stdc++.h> 
-using namespace std; 
-const int N = 100000; 
-
-
-vector<int> graph[N];
-int color[N],par[N],cyclenumber = 0; 
-
-void dfs_cycle(int u, int p) 
-{ 
-
-	if (color[u] == 2) { 
-		return; 
-	} 
-
-
-	if (color[u] == 1) { 
-
-		cyclenumber++; 
-		return; 
-	} 
-	
-	
-	par[u] = p; 
-	color[u] = 1; 
-
-	for (int v : graph[u]) { 
-
-		if (v == par[u]) { 
-			continue; 
-		}
-		dfs_cycle(v, u ); 
-	} 
-	color[u] = 2; 
-} 
-
- 
-void addEdge(int u, int v) 
-{ 
-	graph[u].push_back(v); 
-	graph[v].push_back(u); 
-} 
-
-int main() 
-{ 
-
-
-    int n,m;
-    cin>>n>>m;
-    
-    for(int i=1;i<=m;++i){
-        int nd1,nd2;
-        cin>>nd1>>nd2;
-        
-        addEdge(nd1,nd2);
-    }
-
-	// call DFS to mark the cycles 
-	dfs_cycle(1, 0 ); 
-    
-    cout<<"Number of loops in the graph : "<<cyclenumber;
-} 
-
-
----------------------------------------------------
-
-
-							[8]. MAXIMUN Sum of a submatrix in a matrix
-
-#include<bits/stdc++.h> 
-using namespace std; 
-
-int kadane(int arr[], int n) 
-{
-	int sum = 0, maxSum = INT_MIN,flag=(-1); 
-
-	for (int i = 0; i < n; ++i) 
-	{ 
-		sum += arr[i]; 
-		if (sum < 0) 
-		{ 
-			sum = 0; 
-		} 
-		else if (sum > maxSum) 
-		{ 
-			maxSum = sum; 
-			flag++;
-		} 
-	} 
-
-	if (flag != -1) 
-		return maxSum; 
-
-	maxSum = arr[0]; 
-
-	for(int i = 1; i < n; i++) 
-	{ 
-		if (arr[i] > maxSum) 
-		{ 
-			maxSum = arr[i]; 
-		} 
-	} 
-	return maxSum; 
-} 
-
-int main() 
-{ 
-    int n,m;
-    cin>>n>>m;
-    
-    int M[n][m];
-    for(int i=0;i<n;++i)
-    {
-        for(int j=0;j<m;++j)
-        cin>>M[i][j];
-    }
-
-	int maxSum = INT_MIN; 
-	int temp[n], sum; 
-
-	for(int left = 0; left <m; ++left) 
-	{ 
-		memset(temp, 0, sizeof(temp)); 
-		for(int right = left; right < m; ++right) 
-		{ 
-			for(int i = 0; i < n; ++i) 
-				temp[i] += M[i][right]; 
-
-			sum = kadane(temp,n); 
-
-			if (sum > maxSum) 
-			{ 
-				maxSum = sum;
-			} 
-		} 
-	} 
-
-	cout << "Max sum is: " << maxSum << endl; 
-} 
-
-
-'''''''''
-4 5
-1    2   -1    -4   -20
--8  [-3   4    2]    1
-3   [ 8   10   1]    3
--4  [-1   1    7]   -6
-
-
-output : 29
 
 -----------------------------------------
 
@@ -1178,128 +696,6 @@ int main()
 
 ----------------------------------------------------
 
-					[**] Question Link (https://www.codechef.com/POPU2021/problems/POPPUSH5)
-
-NOTE :  Graph related question.
-	>> there is a tree, have n-1 edges. And weight of every edge is either 1 or 2. We have to cover all the paths, those who taken edge weight 2. Output 	   is minimum number of paths, which cover all the 2's.
-
-CODE :
-
-#include <bits/stdc++.h>
-using namespace std;
-
-#define pb push_back
-#define int long long
-#define popcount __builtin_popcountll
-#define endl "\n"
-
-vector<pair<int,int>>v[100005];
-int dfs(int x,int par)
-{
-    int ans=0;
-    for(int i=0;i<v[x].size();++i)
-    {
-        if((v[x][i].first)!=par)
-        {
-            int y=dfs((v[x][i].first),x);
-            ans+=max(y,(v[x][i].second)-1);
-        }
-    }
-    return ans;
-}
-
-
-signed main() 
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    // int t;  cin>>t;
-    // while(t--)
-    {
-        int n;
-        cin>>n;
-        
-        for(int i=1;i<n;++i)
-        {
-            int x,y,w;
-            cin>>x>>y>>w;
-            v[x].pb({y,w});
-            v[y].pb({x,w});
-        }
-        
-        cout<<dfs(1,0);
-        
-    }
-}
-
-									[11] GRAPH : if(has cycle) YES
-										     else NO
-
-
-CODE :
-
-#include <bits/stdc++.h>
-using namespace std;
-#define IOS ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-#define int long long
-#define pb push_back
-const int N=100005;
-
-vector<int>v[N];
-int vis[N];
-
-bool dfs(int u, int pr)
-{
-    vis[u]=1;
-    
-    for(int i : v[u])
-    {
-        if(!vis[i]){
-            if(dfs(i,u)) return true;
-        } else {
-            if(i!=pr){
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-
-signed main() 
-{IOS;
-    
-    // int t;  cin>>t; while(t--)
-    {
-        
-        int n,m;
-        cin>>n>>m;
-        for(int i=0;i<m;++i){
-            int x,y;
-            cin>>x>>y;
-            v[x].pb(y);
-            v[y].pb(x);
-        }
-        
-        int flag=0;
-        for(int i=0;i<n;++i){
-            
-            if(!vis[i]){
-                if(!dfs(i,-1)) {
-                    flag++; break;
-                }
-            }
-        }
-        
-        if(flag) cout<<"no"<<endl;
-        else cout<<"yes"<<endl;
-        
-    }
-}
-
-
-								--------------------------------
 
 
 								[12] All Paths From Source to Target
@@ -1770,44 +1166,7 @@ int main()
 }
 									
 
-								-------------------------------------------
-
-					[17] find the sum of K continuous elements of an Arr using Sliding window technique
-
-CODE  : 
-
-{
-        int n,k;
-        cin>>n>>k;
-        
-        int a[n];
-        
-        for(int i=0;i<n;++i){
-            cin>>a[i];
-        }
-        
-        // ---
-        
-        int ans=0,sum=0;
-        for(int i=0;i<n;++i)
-        {
-            sum+=a[i];
-            
-            if(i>=k) {
-                
-                sum-=a[i-k];
-            }
-            
-            if(i>=(k-1))
-            {
-                ans=max(ans,sum);
-            }
-        }
-        
-        cout<<ans<<endl;
-}
-
-
+		
 								-------------------------------------
 
 
@@ -2028,128 +1387,7 @@ CODE :
 									-------------------------------
 
 
-							$$$$$$$$$$$$$$$$$$$$$$$$$ [22] Bitmasking $$$$$$$$$$$$$$$$$$$$$$$$
-
-				NOTE : thoda explanation :(
-
-int n;
-int cost[n][n];
-
-   _0_1_
-0: |1 3|
-1: |4 3|
-
-int dp[(1<<n)]={int_max};
-
-for(int mask=0;mask<(1<<n);mask++)
-{
-    int x=__builtin_popcount(mask);
-    
-    for(int j=0;j<n;++j)
-    {
-        
-        if(!(1<<j)&mask)
-        {
-            dp[mask|(1<<j)]=min( dp[mask|(1<<j)], dp[mask] + cost[x][j] )
-        }
-    }
-    
-}
-
-   _0_1_
-0: |1 3|
-1: |4 3|
-
-
-int n=2;
-
-mask 0 : 00 
-    x=0
-    dp[1]=dp[0]+cost[0][0] = 0+1 = 1
-    dp[2]=dp[0]+cost[0][1] = 0+3 = 3
-
-mask 1 : 01
-    x=1
-    dp[1] --
-    dp[3]= dp[1]+cost[1][1] = 1+3 = 4
- 
-mask 2 : 10
-    x=1
-    dp[3]= min( dp[3], dp[2]+cost[1][0] ) = min( 4, 3+4 ) = 4
-    --
-    
-mask 3 : 11
-    x=2
-    --
-    --
-
-return dp[3] => 4
-
-----------------------
-
-1 3
-4 3
-
-1 3 
-- 4 
-4 - 
-- - 
-
-00
-01
-10
-11
-
-----
-   _0_1_2_
-0: |1 2 3|
-1: |5 3 4|
-2: |6 3 2|
-
-mask 0 : 000
-    x=0
-    dp[1]=1
-    dp[2]=2
-    dp[4]=3
-    
-mask 1 : 001
-    x=1
-    --
-    dp[3]=min(dp[3], dp[1]+cost[1][1]) = 1+3 = 4
-    dp[5]=min(dp[5], dp[1]+cost[1][2]) = 1+4 = 5
-    
-mask 2 : 010
-    x=1
-    dp[3]=min(dp[3], dp[2]+cost[1][0]) = min( 4, 2+5) = 4
-    --
-    dp[6]=min(dp[6], dp[2]+cost[1][2]) = 2+4 = 6
-    
-mask 3 : 011
-    x=2
-    --
-    --
-    dp[7]=min(dp[7], dp[3]+cost[2][2]) = 4+2 = 6
-
-1 2 3 
-- 4 5 
-4 - 6 
-- - 6 
-5 6 - 
-- 6 - 
-6 - - 
-- - - 
-
-000
-001
-010
-011
-100
-101
-110
-111
-
----------
-
+							 [22] Bitmasking 
 
 
 								CODE : OUTPUT in dp[(1<<n)-1];
@@ -3730,6 +2968,7 @@ public:
 };
 
 								-------------------------
+								
 						[45] Number of path from source to target node in undirected tree/graph
 Code : 
 #include <bits/stdc++.h>
@@ -3796,6 +3035,7 @@ signed main()
 }
 
 									------------
+									
 								[46] difference between two int strings
 								
 Note : this method is used for subtract two very large numbers
@@ -3902,7 +3142,11 @@ public:
     }
 };
 										---------
+										
+										
 									[48] Bellman Ford algorithm
+									
+									
 Note : [https://cp-algorithms.com/graph/bellman_ford.html]
 
 Code : 
@@ -3986,6 +3230,8 @@ signed main()
     }
 }
 									--------------------
+									
+									
 								[49] Floyd warshall algorithm $$
 
 
@@ -4080,7 +3326,11 @@ Code :
         } 
     }
 									----------------
+									
+									
 							[50] Total number of possible results of OR of all subarrays
+							
+							
 Note: [https://leetcode.com/problems/bitwise-ors-of-subarrays/]
 Code :
 int subarrayBitwiseORs(vector<int>& arr) {
