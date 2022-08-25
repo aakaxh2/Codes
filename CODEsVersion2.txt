@@ -1,27 +1,21 @@
 									Aakash Bishnoi
-										IIIT ALLAHABHD
+										iiit allahabad
 									---------------
 
 [1] MAX sum subarray in array ($$$$)
-		[c] Kadane's Algorithm
-[2] Fenwick tree (Binary index tree) $$$$$$$$$$$$$$ (VERY IMPORTANT) (Short form of segment tree)
+		Kadane's Algorithm
+[2] Fenwick tree (Binary index tree)
 	[c]. Inversion count
 [3] Shortest path between two nodes
 [4] Bridges in a graph 
-[5] Sum of the nodes of a subtree ($$$$)
-[7] Number of loop in a graph
-[8] MAXIMUN Sum of a submatrix in a matrix
 [8] Dijkshtra Algorithm
-[9] Kruskal's Algorithm [MST]-- ( Minimum spanning tree )
+[9] Kruskal's Algorithm [MST => Minimum spanning tree ]
 [10] Prim's Algorithm (2nd method og MST)
-[11] GRAPH : if(has cycle) YES
-	     else NO
 [12] All Paths From Source to Target
 [13] sub-array sum equal to K 
 [14] Is there a subset with SUM equal to K
 [15] Subarray Sums Divisible by K
 [16] Max sum path in a TREE (from one node to another)
-[17] find the sum of K continuous elements of an Arr using Sliding window technique
 [18] String = 11106 Ans: AAJF(1,1,10,6) & KJF(11,10,6)
 [19] Egg dropping problem
 [20] max(a[i]^a[j]) in an array (n=100005)
@@ -57,7 +51,8 @@
 [50] Total number of possible results of OR of all subarrays
 [51] Count of Subarray with given XOR
 [52] Articulation point 
---------------------------------------------
+
+
 
 	
 							[1]. MAX/MIN sum subarray in array = Kadane's Algorithm
