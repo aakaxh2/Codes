@@ -1,41 +1,23 @@
 						Indian Institute of Information Technology, Allahabad
-[0] Some basic points							-------------------------------------
-[1] basic template
-[3]. max/min value between two nodes
-[4]. Entry and exit time code
-[6]. THE RAT IN MAZE (Unique Grid Problem) $$$$$
-[7]. SUB-MATRIX PROBLEM
-[8]. Floyd-Warshall Algorithm
-[9]. |||||a ki power b|||||
-[10] Bubble Sort
-[11] binart tree problem(find the no. of paths which have bitwise AND(&) is ODD)
-[12].(i) unique grid(original matrix me values update ho rahi hai)
-	(ii) $$$$$$$$$ Modified code $$$$
-[13] Longest path in a tree
+						=> Aakash Bishnoi
+						
+[0] Some basic points
+[9]. a ki power b
 [14] find all the prime divisor from 1 to 1e6 (Sieve Code)
-[15] LCA (find only parent of a1 and a2) (Lowest Common Ancestor)
 [16] Binary Lifting (to find k-th parent fo a node in bit time) $$$
-[17] Topological sort
-[18] STRONGLY CONNECTED GRAPH 
-[OR] Souvik's Code ( STRONGLY CONNECTED GRAPH )
-[19] Show all paths from (0,0) to (n,m) in a grid (Matrix)
 [20] No. of all factors of a number (1<=n<=1e18) or (1<=n<=1e9)
 [21] Heap Sort
 [22] Quick Sort
 [23] Selestion Sort & Insertion Sort 
 [23] Convert a string S to an another string R using adjacent swapping
-[24] TREE construction $$$$$$$$$$$$$$$$$$$$$
-[25] Two pointer method 
 [26] Longest increasing subsequnce
-[27] Longest common subsequence $$$$$$$$$$$$$
+[27] Longest common subsequence 
 [28] Subset sum problem
 [29] Merge_Sort
 [30] Counting SORT
 [31] longest palindrome substring
 [32] find all permutation of an array of length n
 [33] Find all permutation of n element 
-[34] Bellman Ford Algorithm
-[35] Counting Sort
 [36] Radix Sort
 [37] Prefic sum array and KMP and Z-algorithm
 [38] Merge K sorted array
@@ -45,18 +27,17 @@
 [42] Allocate books (binary search)
 [43] Median in Matrix
 [44] Union Find {https://practice.geeksforgeeks.org/problems/union-find/1/#}
-[45] Distance between two point from n points (n=100000)
 [46] longest arithmetic progression
 [47] Rearrange string such that there is no palindrome substring 
 [48] Euclidean algorithm extended
 [49] Rod cutting problem DP
 [50] Bipartite graph
 [51] Distance between two points
-[52] Sieve latest code
--------------------------
+[52] Sieve code
 
 
-									|| ORDERED SET ||
+
+								|| ORDERED SET ||
 									
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -71,7 +52,7 @@ using namespace __gnu_pbds;
 
 
 
-									[0] some points
+								[0] some points
 => stiring s;
 bool val = next_permutation(s.begin(),s.end());
 if(val==true) cout<<"next pemutation is : "<<s<<endl;
