@@ -323,75 +323,81 @@ else if N != 1:
 
 						-------------------------------------------------------------------
 
+
 									[21] Heap Sort
 
 CODE :
 
-#include <bits/stdc++.h>
-using namespace std;
-
-#define pb push_back
-#define int long long
-#define popcount __builtin_popcountll
-#define endl "\n"
-
-void max_heapify(int a[],int i,int n)
+void heapify(int a[], int n, int cr)
 {
-    int l,r,lar;
-    l=2*i;
-    r=(2*i)+1;
+    int l=(2*cr)+1;
+    int r=(2*cr)+2;
     
-    if(l<=n && a[l]>a[i])
-        lar=l;
-    else
-        lar=i;
-        
-    if(r<=n && a[r]>a[lar])
-        lar=r;
+    int mx=cr;
     
-    if(lar!=i)
+    if(l<n && a[l]>a[mx]) {
+        mx=l;
+    }
+    
+    if(r<n && a[r]>a[mx]) {
+        mx=r;
+    }
+    
+    if(mx!=cr) {
+        swap(a[cr], a[mx]);
+        heapify(a,n,mx);
+    }
+}
+
+
+int heap_sort(int a[], int n)
+{
+    // sabse pehle first (n/2 -1) values ka heapify karenge
+    for(int i=(n/2)-1;i>=0;i--)
     {
-        swap(a[i],a[lar]);
-        max_heapify(a,lar,n);
-    }   
-}
-
-void build_max_heap(int a[],int n)
-{
-    for(int i=n/2;i>=1;i--)
-        max_heapify(a,i,n);    
-        
-}
-
-void heapsort(int a[],int n)
-{
-    build_max_heap(a,n);
+        heapify(a,n,i);
+    }
     
-    for(int i=n;i>=2;i--)
+    // ab top ko min se swap karke i len ke array pe heapify karenge 
+    // jab tak ki sare element swap na ho jaye
+    for(int i=n-1;i>=0;i--)
     {
-        swap(a[1],a[i]);
-        n=n-1;
-        max_heapify(a,1,n);       
-    }    
+        swap(a[0], a[i]); // ith swap me ek max value sort array me add ho jayegi SEE eg at the bottom of code
+        heapify(a,i,0);
+    }
 }
 
 
-signed main() 
+int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
     
     int n;
     cin>>n;
     
-    int a[n+1];
-    a[0]=0;
-    for(int i=1;i<=n;++i) cin>>a[i];
+    int a[n];
+    for(int i=0;i<n;++i) cin>>a[i];
     
-    heapsort(a,n);
+    heap_sort(a,n);
     
-    for(int i=1;i<=n;++i) cout<<a[i]<<" ";
+    for(int i=0;i<n;++i) cout<<a[i]<<" ";
+    cout<<endl;
+    
 }
+
+
+
+// 6
+// 12 11 13 5 6 7
+
+// sabse pehle 13 niklega
+// phir 12
+// phir 11
+// and so on...
+
+
+
+
+
 
 					---------------------------------------------------------------------------
 
