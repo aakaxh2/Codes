@@ -34,7 +34,7 @@
 [50] Bipartite graph
 [51] Distance between two points
 [52] Sieve code
-
+[53] a[l]+=1, a[r+1]-=1;
 
 
 								|| ORDERED SET ||
@@ -1935,8 +1935,35 @@ Code :
         }
 								------------------------
 
+							[53] a[l]+=1, a[r]-=1 $$
+							
+Code : 
+{
+        int n;
+        cin>>n;
+ 
+        vector<pair<int,int>>v;
+        for(int i=0;i<n;++i) 
+        {
+            int x,y;
+            cin>>x>>y;
+            v.pb({x,1});
+            v.pb({y,-1});
+        }
+        sort(v.begin(), v.end());
+ 
+        int cnt=0, ans=0;
+        for(int i=0;i<v.size();++i)
+        {
+            cnt+=(v[i].second);
+            ans=max(ans, cnt);
+        }
+        cout<<ans<<endl;
+        
+        
+    }
 
-
+								-----------------
 
 
 
