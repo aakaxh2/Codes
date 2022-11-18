@@ -35,6 +35,7 @@
 [51] Distance between two points
 [52] Sieve code
 [53] a[l]+=1, a[r+1]-=1;
+[54] Submatrix sum problem
 
 
 								|| ORDERED SET ||
@@ -1965,9 +1966,142 @@ Code :
 
 								-----------------
 
+								[54] Submatrix sum problem
+								
+Code 1 :  count submatrix sum eq to k
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    
+    int v[n][m];
+    for(int i=0;i<n;++i) {
+        for(int j=0;j<m;++j) cin>>v[i][j];
+    }
+    int k; cin>>k;
+    
+    int dp[n+1][m+1];
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            dp[i][j]=v[i-1][j-1];
+        }
+    }
+    
+    // pre compute
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            dp[i][j]=dp[i][j]+dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1];
+        }
+    }
+    
+    // find count submatrix sum eq to k
+    
+    int cnt=0;
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            int l=1;
+            int r=min(n-i,m-j)+1;
+            
+            while(l<=r)
+            {
+                int mid=(l+r)/2;
+                
+                int l1=i+mid-1;
+                int r1=j+mid-1;
+                
+                int tmp=dp[l1][r1]-dp[l1][j-1]-dp[i-1][r1]+dp[i-1][j-1];
+                if(tmp>=k) {
+                    if(tmp==k) {
+                        cnt++;
+                        break;
+                    }
+                    r=mid-1;
+                }
+                else {
+                    l=mid+1;
+                }
+            }
+        }
+    }
+    
+    cout<<cnt<<endl;
+    
+}
 
 
 
+Code 2 : sum submatrix less than eq to k
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    
+    int v[n][m];
+    for(int i=0;i<n;++i) {
+        for(int j=0;j<m;++j) cin>>v[i][j];
+    }
+    int k; cin>>k;
+    
+    int dp[n+1][m+1];
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            dp[i][j]=v[i-1][j-1];
+        }
+    }
+    
+    // pre compute
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            dp[i][j]=dp[i][j]+dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1];
+        }
+    }
+    
+    // max sum submatrix less than eq to k
+    
+    int ans=0;
+    for(int i=1;i<=n;++i)
+    {
+        for(int j=1;j<=m;++j)
+        {
+            int l=1;
+            int r=min(n-i,m-j)+1;
+            
+            while(l<=r)
+            {
+                int mid=(l+r)/2;
+                
+                int l1=i+mid-1;
+                int r1=j+mid-1;
+                
+                int tmp=dp[l1][r1]-dp[l1][j-1]-dp[i-1][r1]+dp[i-1][j-1];
+                if(tmp<=k) {
+                    ans=max(ans, tmp);
+                    l=mid+1;
+                }
+                else {
+                    r=mid-1;
+                }
+            }
+        }
+    }
+    
+    cout<<ans<<endl;
+    
+}
+
+								----------------------------
 
 
 
